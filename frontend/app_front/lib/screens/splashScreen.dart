@@ -31,12 +31,12 @@ class _SplashScreenState extends State<SplashScreen> {
            height: MediaQuery.of(context).size.height,
            decoration: BoxDecoration(
              gradient: LinearGradient(
-               begin: Alignment.topLeft,
-               end: Alignment.bottomRight,
+               begin: Alignment.topCenter,
+               end: Alignment.bottomCenter,
                colors: [
-                 Color(0xFFFF5722),
-                 Color(0xfff57c00),
-                 Color(0xfffb8c00),
+                 Color(0xFF00276E),
+                 Color(0xff00508a),
+                 Color(0xFF00276E),
                ]
              ),
            ),

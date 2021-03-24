@@ -5,7 +5,10 @@ import 'screens/signUpScreen.dart';
 import 'screens/forgotPasswordScreen.dart';
 import 'screens/splashScreen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  Paint.enableDithering = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
