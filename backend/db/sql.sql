@@ -23,7 +23,7 @@ CREATE TABLE tbr_aluno (
 CREATE TABLE tbr_professor (
   int_idfprofessor INT NOT NULL,
   vhr_cref VARCHAR(20) NOT NULL,
-  vhr_token VARCHAR(20) NOT NULL,
+  vhr_token VARCHAR(12) NOT NULL,
   vhr_descricao VARCHAR(120) NOT NULL,
   FOREIGN KEY (int_idfprofessor)
     REFERENCES tbl_usuario (int_idausuario)

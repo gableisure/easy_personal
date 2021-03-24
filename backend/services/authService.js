@@ -1,55 +1,18 @@
-const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const db = require('../db');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const AppError = require('../utils/AppError');
+const db = require('../db');
 
-exports.gelAllUsers = async () => {
-  const { rows: users } = await db.query('SELECT * FROM tbl_usuario');
-
-  return users;
-};
-
-exports.getAllStudents = async () => {
-  const { rows: users } = await db.query(
-    `SELECT * FROM tbl_usuario 
-    INNER JOIN tbr_aluno 
-    ON tbr_aluno.int_idfaluno = tbl_usuario.int_idausuario;`
-  );
-
-  return users;
-};
-
-exports.getAllInstructors = async () => {
-  const { rows: users } = await db.query(
-    `SELECT * FROM tbl_usuario 
-    INNER JOIN tbr_professor 
-    ON tbr_professor.int_idfprofessor = tbl_usuario.int_idausuario;`
-  );
-
-  return users;
-};
-
-exports.getUser = async req => {
-  const { rows: user } = await db.query(
-    `SELECT * FROM tbl_usuario 
-    LEFT JOIN tbr_aluno 
-    ON tbr_aluno.int_idfaluno = tbl_usuario.int_idausuario
-    LEFT JOIN tbr_professor 
-    ON tbr_professor.int_idfprofessor = tbl_usuario.int_idausuario
-    AND tbl_usuario.int_idausuario = $1;`,
-    [req.params.id]
-  );
-
-  Object.entries(user[0]).forEach(([key, value]) => {
-    if (value === null) delete user[0][key];
+const signToken = id =>
+  jwt.sign({ id }, process.env.JWT_TOKEN, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-  console.log(user[0]);
+const comparePassword = async (requestPass, userPass) =>
+  await bcrypt.compare(requestPass, userPass);
 
-  return user[0];
-};
-
-exports.addUser = async req => {
+exports.signup = async req => {
   // Verificar se senha e confirmação de senha são iguais.
   if (req.body.vhr_senha !== req.body.confirmSenha)
     throw new AppError('As senhas precisam ser iguais.', 400);
@@ -107,4 +70,30 @@ exports.addUser = async req => {
       ]
     );
   }
+
+  const webToken = signToken(createdUser[0].int_idausuario);
+
+  return webToken;
+};
+
+exports.login = async req => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new AppError('Por favor, digite seu email e sua senha.', 400);
+  }
+
+  const {
+    rows: user,
+  } = await db.query(
+    `SELECT int_idausuario, vhr_email, vhr_senha FROM tbl_usuario WHERE vhr_email = $1`,
+    [email]
+  );
+
+  if (!user[0] || !(await comparePassword(password, user[0].vhr_senha)))
+    throw new AppError('Email ou senha incorreta.', 400);
+
+  const webtoken = signToken(user[0].int_idausuario);
+
+  return webtoken;
 };

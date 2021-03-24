@@ -10,7 +10,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') morgan('dev');
 
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/usuarios', userRouter);
 
 app.all('*', (req, res, next) =>
   next(new AppError(`A rota ${req.originalUrl} não existe!`))
