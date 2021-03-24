@@ -6,35 +6,29 @@ class ForgotPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed("/login");
+          },
+        ),
+        elevation: 50,
+        backgroundColor: Color(0xFF0073B7),
+      ),
       body: SingleChildScrollView(
-        reverse: true,
+        //reverse: true,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Color(0xFFFD5C01),
+          color: Color(0xFF0073B7),
           child: Stack(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(
-                  top: 70,
-                  left: 20,
-                  right: 20,
-                ),
-                child: SizedBox(
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed("/login");
-                    },
-                  ),
-                ),
-              ),
               Positioned(
-                top: 200,
+                top: 160,
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: 110,
+                    top: 60,
                     left: 40,
                     right: 40,
                   ),
@@ -43,7 +37,7 @@ class ForgotPassword extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(70),
+                      top: Radius.circular(60),
                     ),
                   ),
                   child: SingleChildScrollView(
@@ -68,15 +62,7 @@ class ForgotPassword extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 13.5,),
-                        SizedBox(
-                          child: Icon(
-                            Icons.arrow_circle_down,
-                            color:  Colors.deepOrange,
-                            size: 70,
-                          ),
-                        ),
-                        SizedBox(height: 15,),
+                        SizedBox(height: 18,),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
@@ -93,13 +79,13 @@ class ForgotPassword extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 15,),
+                        SizedBox(height: 20,),
                         Container(
                           height: 60,
                           child: SizedBox.expand(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFFD5C01),
+                                primary: Color(0xFF0073B7),
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(25),),
                                 ),
