@@ -8,7 +8,7 @@ CREATE TABLE tbl_usuario (
   int_genero INT NOT NULL,
   vhr_whatsapp VARCHAR(20) NOT NULL,
   int_tipo INT NOT NULL,
-  changedpasswordat TIMESTAMPTZ DEFAULT NULL
+  changedpasswordat BIGINT DEFAULT NULL
 );
 
 CREATE TABLE tbr_aluno (
@@ -32,7 +32,7 @@ CREATE TABLE tbr_professor (
 CREATE TABLE resetpasswordtokens (
   user_id INT NOT NULL,
   token TEXT NOT NULL,
-  expiresin TIMESTAMPTZ NOT NULL,
+  expiresin BIGINT NOT NULL,
   FOREIGN KEY(user_id)
     REFERENCES tbl_usuario (int_idausuario)
 );
