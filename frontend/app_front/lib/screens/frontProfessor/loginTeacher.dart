@@ -136,9 +136,10 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               ),
             ),
             onPressed: () {
-              if(!_formKey.currentState.validate()) {
-                return;
-              }
+              Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+              // if(!_formKey.currentState.validate()) {
+              //   return;
+              // }
             },
           ),
         ),
