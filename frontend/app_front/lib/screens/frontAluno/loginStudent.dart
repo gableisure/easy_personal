@@ -138,7 +138,10 @@ class _StateLoginStudent extends State<LoginStudent> {
             onPressed: () {
               if(!_formKey.currentState.validate()) {
                 return;
+              } else{
+                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
               }
+
             },
           ),
         ),
