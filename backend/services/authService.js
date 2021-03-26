@@ -3,18 +3,35 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const AppError = require('../utils/AppError');
 const db = require('../db');
+const sendEmail = require('../utils/email');
 
-const signToken = id =>
-  jwt.sign({ id }, process.env.JWT_TOKEN, {
+const signToken = userId =>
+  jwt.sign({ userId }, process.env.JWT_TOKEN, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
+const createSendToken = (userId, res) => {
+  const token = signToken(userId);
+
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  res.cookie('jwt', token, cookieOptions);
+
+  return token;
+};
 const comparePassword = async (requestPass, userPass) =>
   await bcrypt.compare(requestPass, userPass);
 
-exports.signup = async req => {
+exports.signup = async (req, res) => {
   // Verificar se senha e confirmação de senha são iguais.
-  if (req.body.vhr_senha !== req.body.confirmSenha)
+  if (req.body.vhr_senha !== req.body.passwordConfirm)
     throw new AppError('As senhas precisam ser iguais.', 400);
 
   // Verificar tipo de usuário.
@@ -71,12 +88,10 @@ exports.signup = async req => {
     );
   }
 
-  const webToken = signToken(createdUser[0].int_idausuario);
-
-  return webToken;
+  return createSendToken(createdUser[0].int_idausuario, res);
 };
 
-exports.login = async req => {
+exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -91,9 +106,98 @@ exports.login = async req => {
   );
 
   if (!user[0] || !(await comparePassword(password, user[0].vhr_senha)))
-    throw new AppError('Email ou senha incorreta.', 400);
+    throw new AppError('Email ou senha incorreta.', 401);
 
-  const webtoken = signToken(user[0].int_idausuario);
+  return createSendToken(user[0].int_idausuario, res);
+};
 
-  return webtoken;
+exports.forgotPassword = async req => {
+  const { email } = req.body;
+
+  if (!email) throw new AppError('Por favor, digite seu email.', 400);
+
+  const {
+    rows: user,
+  } = await db.query(
+    `SELECT int_idausuario, vhr_email, vhr_senha FROM tbl_usuario WHERE vhr_email = $1`,
+    [email]
+  );
+
+  if (!user[0]) throw new AppError('Não existe uma conta com este email!', 404);
+
+  // Criando token para mandar para resetar senha.
+  // esse token será enviado pro email do usuário.
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  // Encryptar o token gerado para ser guardado no banco de dados.
+  const encryptResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  const passwordResetExpires = Date.now() + 10 * 60;
+
+  await db.query(
+    'INSERT INTO resetpasswordtokens (user_id, token, expiresin) VALUES ($1, $2, $3)',
+    [user[0].int_idausuario, encryptResetToken, passwordResetExpires]
+  );
+
+  // Mandar email.
+  const resetURL = `${req.protocol}//${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  const message = `Perdeu sua senha? Aqui está a solução: ${resetURL}`;
+
+  try {
+    sendEmail({
+      email: user[0].vhr_email,
+      subject: 'Token de recuperação de senha (válido por 10 min).',
+      message: message,
+    });
+  } catch (err) {
+    await db.query(
+      'DELETE FROM resetpasswordtokens WHERE user_id = $1',
+      user[0].int_idausuario
+    );
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password, passwordConfirm } = req.body;
+
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  const {
+    rows: user,
+  } = await db.query(
+    'SELECT user_id FROM resetpasswordtokens WHERE token = $1',
+    [hashedToken]
+  );
+
+  if (!user[0]) throw new AppError('Token inválido ou expirado!', 400);
+
+  // IDENTIFICAR SE TOKEN JÁ EXPIROU
+  // VER PROBLEMA DO TRY CATCH SENDEMAIL
+
+  if (!password || !passwordConfirm)
+    throw new AppError('Preencha todos os campos.', 400);
+
+  if (password !== passwordConfirm)
+    throw new AppError('As senhas precisam ser iguais.', 400);
+
+  // Gerar hash de senha.
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  await db.query(
+    'UPDATE tbl_usuario SET vhr_senha = $1, changedpasswordat = $2 WHERE int_idausuario = $3',
+    [hashedPassword, Date.now(), user[0].user_id]
+  );
+
+  await db.query('DELETE FROM resetpasswordtokens WHERE user_id = $1', [
+    user[0].user_id,
+  ]);
+
+  return createSendToken(user[0].user_id, res);
 };
