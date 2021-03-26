@@ -77,7 +77,7 @@ class _PageMainStudentState extends State<PageMainStudent> {
                 fontSize: 18.0,
               ),
             ),
-            subtitle: Text("Aluno há 3 meses"),
+            subtitle: Text("Aluno há 2 meses"),
           ),
         );
       },
