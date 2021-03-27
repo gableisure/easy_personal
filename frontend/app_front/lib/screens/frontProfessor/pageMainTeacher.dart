@@ -74,11 +74,21 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.person,
-                      size: 50,
+                    CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      maxRadius: 35.0,
+                      child:
+                        Text(
+                          "${_getIniciais(alunosData[index]["vhr_nome"], alunosData[index]["vhr_sobrenome"])}",
+                          style: TextStyle(
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
                     ),
                   ],
+
                 ),
               ),
               SizedBox(width: 10,),
@@ -88,10 +98,10 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 children: [
                   SizedBox(height: 15,),
                   Text(
-                    "${alunosData[index]["vhr_nome"]}",
+                    "${alunosData[index]["vhr_nome"]} ${alunosData[index]["vhr_sobrenome"]}",
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 23.0,
                       fontWeight: FontWeight.w700,
                       color: Color(0XFF2E2E2E),
 
@@ -133,6 +143,16 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
       },
     ),
   );
+
+  /*  Funções buildAluno  */
+
+  String _getIniciais(String nome, String sobrenome) {
+    if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
+      return nome[0] + sobrenome[3];
+    }
+    return nome[0] + sobrenome[0];
+
+  }
 
   Widget buildTreinos() => Center(
     child: Text("Texto"),
