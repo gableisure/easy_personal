@@ -14,7 +14,7 @@ class PageMainTeacher extends StatefulWidget {
 class _PageMainTeacherState extends State<PageMainTeacher> {
   final uri = "api-easy-personal-dsv.herokuapp.com";
   List data;
-  List alunosData;
+  List alunosData = [];
 
   getAlunos() async {
     http.Response response = await http.get(Uri.https(uri, "/alunos"));
