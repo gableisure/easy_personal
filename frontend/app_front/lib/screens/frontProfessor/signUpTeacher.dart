@@ -379,9 +379,9 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               onPressed: () {
                 _switchInputField(_index - 1);
               },
-              child: Text("VOLTAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              child: Text("RETORNAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF0073B7),
+                primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25),),
                 ),
@@ -399,7 +399,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               },
               child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF0073B7),
+                primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25),),
                 ),
@@ -417,7 +417,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                 },
                 child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF0073B7),
+                  primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25),),
                   ),
@@ -437,7 +437,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                 },
                 child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF0073B7),
+                  primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25),),
                   ),

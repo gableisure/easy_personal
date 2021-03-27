@@ -15,7 +15,7 @@ class _MyStateRadioButton extends State<RadioButtonSignUp> {
   @override
   void initState() {
     super.initState();
-    selectedRadioButton1 = 0;
+    selectedRadioButton1 = 1;
     selectedRadioButton2 = 0;
   }
   //professor
