@@ -18,6 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(primary: Color(0XFF454545)),
+        ),
+      ),
       initialRoute: "/",
       routes: {
         "/": (context) => SplashScreen(),
