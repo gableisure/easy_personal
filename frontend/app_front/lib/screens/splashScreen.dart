@@ -33,10 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
              gradient: LinearGradient(
                begin: Alignment.topCenter,
                end: Alignment.bottomCenter,
+               stops: [0.1, 0.4],
                colors: [
-                 Color(0xFF00276E),
-                 Color(0xff00508a),
-                 Color(0xFF00276E),
+                 Colors.lightBlueAccent, Colors.blueAccent
                ]
              ),
            ),
@@ -48,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
                ),
                SizedBox(height: 60,),
                CircularProgressIndicator(
-                 backgroundColor: Color(0xFFFF9800),
+                 backgroundColor: Colors.lightBlue,
                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFFFFF)),
-                 strokeWidth: 6.0,
+                 strokeWidth: 5.0,
                ),
              ],
            ),

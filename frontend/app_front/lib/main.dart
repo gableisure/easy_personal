@@ -1,3 +1,4 @@
+import 'package:app_front/screens/frontAluno/pageMainStudent.dart';
 import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
 import 'package:app_front/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         "/signUp": (context) => SignUp(),
         "/forgotPassword": (context) => ForgotPassword(),
         "/pageMainTeacher": (context) => PageMainTeacher(),
+        "/pageMainStudent": (context) => PageMainStudent(),
       },
     );
   }

@@ -27,8 +27,8 @@ class _PageMainStudentState extends State<PageMainStudent> {
       ],
     children: [
       buildTreinos(),
-     // buildFeedback(),
-      //buildTreinosArquivados(),
+      buildFeedback(),
+      buildTreinosArquivados(),
     ],
   );
 
@@ -85,11 +85,55 @@ class _PageMainStudentState extends State<PageMainStudent> {
   );
 
   Widget buildFeedback() => Center(
-    child: Text("Texto"),
+    child: ListView.separated(
+      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+      separatorBuilder: (context, index) => Divider(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return TextButton(
+          onPressed: () {},
+          child: ListTile(
+            leading: Icon(
+                Icons.person,
+                size: 30
+            ),
+            title: Text(
+              '${items[index]}',
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            subtitle: Text("Aluno há 2 meses"),
+          ),
+        );
+      },
+    ),
   );
 
   Widget buildTreinosArquivados() => Center(
-    child: Text("Texto"),
+    child: ListView.separated(
+      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+      separatorBuilder: (context, index) => Divider(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return TextButton(
+          onPressed: () {},
+          child: ListTile(
+            leading: Icon(
+                Icons.person,
+                size: 30
+            ),
+            title: Text(
+              '${items[index]}',
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            subtitle: Text("Aluno há 2 meses"),
+          ),
+        );
+      },
+    ),
   );
 
 

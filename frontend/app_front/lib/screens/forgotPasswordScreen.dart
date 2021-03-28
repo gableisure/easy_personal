@@ -6,26 +6,50 @@ class ForgotPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
+      /*appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
           onPressed: () {
             Navigator.of(context).pushReplacementNamed("/login");
           },
         ),
-        elevation: 50,
-        backgroundColor: Color(0xFF0073B7),
-      ),
+        elevation: 0,
+        backgroundColor:  Colors.transparent,
+        bottomOpacity: 1.0 ,
+        //foregroundColor: Colors.transparent,
+        //shadowColor: Colors.lightBlueAccent,
+      ),*/
       body: SingleChildScrollView(
         //reverse: true,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Color(0xFF0073B7),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.1, 0.4],
+              colors: [
+                Colors.lightBlueAccent, Colors.blueAccent
+              ],
+            ),
+          ),
           child: Stack(
             children: <Widget>[
               Positioned(
-                top: 160,
+                child: AppBar(
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed("/login");
+                    },
+                  ),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+              Positioned(
+                top: 200,
                 child: Container(
                   padding: EdgeInsets.only(
                     top: 60,
@@ -58,7 +82,7 @@ class ForgotPassword extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 16.5,
-                            color: Color(0xFF012777),
+                            color: Colors.blueGrey[900],
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -85,7 +109,7 @@ class ForgotPassword extends StatelessWidget {
                           child: SizedBox.expand(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFF0073B7),
+                                primary: Colors.lightBlue,
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(25),),
                                 ),

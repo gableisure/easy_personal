@@ -11,10 +11,11 @@ class RadioButtonSignUp extends StatefulWidget {
 class _MyStateRadioButton extends State<RadioButtonSignUp> {
   int selectedRadioButton1;
   int selectedRadioButton2;
+
   @override
   void initState() {
     super.initState();
-    selectedRadioButton1 = 0;
+    selectedRadioButton1 = 1;
     selectedRadioButton2 = 0;
   }
   //professor
@@ -31,6 +32,12 @@ class _MyStateRadioButton extends State<RadioButtonSignUp> {
       selectedRadioButton2 = val;
     });
   }
+  @override
+  void dispose() {
+    super.dispose();
+    //radioTeacher.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

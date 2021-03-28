@@ -107,7 +107,7 @@ class _StateLoginStudent extends State<LoginStudent> {
           height: 60,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color(0xFF0073B7),
+              primary: Colors.lightBlue,
               shape: new RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25),),
               ),
@@ -138,7 +138,10 @@ class _StateLoginStudent extends State<LoginStudent> {
             onPressed: () {
               if(!_formKey.currentState.validate()) {
                 return;
+              } else{
+                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
               }
+
             },
           ),
         ),
