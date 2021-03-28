@@ -14,7 +14,16 @@ class LoginScreen extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Color(0xFF0073B7),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.1, 0.4],
+              colors: [
+                Colors.lightBlueAccent, Colors.blueAccent
+              ],
+            ),
+          ),
           child: Stack(
             children: <Widget>[
               Positioned(
