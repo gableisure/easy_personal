@@ -169,7 +169,7 @@ exports.forgotPassword = async req => {
     .update(resetToken)
     .digest('hex');
 
-  const passwordResetExpires = Date.now() + 10 * 60;
+  const passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   await db.query(
     'INSERT INTO resetpasswordtokens (user_id, token, expiresin) VALUES ($1, $2, $3)',
@@ -198,6 +198,7 @@ exports.forgotPassword = async req => {
 };
 
 exports.resetPassword = async (req, res) => {
+  // VER PROBLEMA DO TRY CATCH SENDEMAIL
   const { token } = req.params;
   const { password, passwordConfirm } = req.body;
 
@@ -206,14 +207,15 @@ exports.resetPassword = async (req, res) => {
   const {
     rows: user,
   } = await db.query(
-    'SELECT user_id FROM resetpasswordtokens WHERE token = $1',
+    'SELECT user_id, expiresin FROM resetpasswordtokens WHERE token = $1',
     [hashedToken]
   );
 
-  if (!user[0]) throw new AppError('Token inválido ou expirado!', 400);
+  // Indetificar se token existe e se ainda é válido.
+  if (!user[0] || Date.now() > user[0].expiresin)
+    throw new AppError('Token inválido ou expirado!', 400);
 
-  // IDENTIFICAR SE TOKEN JÁ EXPIROU
-  // VER PROBLEMA DO TRY CATCH SENDEMAIL
+  return;
 
   if (!password || !passwordConfirm)
     throw new AppError('Preencha todos os campos.', 400);
