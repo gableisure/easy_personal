@@ -30,6 +30,33 @@ const comparePassword = async (requestPass, userPass) =>
   await bcrypt.compare(requestPass, userPass);
 
 exports.signup = async (req, res) => {
+  // NÃO PERMITIR REPETIÇÃO DE TOKEN DE PROFESSOR.
+  let validUser = false;
+  let validInstructor;
+
+  if (req.body.int_tipo === 0) {
+    // Verificar se token do professor existe.
+    if (!req.body.token_professor)
+      throw new AppError(
+        'Você precisa usar o token de um professor válido.',
+        400
+      );
+
+    const {
+      rows: instructors,
+    } = await db.query(
+      'SELECT int_idfprofessor FROM tbr_professor WHERE vhr_token = $1',
+      [req.body.token_professor]
+    );
+
+    if (!instructors[0]) {
+      throw new AppError('Token de professor inválido.', 400);
+    }
+
+    validInstructor = instructors[0];
+    validUser = true;
+  }
+
   // Verificar se senha e confirmação de senha são iguais.
   if (req.body.vhr_senha !== req.body.passwordConfirm)
     throw new AppError('As senhas precisam ser iguais.', 400);
@@ -70,6 +97,13 @@ exports.signup = async (req, res) => {
         req.body.num_altura,
       ]
     );
+
+    if (validUser) {
+      await db.query(
+        'INSERT INTO user_instructors (user_id, instructor_id) VALUES ($1, $2)',
+        [createdUser[0].int_idausuario, validInstructor.int_idfprofessor]
+      );
+    }
   }
 
   if (req.body.int_tipo === 1) {
@@ -135,7 +169,7 @@ exports.forgotPassword = async req => {
     .update(resetToken)
     .digest('hex');
 
-  const passwordResetExpires = Date.now() + 10 * 60;
+  const passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   await db.query(
     'INSERT INTO resetpasswordtokens (user_id, token, expiresin) VALUES ($1, $2, $3)',
@@ -164,6 +198,7 @@ exports.forgotPassword = async req => {
 };
 
 exports.resetPassword = async (req, res) => {
+  // VER PROBLEMA DO TRY CATCH SENDEMAIL
   const { token } = req.params;
   const { password, passwordConfirm } = req.body;
 
@@ -172,14 +207,15 @@ exports.resetPassword = async (req, res) => {
   const {
     rows: user,
   } = await db.query(
-    'SELECT user_id FROM resetpasswordtokens WHERE token = $1',
+    'SELECT user_id, expiresin FROM resetpasswordtokens WHERE token = $1',
     [hashedToken]
   );
 
-  if (!user[0]) throw new AppError('Token inválido ou expirado!', 400);
+  // Indetificar se token existe e se ainda é válido.
+  if (!user[0] || Date.now() > user[0].expiresin)
+    throw new AppError('Token inválido ou expirado!', 400);
 
-  // IDENTIFICAR SE TOKEN JÁ EXPIROU
-  // VER PROBLEMA DO TRY CATCH SENDEMAIL
+  return;
 
   if (!password || !passwordConfirm)
     throw new AppError('Preencha todos os campos.', 400);
