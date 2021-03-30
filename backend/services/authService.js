@@ -30,6 +30,33 @@ const comparePassword = async (requestPass, userPass) =>
   await bcrypt.compare(requestPass, userPass);
 
 exports.signup = async (req, res) => {
+  // NÃO PERMITIR REPETIÇÃO DE TOKEN DE PROFESSOR.
+  let validUser = false;
+  let validInstructor;
+
+  if (req.body.int_tipo === 0) {
+    // Verificar se token do professor existe.
+    if (!req.body.token_professor)
+      throw new AppError(
+        'Você precisa usar o token de um professor válido.',
+        400
+      );
+
+    const {
+      rows: instructors,
+    } = await db.query(
+      'SELECT int_idfprofessor FROM tbr_professor WHERE vhr_token = $1',
+      [req.body.token_professor]
+    );
+
+    if (!instructors[0]) {
+      throw new AppError('Token de professor inválido.', 400);
+    }
+
+    validInstructor = instructors[0];
+    validUser = true;
+  }
+
   // Verificar se senha e confirmação de senha são iguais.
   if (req.body.vhr_senha !== req.body.passwordConfirm)
     throw new AppError('As senhas precisam ser iguais.', 400);
@@ -70,6 +97,13 @@ exports.signup = async (req, res) => {
         req.body.num_altura,
       ]
     );
+
+    if (validUser) {
+      await db.query(
+        'INSERT INTO user_instructors (user_id, instructor_id) VALUES ($1, $2)',
+        [createdUser[0].int_idausuario, validInstructor.int_idfprofessor]
+      );
+    }
   }
 
   if (req.body.int_tipo === 1) {

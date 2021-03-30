@@ -12,7 +12,7 @@ CREATE TABLE tbl_usuario (
 );
 
 CREATE TABLE tbr_aluno (
-  int_idfaluno INT NOT NULL,
+  int_idfaluno INT NOT NULL UNIQUE,
   vhr_descricao VARCHAR(120) NOT NULL,
   num_peso DECIMAL NOT NULL,
   num_altura DECIMAL NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE tbr_aluno (
 );
 
 CREATE TABLE tbr_professor (
-  int_idfprofessor INT NOT NULL,
+  int_idfprofessor INT NOT NULL UNIQUE,
   vhr_cref VARCHAR(20) NOT NULL,
   vhr_token VARCHAR(12) NOT NULL,
   vhr_descricao VARCHAR(120) NOT NULL,
@@ -35,4 +35,13 @@ CREATE TABLE resetpasswordtokens (
   expiresin BIGINT NOT NULL,
   FOREIGN KEY(user_id)
     REFERENCES tbl_usuario (int_idausuario)
+);
+
+CREATE TABLE user_instructors (
+  user_id INT NOT NULL,
+  instructor_id INT NOT NULL,
+  FOREIGN KEY(user_id)
+    REFERENCES tbr_aluno (int_idfaluno),
+  FOREIGN KEY(instructor_id)
+    REFERENCES tbr_professor (int_idfprofessor)
 );
