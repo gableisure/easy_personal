@@ -13,21 +13,21 @@ class PageMainTeacher extends StatefulWidget {
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
   final uri = "api-easy-personal-dsv.herokuapp.com";
-  List data;
-  List alunosData = [];
+  Map data;
+  Map alunosData;
+  http.Response response;
 
-  getAlunos() async {
-    http.Response response = await http.get(Uri.https(uri, "/alunos"));
-    data = json.decode(response.body);
-    setState(() {
-      alunosData = data;
-    });
+  Future<Map> _getAlunos() async {
+    response = await http.get(Uri.https(uri, "/alunos"));
+    return json.decode(response.body);
   }
 
   @override
   void initState() {
     super.initState();
-    getAlunos();
+    _getAlunos().then((map) {
+      print(map);
+    });
   }
 
   @override
@@ -51,7 +51,47 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Widget buildAlunos() => Container(
     color: Color(0XFFF5F5F5),
-    child: ListView.separated(
+    child: Column(
+      children: [
+        Expanded(
+          child: FutureBuilder(
+            future: _getAlunos(),
+            builder: (context, snapshot) {
+              switch(snapshot.connectionState) {
+                case ConnectionState.waiting:
+                case ConnectionState.none:
+                  return Container(
+                    width: 200.0,
+                    height: 200.0,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      strokeWidth: 5.0,
+                    ),
+                  );
+                default:
+                  if(snapshot.hasError) return Container();
+                  else return _buildListAlunos(context, snapshot);
+              }
+            },
+          ),
+        ),
+      ]
+    ),
+  );
+
+  /*  Funções buildAluno  */
+
+  String _getIniciais(String nome, String sobrenome) {
+    if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
+      return nome[0] + sobrenome[3];
+    }
+    return nome[0] + sobrenome[0];
+
+  }
+
+  Widget _buildListAlunos(BuildContext context, AsyncSnapshot snapshot) {
+    return ListView.separated(
       padding: EdgeInsets.only(top: 30, left: 10, right: 10),
       separatorBuilder: (context, index) => Divider(),
       itemCount: alunosData.length,
@@ -78,14 +118,14 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                       backgroundColor: Colors.blue,
                       maxRadius: 35.0,
                       child:
-                        Text(
-                          "${_getIniciais(alunosData[index]["vhr_nome"], alunosData[index]["vhr_sobrenome"])}",
-                          style: TextStyle(
-                            fontSize: 35.0,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
+                      Text(
+                        "${_getIniciais(alunosData[index]["vhr_nome"], alunosData[index]["vhr_sobrenome"])}",
+                        style: TextStyle(
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
                         ),
+                      ),
                     ),
                   ],
 
@@ -111,11 +151,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                   Row(
                     children: [
                       TextButton(
-                          onPressed: () {},
-                          child: Icon(
-                            Icons.assignment_outlined,
-                            size: 40,
-                          ),
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.assignment_outlined,
+                          size: 40,
+                        ),
                       ),
                       SizedBox(width: 5,),
                       TextButton(
@@ -141,17 +181,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
           ),
         );
       },
-    ),
-  );
-
-  /*  Funções buildAluno  */
-
-  String _getIniciais(String nome, String sobrenome) {
-    if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
-      return nome[0] + sobrenome[3];
-    }
-    return nome[0] + sobrenome[0];
-
+    );
   }
 
   Widget buildTreinos() => Center(

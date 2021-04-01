@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +22,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   String dataNascimento;
   String telefone;
   String descricao;
-  //chaves paras os forms
+
+  // controllers dos text form field
+  final _nameController = TextEditingController();
+  final _senhaController = TextEditingController();
+
+  // chaves para os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
@@ -30,6 +36,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   //Nome
   Widget _buildNome() {
     return TextFormField(
+      controller: _nameController,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -108,9 +115,10 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       },
     );
   }
-  //senha
+  // senha
   Widget _buildSenha() {
     return TextFormField(
+      controller: _senhaController,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       decoration: InputDecoration(
@@ -135,6 +143,38 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       },
     );
   }
+
+  // confirma senha
+  Widget _buildConfirmaSenha() {
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.vpn_key_rounded),
+        labelText: "Confirmar senha",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Confirmação de senha obrigatória";
+        }
+        if(value != _senhaController.text) {
+          return "As senhas não coincidem";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        senha = value;
+      },
+    );
+  }
+
   //cref
   Widget _buildCref() {
     return TextFormField(
@@ -325,6 +365,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   _buildEmail(),
                   SizedBox(height: 18,),
                   _buildSenha(),
+                  SizedBox(height: 18,),
+                  _buildConfirmaSenha(),
                 ],
               ),
             ),
@@ -433,6 +475,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     _formKey.currentState.save();
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
+                    print(_nameController.text);
                   }
                 },
                 child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
