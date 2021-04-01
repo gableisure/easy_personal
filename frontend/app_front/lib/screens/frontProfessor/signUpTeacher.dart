@@ -1,6 +1,8 @@
 import 'dart:convert';
-
+import 'package:app_front/widgets/buttons/buttonAvancarSingUp.dart';
 import 'package:app_front/models/Usuario.dart';
+import 'package:app_front/widgets/buttons/buttonCadastrarSingUp.dart';
+import 'package:app_front/widgets/buttons/buttonVoltarSingUp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -500,13 +502,15 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         SizedBox(height: 20.0,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
           children: <Widget>[
             _index >= 1
             ? ElevatedButton(
+
               onPressed: () {
                 _switchInputField(_index - 1);
               },
-              child: Text("RETORNAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              child: ButtonVoltarSingUp(labelButton: "Voltar", iconButton: Icon( Icons.chevron_left_outlined ),),
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
@@ -524,7 +528,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   _switchInputField(_index + 1);
                 }
               },
-              child: _buildButtonAvancar(),
+              child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
@@ -542,7 +546,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     _switchInputField(_index + 1);
                   }
                 },
-                child: _buildButtonAvancar(),
+                child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(
@@ -574,7 +578,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     // print("[DEBUG]: ${usuario.fromJson()}");
                   }
                 },
-                child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
+                child: ButtonCadastrarSingUp(labelButton: "Cadastrar"),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(

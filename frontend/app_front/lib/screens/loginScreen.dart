@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/painting.dart';
-import 'package:app_front/widgets/radioButtonLogin.dart';
+import 'package:app_front/widgets/buttons/radioButtonLogin.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
