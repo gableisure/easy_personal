@@ -1,3 +1,4 @@
+import 'package:app_front/models/Usuario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -23,20 +24,30 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   String telefone;
   String descricao;
 
+  Usuario usuario = new Usuario();
+
   // controllers dos text form field
-  final _nameController = TextEditingController();
+  /*
+  *   TODO: analisar uso dos controllers
+  * */
+  // final _nomeController = TextEditingController();
+  // final _sobrenomeController = TextEditingController();
+  // final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
+  // final _dataNascimentoController = TextEditingController();
+  // final _telefoneController = TextEditingController();
+  // final _crefController = TextEditingController();
+  // final _generoController = TextEditingController();
 
   // chaves para os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
 
-  //Widgets
-  //Nome
+  // widgets
+  // nome
   Widget _buildNome() {
     return TextFormField(
-      controller: _nameController,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -56,11 +67,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        nome = value;
+        usuario.vhr_nome = value;
       },
     );
   }
-  //sobrenome
+
+  // sobrenome
   Widget _buildSobrenome() {
     return TextFormField(
       keyboardType: TextInputType.name,
@@ -82,11 +94,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        sobrenome = value;
+        usuario.vhr_sobrenome = value;
       },
     );
   }
-  //E-mail
+
+  // e-mail
   Widget _buildEmail() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -111,7 +124,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        email = value;
+        usuario.vhr_email = value;
       },
     );
   }
@@ -139,7 +152,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        senha = value;
+        usuario.vhr_senha = value;
       },
     );
   }
@@ -170,79 +183,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        senha = value;
+        usuario.vhr_senha = value;
       },
     );
   }
 
-  //cref
-  Widget _buildCref() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25),),
-        ),
-        prefixIcon: Icon(Icons.credit_card_rounded),
-        labelText: "CREF",
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-        ),
-      ),
-      validator: (String value) {
-        if(value.isEmpty) {
-          return;
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        cref = value;
-      },
-    );
-  }
-  //genero
-  Widget _buildGenero() {
-    var _list = ["Masculino", " Femenino", "Indefinido", ""];
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25),),
-        ),
-        prefixIcon: Icon(Icons.people_alt_rounded),
-        labelText: "Escolha o Gênero",
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-        ),
-        isDense: true,
-      ),
-      value: genero,
-      items: _list.map<DropdownMenuItem<String>>((String drop) {
-        return DropdownMenuItem<String>(
-          child: Text(drop),
-          value: drop,
-        );
-      }).toList(),
-      validator: (String value){
-        if(value == null || value.isEmpty){
-          return "Escolha de gênero Obrigatória";
-        }
-
-        return null;
-      },
-      onChanged: (String value) {
-        setState(() {
-          genero = value;
-        });
-      },
-
-      onSaved: (String value) {
-        genero = value;
-      },
-    );
-  }
-  //Data de Nascimento
+  // data de nascimento
   Widget _buildDataNascimento() {
     return TextFormField(
       inputFormatters: [
@@ -263,16 +209,17 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       ),
       validator: (String value) {
         if(value.isEmpty) {
-          return "Data de Nascimento Obrigatória";
+          return "Data de nascimento obrigatória";
         }
         return null;
       },
       onSaved: (String value) {
-        dataNascimento = value;
+        usuario.dtt_nascimento = value;
       },
     );
   }
-  //Telefone
+
+  // telefone
   Widget _buildTelefone() {
     return TextFormField(
       inputFormatters: [
@@ -299,11 +246,79 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        telefone = value;
+        usuario.vhr_whatsapp = value;
       },
     );
   }
-  //Descrição
+
+  // cref
+  Widget _buildCref() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.credit_card_rounded),
+        labelText: "CREF",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return;
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        usuario.vhr_cref = value;
+      },
+    );
+  }
+
+  // gênero
+  Widget _buildGenero() {
+    var _list = ["Masculino", "Feminino", "Indefinido"];
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.people_alt_rounded),
+        labelText: "Escolha o Gênero",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+        isDense: true,
+      ),
+      value: genero,
+      items: _list.map<DropdownMenuItem<String>>((String drop) {
+        return DropdownMenuItem<String>(
+          child: Text(drop),
+          value: drop,
+        );
+        }).toList(),
+        validator: (String value){
+          if(value == null || value.isEmpty){
+            return "Escolha de gênero Obrigatória";
+          }
+          return null;
+        },
+        onChanged: (String value) {
+          setState(() {
+            usuario.int_genero = int.parse(value);
+          });
+        },
+        onSaved: (String value) {
+          genero = value;
+        },
+      );
+  }
+
+  // descrição
   Widget _buildDescricao() {
     return TextFormField(
       keyboardType: TextInputType.multiline,
@@ -322,12 +337,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       ),
       validator: (String value) {
         if(value.isEmpty) {
-          return "Descrição Obrigatória";
+          return;
         }
         return null;
       },
       onSaved: (String value) {
-        descricao = value;
+
       },
     );
   }
@@ -475,7 +490,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     _formKey.currentState.save();
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
-                    print(_nameController.text);
+                    /*
+                    * TODO: Implementar cadastro do usuário pela API
+                     */
+                    // Usuario.fromJson();
+                    print(usuario.dtt_nascimento);
+                    // print("[DEBUG]: ${usuario.fromJson()}");
                   }
                 },
                 child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
@@ -492,4 +512,5 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       ],
     );
   }
+
 }
