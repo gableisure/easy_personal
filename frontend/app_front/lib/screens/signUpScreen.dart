@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app_front/screens/widgets/radioButtonSignUp.dart';
+import 'package:app_front/widgets/radioButtonSignUp.dart';
 
 class SignUp extends StatelessWidget {
   @override
