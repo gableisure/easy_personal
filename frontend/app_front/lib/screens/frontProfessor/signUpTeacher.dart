@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:app_front/models/Usuario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpTeacher extends StatefulWidget {
   @override
@@ -26,6 +29,21 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
 
   Usuario usuario = new Usuario();
 
+  var userObject = {
+    "vhr_email": "gabriel@adm.comt",
+    "vhr_senha": "admin123",
+    "passwordConfirm": "admin123",
+    "vhr_nome": "Gabriel",
+    "vhr_sobrenome": "Ribeiro",
+    "dtt_nascimento": "15/10/1997",
+    "int_genero": 0,
+    "vhr_whatsapp": "61983556698",
+    "int_tipo": 1,
+    "num_altura": "190",
+    "num_peso": "90",
+    "vhr_descricao": "dsadadas"
+  };
+
   // controllers dos text form field
   /*
   *   TODO: analisar uso dos controllers
@@ -43,6 +61,36 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
+
+  final uri = "10.0.2.2:3000";
+  var usersData = [];
+
+  Future reqPost() async {
+    http.Response response = await http.post(
+      Uri.http(uri, "/api/v1/usuarios/signup"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "token_professor": "d84e384f4971",
+        "vhr_email": "gabriel@adm.comt",
+        "vhr_senha": "admin123",
+        "passwordConfirm": "admin123",
+        "vhr_nome": "Gabriel",
+        "vhr_sobrenome": "Ribeiro",
+        "dtt_nascimento": "02/10/1995",
+        "int_genero": 0,
+        "vhr_whatsapp": "61982524117",
+        "int_tipo": 0,
+        "num_altura": "167",
+        "num_peso": "68.5",
+        "vhr_descricao": "dsadadas"
+      }),
+    );
+    if(response.statusCode == 200) print("Status Code: ${response.statusCode}");
+    else print(response.statusCode);
+
+  }
 
   // widgets
   // nome
@@ -353,6 +401,28 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
     });
   }
 
+  Widget _buildButtonAvancar() {
+    return Padding(
+        padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 8.0),
+        child: Row(
+            children: [
+              Text(
+                "Avançar",
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Color(0xFFFFFFFF),
+                ),
+              ),
+              SizedBox( width: 5.0, ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                size: 25.0,
+              ),
+            ]
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -427,7 +497,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
             ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 20.0,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -454,7 +524,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   _switchInputField(_index + 1);
                 }
               },
-              child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              child: _buildButtonAvancar(),
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
@@ -472,7 +542,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     _switchInputField(_index + 1);
                   }
                 },
-                child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
+                child: _buildButtonAvancar(),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(
@@ -494,7 +564,13 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     * TODO: Implementar cadastro do usuário pela API
                      */
                     // Usuario.fromJson();
-                    print(usuario.dtt_nascimento);
+                    // print(usuario.dtt_nascimento);
+                    // reqPost().then((value) {
+                    //   null
+                    // }).catchError((err) => {
+                    //
+                    // });
+
                     // print("[DEBUG]: ${usuario.fromJson()}");
                   }
                 },
