@@ -143,12 +143,27 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               } 
               _formKey.currentState.save();
               var response = await APILogin().login(email, senha);
-              
+
               if(response.token != null) {
+                SnackBar snackbar = new SnackBar(
+                  content: Text(
+                    "Usuário Logado com Sucesso!!",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.green[600],
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 print(response.data);
                 Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
               } else {
-                print("Senha ou E-mail Inválidos");
+                SnackBar snackbar = new SnackBar(
+                  content: Text(
+                    "E-mail ou Senha Inválidos!!",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.red[600],
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
               }
             },
           ),
