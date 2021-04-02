@@ -1,3 +1,4 @@
+import 'package:app_front/api/apiLogin.dart';
 import 'package:flutter/material.dart';
 
 class LoginTeacher extends StatefulWidget {
@@ -135,12 +136,19 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                 ],
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
 
               if(!_formKey.currentState.validate()) {
                 return;
-              } else {
+              } 
+              _formKey.currentState.save();
+              var response = await APILogin().login(email, senha);
+              
+              if(response.token != null) {
+                print(response.data);
                 Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+              } else {
+                print("Senha ou E-mail Inválidos");
               }
             },
           ),

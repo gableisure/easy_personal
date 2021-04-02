@@ -1,3 +1,4 @@
+import 'package:app_front/api/apiLogin.dart';
 import 'package:flutter/material.dart';
 
 class LoginStudent extends StatefulWidget {
@@ -135,13 +136,19 @@ class _StateLoginStudent extends State<LoginStudent> {
                 ],
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               if(!_formKey.currentState.validate()) {
                 return;
-              } else{
-                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
               }
+              _formKey.currentState.save();
+              var response =  await APILogin().login(email, senha);
 
+              if(response.token != null) {
+                print(response.data);
+                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
+              } else {
+                print("Email ou Senha Inválidos!!!!");
+              }
             },
           ),
         ),

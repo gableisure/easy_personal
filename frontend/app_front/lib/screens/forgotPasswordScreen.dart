@@ -1,24 +1,14 @@
+import 'package:app_front/api/apiForgotPassword.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatelessWidget {
+  String email;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      /*appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
-          onPressed: () {
-            Navigator.of(context).pushReplacementNamed("/login");
-          },
-        ),
-        elevation: 0,
-        backgroundColor:  Colors.transparent,
-        bottomOpacity: 1.0 ,
-        //foregroundColor: Colors.transparent,
-        //shadowColor: Colors.lightBlueAccent,
-      ),*/
       body: SingleChildScrollView(
         //reverse: true,
         child: Container(
@@ -87,20 +77,32 @@ class ForgotPassword extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 18,),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(25),
-                              )
+                        Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(25),
+                                  ),
+                              ),
+                              prefixIcon: Icon(Icons.email_outlined),
+                              labelText: "Digite seu E-mail",
+                              labelStyle: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 20,
+                              ),
                             ),
-                            prefixIcon: Icon(Icons.email_outlined),
-                            labelText: "Digite seu E-mail",
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                            ),
+                            validator: (String val) {
+                              if(val.isEmpty) {
+                                return "Email Obrigatório";
+                              }
+                              return null;
+                            },
+                            onSaved: (String val) {
+                              email = val;
+                            },
                           ),
                         ),
                         SizedBox(height: 20,),
@@ -135,7 +137,20 @@ class ForgotPassword extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              onPressed: () => {},
+                              onPressed: () async {
+                                if(!_formKey.currentState.validate()) {
+                                  return null;
+                                }
+                                _formKey.currentState.save();
+                                var response = await APIPassword().forgotPassword(email);
+
+                                if(response.status != "success") {
+                                  print("Email de Usuário não Existe!!!!");
+                                } else {
+                                  print(response.data);
+                                  print("Enviado com Sucesso!!!");
+                                }
+                              },
                             ),
                           ),
                         ),
