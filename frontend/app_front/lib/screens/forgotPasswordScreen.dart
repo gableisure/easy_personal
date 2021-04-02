@@ -145,10 +145,24 @@ class ForgotPassword extends StatelessWidget {
                                 var response = await APIPassword().forgotPassword(email);
 
                                 if(response.status != "success") {
-                                  print("Email de Usuário não Existe!!!!");
+                                  SnackBar snackbar = new SnackBar(
+                                    content: Text(
+                                      "Não existe uma conta com este e-mail!!",
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                    backgroundColor: Colors.red[600],
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
                                 } else {
+                                  SnackBar snackbar = new SnackBar(
+                                    content: Text(
+                                      "Enviado com Sucesso!!",
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                    backgroundColor: Colors.green[600],
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
                                   print(response.data);
-                                  print("Enviado com Sucesso!!!");
                                 }
                               },
                             ),
