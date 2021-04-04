@@ -50,7 +50,7 @@ class SignUp extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 160,
+                top: 140,
                 child: Container(
                   padding: EdgeInsets.only(
                     top: 10,
