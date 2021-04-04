@@ -407,9 +407,20 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   SizedBox(height: 18,),
                   _buildEmail(),
                   SizedBox(height: 18,),
-                  _buildSenha(),
-                  SizedBox(height: 18,),
-                  _buildConfirmaSenha(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: _buildSenha(),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.0),),
+                      Expanded(
+                        flex: 2,
+                        child: _buildConfirmaSenha(),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -455,7 +466,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
             ),
           ],
         ),
-        SizedBox(height: 20.0,),
+        SizedBox(height: 10.0,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
