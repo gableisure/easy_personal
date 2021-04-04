@@ -1,13 +1,11 @@
-import 'dart:convert';
+import 'package:app_front/api/apiSingUpTeacher.dart';
 import 'package:app_front/widgets/buttons/buttonAvancarSingUp.dart';
-import 'package:app_front/models/Usuario.dart';
 import 'package:app_front/widgets/buttons/buttonCadastrarSingUp.dart';
 import 'package:app_front/widgets/buttons/buttonVoltarSingUp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpTeacher extends StatefulWidget {
   @override
@@ -29,22 +27,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   String telefone;
   String descricao;
 
-  Usuario usuario = new Usuario();
 
-  var userObject = {
-    "vhr_email": "gabriel@adm.comt",
-    "vhr_senha": "admin123",
-    "passwordConfirm": "admin123",
-    "vhr_nome": "Gabriel",
-    "vhr_sobrenome": "Ribeiro",
-    "dtt_nascimento": "15/10/1997",
-    "int_genero": 0,
-    "vhr_whatsapp": "61983556698",
-    "int_tipo": 1,
-    "num_altura": "190",
-    "num_peso": "90",
-    "vhr_descricao": "dsadadas"
-  };
+  var userObject = {};
 
   // controllers dos text form field
   /*
@@ -64,35 +48,6 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
 
-  final uri = "10.0.2.2:3000";
-  var usersData = [];
-
-  Future reqPost() async {
-    http.Response response = await http.post(
-      Uri.http(uri, "/api/v1/usuarios/signup"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        "token_professor": "d84e384f4971",
-        "vhr_email": "gabriel@adm.comt",
-        "vhr_senha": "admin123",
-        "passwordConfirm": "admin123",
-        "vhr_nome": "Gabriel",
-        "vhr_sobrenome": "Ribeiro",
-        "dtt_nascimento": "02/10/1995",
-        "int_genero": 0,
-        "vhr_whatsapp": "61982524117",
-        "int_tipo": 0,
-        "num_altura": "167",
-        "num_peso": "68.5",
-        "vhr_descricao": "dsadadas"
-      }),
-    );
-    if(response.statusCode == 200) print("Status Code: ${response.statusCode}");
-    else print(response.statusCode);
-
-  }
 
   // widgets
   // nome
@@ -117,7 +72,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_nome = value;
+        userObject['vhr_nome'] = value;
       },
     );
   }
@@ -144,7 +99,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_sobrenome = value;
+        userObject['vhr_sobrenome'] = value;
       },
     );
   }
@@ -174,7 +129,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_email = value;
+        //usuario.vhr_email = value;
+        userObject['vhr_email'] = value;
       },
     );
   }
@@ -202,7 +158,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_senha = value;
+        userObject['vhr_senha'] = value;
       },
     );
   }
@@ -233,7 +189,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_senha = value;
+        userObject['passwordConfirm'] = value;
       },
     );
   }
@@ -264,7 +220,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.dtt_nascimento = value;
+        userObject['dtt_nascimento'] = value;
       },
     );
   }
@@ -296,7 +252,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_whatsapp = value;
+        userObject['vhr_whatsapp'] = value;
       },
     );
   }
@@ -323,7 +279,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        usuario.vhr_cref = value;
+        userObject['vhr_cref'] = value;
       },
     );
   }
@@ -359,11 +315,11 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         },
         onChanged: (String value) {
           setState(() {
-            usuario.int_genero = int.parse(value);
+            userObject['int_genero'] = value;
           });
         },
         onSaved: (String value) {
-          genero = value;
+          userObject['int_genero'] = value;
         },
       );
   }
@@ -392,7 +348,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-
+        userObject['vhr_descricao'] = value;
       },
     );
   }
@@ -557,25 +513,55 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               ),
             if(_index == 2)
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if(!_formKey3.currentState.validate()) {
                     return;
                   } else {
                     _formKey.currentState.save();
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
-                    /*
-                    * TODO: Implementar cadastro do usuário pela API
-                     */
-                    // Usuario.fromJson();
-                    // print(usuario.dtt_nascimento);
-                    // reqPost().then((value) {
-                    //   null
-                    // }).catchError((err) => {
-                    //
-                    // });
 
-                    // print("[DEBUG]: ${usuario.fromJson()}");
+                    if(userObject['int_genero'] == "Masculino") userObject['int_genero'] = 0;
+                    else if (userObject['int_genero'] == "Feminino") userObject['int_genero'] = 1;
+                    else userObject['int_genero'] = 2;
+
+                    userObject['int_tipo'] = 1;
+
+                    var response = await APISingUpTeacher().singUp(
+                      userObject['vhr_email'],
+                      userObject['vhr_senha'],
+                      userObject['passwordConfirm'],
+                      userObject['vhr_nome'],
+                      userObject['vhr_sobrenome'],
+                      userObject['dtt_nascimento'],
+                      userObject['int_genero'],
+                      userObject['vhr_whatsapp'],
+                      userObject['int_tipo'],
+                      userObject['vhr_cref'],
+                      userObject['vhr_descricao'],
+                    );
+                    print("Response Token: ${response.token}");
+
+                    if(response.token != null) {
+                      SnackBar snackbar = new SnackBar(
+                        content: Text(
+                          "Professor cadastrado com sucesso",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.green[600],
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      Navigator.of(context).pushReplacementNamed("/login");
+                    } else {
+                      SnackBar snackbar = new SnackBar(
+                        content: Text(
+                          "Outro erro!!!",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.red[600],
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    }
                   }
                 },
                 child: ButtonCadastrarSingUp(labelButton: "Cadastrar"),
