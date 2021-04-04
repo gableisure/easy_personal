@@ -143,7 +143,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               } 
               _formKey.currentState.save();
               var response = await APILogin().login(email, senha);
-
+              print("${response}");
               if(response.token != null) {
                 SnackBar snackbar = new SnackBar(
                   content: Text(

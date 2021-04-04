@@ -26,6 +26,7 @@ class SignUp extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
+
               end: Alignment.bottomCenter,
               stops: [0.1, 0.4],
               colors: [
