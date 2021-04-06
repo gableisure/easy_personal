@@ -1,3 +1,4 @@
+import 'package:app_front/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatelessWidget {
@@ -37,6 +38,7 @@ class TabBarWidget extends StatelessWidget {
         elevation: 20,
         titleSpacing: 20,
       ),
+      drawer: SideMenu(),
       body: TabBarView(children: children),
     ),
   );
