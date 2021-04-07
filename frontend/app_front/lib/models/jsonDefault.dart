@@ -1,11 +1,11 @@
-class UserLogin {
+class JsonDefault {
   String status;
   String data;
   String token;
 
-  UserLogin({this.status, this.data, this.token});
+  JsonDefault({this.status, this.data, this.token});
 
-  UserLogin.fromJson(Map<String, dynamic> json) {
+  JsonDefault.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'];
     token = json['token'];
