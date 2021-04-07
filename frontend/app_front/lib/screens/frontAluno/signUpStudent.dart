@@ -1,3 +1,5 @@
+import 'package:app_front/api/apiSingUpStudent.dart';
+import 'package:app_front/widgets/buttons/buttonAvancarSingUp.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
@@ -10,25 +12,50 @@ class SignUpStudent extends StatefulWidget {
 }
 
 class _StateSignUpStudent extends State<SignUpStudent> {
-  //váriaveis
+  // váriaveis
   int _index = 0;
-  String nome;
-  String sobrenome;
-  String email;
-  String senha;
-  String peso;
-  String altura;
   String genero;
-  String dataNascimento;
-  String telefone;
-  String descricao;
-  //chaves paras os forms
+
+
+  var _userObject = {};
+
+  // controllers dos text form field
+  final _senhaController = TextEditingController();
+
+  // chaves para os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
 
   //Widgets
-  //Nome
+  // token
+  Widget _buildToken() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.vpn_key_outlined),
+        labelText: "Token do Professor",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Token Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userObject['token_professor'] = value;
+      },
+    );
+  }
+
+  // nome
   Widget _buildNome() {
     return TextFormField(
       keyboardType: TextInputType.name,
@@ -50,11 +77,12 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        nome = value;
+        _userObject['vhr_nome'] = value;
       },
     );
   }
-  //sobrenome
+
+  // sobrenome
   Widget _buildSobrenome() {
     return TextFormField(
       keyboardType: TextInputType.name,
@@ -76,11 +104,12 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        sobrenome = value;
+        _userObject['vhr_sobrenome'] = value;
       },
     );
   }
-  //E-mail
+
+  // e-mail
   Widget _buildEmail() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -105,13 +134,15 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        email = value;
+        _userObject['vhr_email'] = value;
       },
     );
   }
-  //senha
+
+  // senha
   Widget _buildSenha() {
     return TextFormField(
+      controller: _senhaController,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       decoration: InputDecoration(
@@ -132,11 +163,106 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        senha = value;
+        _userObject['vhr_senha'] = value;
       },
     );
   }
-  //peso
+
+  // confirma senha
+  Widget _buildConfirmaSenha() {
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.vpn_key_rounded),
+        labelText: "Confirmar senha",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Confirmação de senha obrigatória";
+        }
+        if(value != _senhaController.text) {
+          return "As senhas não coincidem";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userObject['passwordConfirm'] = value;
+      },
+    );
+  }
+
+  // data de nascimento
+  Widget _buildDataNascimento() {
+    return TextFormField(
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        DataInputFormatter(),
+      ],
+      keyboardType: TextInputType.datetime,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.date_range_rounded),
+        labelText: "Data de Nascimento",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Data de Nascimento Obrigatória";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userObject['dtt_nascimento'] = value;
+      },
+    );
+  }
+
+  // telefone
+  Widget _buildTelefone() {
+    return TextFormField(
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        TelefoneInputFormatter(),
+      ],
+      keyboardType: TextInputType.phone,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.phone),
+        hintText: "(##) 9####-####",
+        labelText: "Telefone WhatsApp",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Telefone Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userObject['vhr_whatsapp'] = value;
+      },
+    );
+  }
+
+  // peso
   Widget _buildPeso() {
     return TextFormField(
       inputFormatters: [
@@ -162,11 +288,12 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        peso = value;
+        _userObject['num_peso'] = value;
       },
     );
   }
-  //altura
+
+  // altura
   Widget _buildAltura() {
     return TextFormField(
       inputFormatters: [
@@ -192,13 +319,14 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        altura = value;
+        _userObject['num_altura'] = value;
       },
     );
   }
-  //genero
+
+  // gênero
   Widget _buildGenero() {
-    var _list = ["Masculino", " Femenino", "Indefinido", ""];
+    var _list = ["Masculino", "Feminino", "Indefinido"];
     return DropdownButtonFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -228,77 +356,17 @@ class _StateSignUpStudent extends State<SignUpStudent> {
       },
       onChanged: (String value) {
         setState(() {
-          genero = value;
+          _userObject['int_genero'] = value;
         });
       },
 
       onSaved: (String value) {
-        genero = value;
+        _userObject['int_genero'] = value;
       },
     );
   }
-  //Data de Nascimento
-  Widget _buildDataNascimento() {
-    return TextFormField(
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        DataInputFormatter(),
-      ],
-      keyboardType: TextInputType.datetime,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25),),
-        ),
-        prefixIcon: Icon(Icons.date_range_rounded),
-        labelText: "Data de Nascimento",
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-        ),
-      ),
-      validator: (String value) {
-        if(value.isEmpty) {
-          return "Data de Nascimento Obrigatória";
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        dataNascimento = value;
-      },
-    );
-  }
-  //Telefone
-  Widget _buildTelefone() {
-    return TextFormField(
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        TelefoneInputFormatter(),
-      ],
-      keyboardType: TextInputType.phone,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25),),
-        ),
-        prefixIcon: Icon(Icons.phone),
-        hintText: "(##) 9####-####",
-        labelText: "Telefone WhatsApp",
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-        ),
-      ),
-      validator: (String value) {
-        if(value.isEmpty) {
-          return "Telefone Obrigatório";
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        telefone = value;
-      },
-    );
-  }
-  //Descrição
+
+  // Ddscrição
   Widget _buildDescricao() {
     return TextFormField(
       keyboardType: TextInputType.multiline,
@@ -322,7 +390,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
         return null;
       },
       onSaved: (String value) {
-        descricao = value;
+        _userObject['vhr_descricao'] = value;
       },
     );
   }
@@ -331,6 +399,14 @@ class _StateSignUpStudent extends State<SignUpStudent> {
     setState(() {
       _index = newIndex;
     });
+  }
+
+  _defineUserObject() {
+    if(_userObject['int_genero'] == "Masculino") _userObject['int_genero'] = 0;
+    else if (_userObject['int_genero'] == "Feminino") _userObject['int_genero'] = 1;
+    else _userObject['int_genero'] = 2;
+
+    _userObject['int_tipo'] = 1;
   }
 
   @override
@@ -353,6 +429,8 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                     ),
                   ),
                   SizedBox(height: 13,),
+                  _buildToken(),
+                  SizedBox(height: 13,),
                   _buildNome(),
                   SizedBox(height: 18,),
                   _buildSobrenome(),
@@ -360,6 +438,8 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                   _buildEmail(),
                   SizedBox(height: 18,),
                   _buildSenha(),
+                  SizedBox(height: 18,),
+                  _buildConfirmaSenha(),
                 ],
               ),
             ),
@@ -445,7 +525,12 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                   _switchInputField(_index + 1);
                 }
               },
-              child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              ),
+              // Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              // ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
@@ -474,13 +559,51 @@ class _StateSignUpStudent extends State<SignUpStudent> {
               ),
             if(_index == 2)
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if(!_formKey3.currentState.validate()) {
                     return;
                   } else {
                     _formKey.currentState.save();
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
+                    _defineUserObject();
+
+                    var response = await APISingUpStudent().singUp(
+                      _userObject['vhr_email'],
+                      _userObject['vhr_senha'],
+                      _userObject['passwordConfirm'],
+                      _userObject['vhr_nome'],
+                      _userObject['vhr_sobrenome'],
+                      _userObject['dtt_nascimento'],
+                      _userObject['int_genero'],
+                      _userObject['vhr_whatsapp'],
+                      _userObject['int_tipo'],
+                      _userObject['vhr_descricao'],
+                      _userObject['num_altura'],
+                      _userObject['num_peso'],
+                      _userObject['token_professor']
+                    );
+
+                    if(response.token != null) {
+                      SnackBar snackbar = new SnackBar(
+                        content: Text(
+                          "Aluno cadastrado com sucesso",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.green[600],
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      Navigator.of(context).pushReplacementNamed("/login");
+                    } else {
+                      SnackBar snackbar = new SnackBar(
+                        content: Text(
+                          "Outro erro!!!",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.red[600],
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    }
                   }
                 },
                 child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),

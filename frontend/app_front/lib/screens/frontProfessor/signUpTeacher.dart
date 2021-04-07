@@ -15,33 +15,15 @@ class SignUpTeacher extends StatefulWidget {
 }
 
 class _StateSignUpTeacher extends State<SignUpTeacher> {
-  //váriaveis
+  // váriaveis
   int _index = 0;
-  String nome;
-  String sobrenome;
-  String email;
-  String senha;
-  String cref;
   String genero;
-  String dataNascimento;
-  String telefone;
-  String descricao;
 
 
-  var userObject = {};
+  var _userObject = {};
 
   // controllers dos text form field
-  /*
-  *   TODO: analisar uso dos controllers
-  * */
-  // final _nomeController = TextEditingController();
-  // final _sobrenomeController = TextEditingController();
-  // final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
-  // final _dataNascimentoController = TextEditingController();
-  // final _telefoneController = TextEditingController();
-  // final _crefController = TextEditingController();
-  // final _generoController = TextEditingController();
 
   // chaves para os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -72,7 +54,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_nome'] = value;
+        _userObject['vhr_nome'] = value;
       },
     );
   }
@@ -99,7 +81,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_sobrenome'] = value;
+        _userObject['vhr_sobrenome'] = value;
       },
     );
   }
@@ -129,11 +111,11 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        //usuario.vhr_email = value;
-        userObject['vhr_email'] = value;
+        _userObject['vhr_email'] = value;
       },
     );
   }
+
   // senha
   Widget _buildSenha() {
     return TextFormField(
@@ -158,7 +140,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_senha'] = value;
+        _userObject['vhr_senha'] = value;
       },
     );
   }
@@ -189,7 +171,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['passwordConfirm'] = value;
+        _userObject['passwordConfirm'] = value;
       },
     );
   }
@@ -220,7 +202,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['dtt_nascimento'] = value;
+        _userObject['dtt_nascimento'] = value;
       },
     );
   }
@@ -252,7 +234,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_whatsapp'] = value;
+        _userObject['vhr_whatsapp'] = value;
       },
     );
   }
@@ -279,7 +261,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_cref'] = value;
+        _userObject['vhr_cref'] = value;
       },
     );
   }
@@ -315,11 +297,11 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         },
         onChanged: (String value) {
           setState(() {
-            userObject['int_genero'] = value;
+            _userObject['int_genero'] = value;
           });
         },
         onSaved: (String value) {
-          userObject['int_genero'] = value;
+          _userObject['int_genero'] = value;
         },
       );
   }
@@ -348,7 +330,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         return null;
       },
       onSaved: (String value) {
-        userObject['vhr_descricao'] = value;
+        _userObject['vhr_descricao'] = value;
       },
     );
   }
@@ -359,26 +341,12 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
     });
   }
 
-  Widget _buildButtonAvancar() {
-    return Padding(
-        padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 8.0),
-        child: Row(
-            children: [
-              Text(
-                "Avançar",
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Color(0xFFFFFFFF),
-                ),
-              ),
-              SizedBox( width: 5.0, ),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 25.0,
-              ),
-            ]
-        ),
-    );
+  _defineUserObject() {
+    if(_userObject['int_genero'] == "Masculino") _userObject['int_genero'] = 0;
+    else if (_userObject['int_genero'] == "Feminino") _userObject['int_genero'] = 1;
+    else _userObject['int_genero'] = 2;
+
+    _userObject['int_tipo'] = 1;
   }
 
   @override
@@ -532,26 +500,21 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
 
-                    if(userObject['int_genero'] == "Masculino") userObject['int_genero'] = 0;
-                    else if (userObject['int_genero'] == "Feminino") userObject['int_genero'] = 1;
-                    else userObject['int_genero'] = 2;
-
-                    userObject['int_tipo'] = 1;
+                    _defineUserObject();
 
                     var response = await APISingUpTeacher().singUp(
-                      userObject['vhr_email'],
-                      userObject['vhr_senha'],
-                      userObject['passwordConfirm'],
-                      userObject['vhr_nome'],
-                      userObject['vhr_sobrenome'],
-                      userObject['dtt_nascimento'],
-                      userObject['int_genero'],
-                      userObject['vhr_whatsapp'],
-                      userObject['int_tipo'],
-                      userObject['vhr_cref'],
-                      userObject['vhr_descricao'],
+                      _userObject['vhr_email'],
+                      _userObject['vhr_senha'],
+                      _userObject['passwordConfirm'],
+                      _userObject['vhr_nome'],
+                      _userObject['vhr_sobrenome'],
+                      _userObject['dtt_nascimento'],
+                      _userObject['int_genero'],
+                      _userObject['vhr_whatsapp'],
+                      _userObject['int_tipo'],
+                      _userObject['vhr_cref'],
+                      _userObject['vhr_descricao'],
                     );
-                    print("Response Token: ${response.token}");
 
                     if(response.token != null) {
                       SnackBar snackbar = new SnackBar(
