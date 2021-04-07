@@ -27,16 +27,15 @@ class APISingUpStudent {
       print("${response.statusCode}");
       print("${response.body}");
       return JsonDefault.fromJson(json.decode(response.body));
-    } else if(response.statusCode == 401){
+    } else if(response.statusCode == 500){
       print("${response.statusCode}");
       print("${response.body}");
       return JsonDefault.fromJson(json.decode(response.body));
     } else {
       print("FAIL: ${response.statusCode}");
       print("FAIL: ${response.body}");
-      return null;//throw Exception("Falha no carregamento dos dados!!!!");
+      return JsonDefault.fromJson(json.decode(response.body));
+      //throw Exception("Falha no carregamento dos dados!!!!");
     }
-
-
   }
 }

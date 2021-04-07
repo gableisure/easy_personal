@@ -1,5 +1,7 @@
 import 'package:app_front/api/apiSingUpStudent.dart';
 import 'package:app_front/widgets/buttons/buttonAvancarSingUp.dart';
+import 'package:app_front/widgets/buttons/buttonCadastrarSingUp.dart';
+import 'package:app_front/widgets/buttons/buttonVoltarSingUp.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
@@ -26,12 +28,13 @@ class _StateSignUpStudent extends State<SignUpStudent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyToken = GlobalKey<FormState>();
 
   //Widgets
   // token
   Widget _buildToken() {
     return TextFormField(
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -265,10 +268,10 @@ class _StateSignUpStudent extends State<SignUpStudent> {
   // peso
   Widget _buildPeso() {
     return TextFormField(
-      inputFormatters: [
+      /*inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         PesoInputFormatter(),
-      ],
+      ],*/
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -296,10 +299,10 @@ class _StateSignUpStudent extends State<SignUpStudent> {
   // altura
   Widget _buildAltura() {
     return TextFormField(
-      inputFormatters: [
+      /*inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         AlturaInputFormatter(),
-      ],
+      ],*/
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -406,7 +409,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
     else if (_userObject['int_genero'] == "Feminino") _userObject['int_genero'] = 1;
     else _userObject['int_genero'] = 2;
 
-    _userObject['int_tipo'] = 1;
+    _userObject['int_tipo'] = 0;
   }
 
   @override
@@ -417,11 +420,39 @@ class _StateSignUpStudent extends State<SignUpStudent> {
           index: _index,
           children: <Widget>[
             Form(
+              key: _formKeyToken,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 40,),
+                  Text(
+                    "Passo 1 de 4",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Color(0xFF0073B7),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Text(
+                    "Qual a identificação do seu professor?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Colors.blueGrey[900],
+                    ),
+                  ),
+                  SizedBox(height: 35,),
+                  _buildToken(),
+                ],
+              ),
+            ),
+            Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
                   Text(
-                    "PASSO 1 DE 3",
+                    "PASSO 2 DE 4",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -429,17 +460,26 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                     ),
                   ),
                   SizedBox(height: 13,),
-                  _buildToken(),
-                  SizedBox(height: 13,),
                   _buildNome(),
                   SizedBox(height: 18,),
                   _buildSobrenome(),
                   SizedBox(height: 18,),
                   _buildEmail(),
                   SizedBox(height: 18,),
-                  _buildSenha(),
-                  SizedBox(height: 18,),
-                  _buildConfirmaSenha(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: _buildSenha(),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.0),),
+                      Expanded(
+                        flex: 2,
+                        child: _buildConfirmaSenha(),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -448,7 +488,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "PASSO 2 DE 3",
+                    "PASSO 3 DE 4",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -484,7 +524,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "PASSO 3 DE 3",
+                    "PASSO 4 DE 4",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -507,7 +547,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
               onPressed: () {
                 _switchInputField(_index - 1);
               },
-              child: Text("RETORNAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
+              child: ButtonVoltarSingUp(labelButton: "Voltar", iconButton: Icon( Icons.chevron_left_outlined ),),
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
@@ -519,16 +559,13 @@ class _StateSignUpStudent extends State<SignUpStudent> {
             _index == 0
                 ? ElevatedButton(
               onPressed: () {
-                if(!_formKey.currentState.validate()) {
+                if(!_formKeyToken.currentState.validate()) {
                   return;
                 } else {
                   _switchInputField(_index + 1);
                 }
               },
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
-                child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
-              ),
+              child:  ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
               // Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF)),),
               // ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
               style: ElevatedButton.styleFrom(
@@ -542,13 +579,13 @@ class _StateSignUpStudent extends State<SignUpStudent> {
             if(_index == 1)
               ElevatedButton(
                 onPressed: () {
-                  if(!_formKey2.currentState.validate()) {
+                  if(!_formKey.currentState.validate()) {
                     return;
                   } else {
                     _switchInputField(_index + 1);
                   }
                 },
-                child: Text("CONTINUAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
+                child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue,
                   shape: new RoundedRectangleBorder(
@@ -560,34 +597,53 @@ class _StateSignUpStudent extends State<SignUpStudent> {
             if(_index == 2)
               ElevatedButton(
                 onPressed: () async {
+                  if(!_formKey2.currentState.validate()) {
+                    return;
+                  } else {
+                    _switchInputField(_index + 1);
+                  }
+                },
+                child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25),),
+                  ),
+                  elevation: 10,
+                ),
+              ),
+            if(_index == 3)
+              ElevatedButton(
+                onPressed: () async {
                   if(!_formKey3.currentState.validate()) {
                     return;
                   } else {
                     _formKey.currentState.save();
                     _formKey2.currentState.save();
                     _formKey3.currentState.save();
+                    _formKeyToken.currentState.save();
                     _defineUserObject();
 
                     var response = await APISingUpStudent().singUp(
-                      _userObject['vhr_email'],
-                      _userObject['vhr_senha'],
-                      _userObject['passwordConfirm'],
-                      _userObject['vhr_nome'],
-                      _userObject['vhr_sobrenome'],
-                      _userObject['dtt_nascimento'],
-                      _userObject['int_genero'],
-                      _userObject['vhr_whatsapp'],
-                      _userObject['int_tipo'],
-                      _userObject['vhr_descricao'],
-                      _userObject['num_altura'],
-                      _userObject['num_peso'],
-                      _userObject['token_professor']
+                        _userObject['vhr_email'],
+                        _userObject['vhr_senha'],
+                        _userObject['passwordConfirm'],
+                        _userObject['vhr_nome'],
+                        _userObject['vhr_sobrenome'],
+                        _userObject['dtt_nascimento'],
+                        _userObject['int_genero'],
+                        _userObject['vhr_whatsapp'],
+                        _userObject['int_tipo'],
+                        _userObject['vhr_descricao'],
+                        _userObject['num_altura'],
+                        _userObject['num_peso'],
+                        _userObject['token_professor']
                     );
-
+                    //verificando usuário
                     if(response.token != null) {
                       SnackBar snackbar = new SnackBar(
                         content: Text(
-                          "Aluno cadastrado com sucesso",
+                          "Aluno(a) cadastrado com sucesso",
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         backgroundColor: Colors.green[600],
@@ -597,7 +653,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                     } else {
                       SnackBar snackbar = new SnackBar(
                         content: Text(
-                          "Outro erro!!!",
+                          "OPS, ${response.message}",
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         backgroundColor: Colors.red[600],
@@ -606,14 +662,14 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                     }
                   }
                 },
-                child: Text("CADASTRAR", style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF),),),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.lightBlue,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25),),
+                child:  ButtonCadastrarSingUp(labelButton: "Cadastrar"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightBlue,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25),),
+                    ),
+                    elevation: 10,
                   ),
-                  elevation: 10,
-                ),
               ),
           ],
         ),
