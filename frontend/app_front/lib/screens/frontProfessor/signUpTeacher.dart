@@ -529,7 +529,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                     } else {
                       SnackBar snackbar = new SnackBar(
                         content: Text(
-                          "Outro erro!!!",
+                          "Ops, ${response.message}",
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         backgroundColor: Colors.red[600],
@@ -552,5 +552,4 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       ],
     );
   }
-
 }

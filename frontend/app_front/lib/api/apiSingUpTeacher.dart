@@ -32,7 +32,8 @@ class APISingUpTeacher {
     } else {
       print("FAIL: ${response.statusCode}");
       print("FAIL: ${response.body}");
-      return null;//throw Exception("Falha no carregamento dos dados!!!!");
+      return JsonDefault.fromJson(json.decode(response.body));
+      //return null;//throw Exception("Falha no carregamento dos dados!!!!");
     }
 
 
