@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app_front/models/jsonDefault.dart';
 import 'package:http/http.dart' as http;
 
-class APILogin {
+class APILoginStudent {
   Future<JsonDefault> login(String email, String password) async {
     String url = "10.0.2.2:3000";
 

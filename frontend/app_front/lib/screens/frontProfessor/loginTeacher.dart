@@ -1,4 +1,5 @@
-import 'package:app_front/api/apiLogin.dart';
+import 'package:app_front/api/apiLoginStudent.dart';
+import 'package:app_front/api/apiLoginTeacher.dart';
 import 'package:flutter/material.dart';
 
 class LoginTeacher extends StatefulWidget {
@@ -140,9 +141,11 @@ class _StateLoginTeacher extends State<LoginTeacher> {
 
               if(!_formKey.currentState.validate()) {
                 return;
-              } 
+              }
+
               _formKey.currentState.save();
-              var response = await APILogin().login(email, senha);
+
+              var response = await APILoginTeacher().login(email, senha);
               print("${response}");
               if(response.token != null) {
                 SnackBar snackbar = new SnackBar(
