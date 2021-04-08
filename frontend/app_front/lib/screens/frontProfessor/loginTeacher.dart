@@ -163,7 +163,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                   print(response.data);
                   Navigator.of(context).pushReplacementNamed(
-                      "/pageMainStudent");
+                      "/pageMainTeacher");
                 } else {
                   SnackBar snackbar = new SnackBar(
                     content: Text(
