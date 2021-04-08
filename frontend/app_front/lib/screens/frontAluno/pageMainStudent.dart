@@ -19,7 +19,7 @@ class _PageMainStudentState extends State<PageMainStudent> {
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
-    title: 'Easy',
+    title: 'Easy Personal',
     tabs: [
       Tab(icon: Icon(Icons.fitness_center), text: 'Treinos'),
       Tab(icon: Icon(Icons.announcement), text: 'Feedback'),
