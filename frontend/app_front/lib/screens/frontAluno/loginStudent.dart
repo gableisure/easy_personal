@@ -1,4 +1,6 @@
-import 'package:app_front/api/apiLogin.dart';
+import 'package:app_front/api/apiGetStudents.dart';
+import 'package:app_front/api/apiLoginStudent.dart';
+import 'package:app_front/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class LoginStudent extends StatefulWidget {
@@ -141,20 +143,33 @@ class _StateLoginStudent extends State<LoginStudent> {
                 return;
               }
               _formKey.currentState.save();
-              var response =  await APILogin().login(email, senha);
+              var listStudents = await APIGetStudents().getAllStudents();
+              var users = listStudents.data;
 
-              if(response.token != null) {
-                SnackBar snackbar = new SnackBar(
-                  content: Text(
-                    "Usuário Logado com Sucesso!!",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  backgroundColor: Colors.green[600],
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                print(response.data);
-                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
-              } else {
+              if(Helpers().isStudent(users, email)) {
+                var response =  await APILoginStudent().login(email, senha);
+                if(response.token != null) {
+                  SnackBar snackbar = new SnackBar(
+                    content: Text(
+                      "Usuário Logado com Sucesso!!",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    backgroundColor: Colors.green[600],
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  print(response.data);
+                  Navigator.of(context).pushReplacementNamed("/pageMainStudent");
+                } else {
+                  SnackBar snackbar = new SnackBar(
+                    content: Text(
+                      "E-mail ou Senha Inválidos!!",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    backgroundColor: Colors.red[600],
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              }else{
                 SnackBar snackbar = new SnackBar(
                   content: Text(
                     "E-mail ou Senha Inválidos!!",

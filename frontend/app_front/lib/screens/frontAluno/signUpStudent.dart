@@ -653,7 +653,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
                     } else {
                       SnackBar snackbar = new SnackBar(
                         content: Text(
-                          "OPS, ${response.message}",
+                          "E-mail já cadastrado",
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         backgroundColor: Colors.red[600],
