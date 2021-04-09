@@ -147,9 +147,16 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               _formKey.currentState.save();
 
               var listTeachers = await APIGetTeachers().getAllTeachers();
+              var tam = listTeachers.results;
               var users = listTeachers.data;
+              //print("[DEBUG TEACHER]: ${users[16].vhr_email}");
+              print("[DEGUB]: Início do For");
+              for(var user in users) {
+                print("${user.vhr_email}");
+              }
 
               if (Helpers().isTeacher(users, email)) {
+                String token = Helpers().getTokenTeacher(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -162,8 +169,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                   print(response.data);
-                  Navigator.of(context).pushReplacementNamed(
-                      "/pageMainTeacher");
+                  Navigator.of(context).pushReplacementNamed("/pageMainTeacher", arguments: {token: token});
                 } else {
                   SnackBar snackbar = new SnackBar(
                     content: Text(
