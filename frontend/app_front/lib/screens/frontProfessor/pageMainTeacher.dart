@@ -1,34 +1,23 @@
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:http/http.dart' as http;
 
 
 class PageMainTeacher extends StatefulWidget {
+  final String token;
+
+  PageMainTeacher({Key key, @required this.token}) : super(key: key);
+
   @override
   _PageMainTeacherState createState() => _PageMainTeacherState();
+
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  final uri = "api-easy-personal-dsv.herokuapp.com";
   Map data;
   Map alunosData;
-  http.Response response;
 
-  Future<Map> _getAlunos() async {
-    response = await http.get(Uri.https(uri, "/alunos"));
-    return json.decode(response.body);
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _getAlunos().then((map) {
-      print(map);
-    });
-  }
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -50,34 +39,37 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   );
 
   Widget buildAlunos() => Container(
-    color: Color(0XFFF5F5F5),
-    child: Column(
-      children: [
-        Expanded(
-          child: FutureBuilder(
-            future: _getAlunos(),
-            builder: (context, snapshot) {
-              switch(snapshot.connectionState) {
-                case ConnectionState.waiting:
-                case ConnectionState.none:
-                  return Container(
-                    width: 200.0,
-                    height: 200.0,
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 5.0,
-                    ),
-                  );
-                default:
-                  if(snapshot.hasError) return Container();
-                  else return _buildListAlunos(context, snapshot);
-              }
-            },
-          ),
-        ),
-      ]
-    ),
+    // color: Color(0XFFF5F5F5),
+    // child: Column(
+    //   children: [
+    //     Expanded(
+    //       child: FutureBuilder(
+    //         future: _getAlunos(),
+    //         builder: (context, snapshot) {
+    //           switch(snapshot.connectionState) {
+    //             case ConnectionState.waiting:
+    //             case ConnectionState.none:
+    //               return Container(
+    //                 width: 200.0,
+    //                 height: 200.0,
+    //                 alignment: Alignment.center,
+    //                 child: CircularProgressIndicator(
+    //                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+    //                   strokeWidth: 5.0,
+    //                 ),
+    //               );
+    //             default:
+    //               if(snapshot.hasError) return Container();
+    //               else return _buildListAlunos(context, snapshot);
+    //           }
+    //         },
+    //       ),
+    //     ),
+    //   ]
+    // ),
+    child: Center(
+      child: Text("${widget.token}"),
+    )
   );
 
   /*  Funções buildAluno  */
