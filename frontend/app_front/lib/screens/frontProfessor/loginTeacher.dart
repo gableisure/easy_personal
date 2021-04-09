@@ -2,6 +2,8 @@ import 'package:app_front/api/apiGetTeachers.dart';
 import 'package:app_front/api/apiLoginStudent.dart';
 import 'package:app_front/api/apiLoginTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
+import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginTeacher extends StatefulWidget {
@@ -163,7 +165,13 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                   print(response.data);
-                  Navigator.of(context).pushReplacementNamed("/pageMainTeacher", arguments: {token: token});
+                  // Navigator.of(context).pushReplacementNamed("/pageMainTeacher", arguments: {token: token});
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => PageMainTeacher(token: token)
+                      ),
+                  );
                 } else {
                   SnackBar snackbar = new SnackBar(
                     content: Text(
