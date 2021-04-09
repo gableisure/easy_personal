@@ -147,13 +147,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               _formKey.currentState.save();
 
               var listTeachers = await APIGetTeachers().getAllTeachers();
-              var tam = listTeachers.results;
               var users = listTeachers.data;
-              //print("[DEBUG TEACHER]: ${users[16].vhr_email}");
-              print("[DEGUB]: Início do For");
-              for(var user in users) {
-                print("${user.vhr_email}");
-              }
 
               if (Helpers().isTeacher(users, email)) {
                 String token = Helpers().getTokenTeacher(users, email);
