@@ -215,8 +215,6 @@ exports.resetPassword = async (req, res) => {
   if (!user[0] || Date.now() > user[0].expiresin)
     throw new AppError('Token inválido ou expirado!', 400);
 
-  return;
-
   if (!password || !passwordConfirm)
     throw new AppError('Preencha todos os campos.', 400);
 
