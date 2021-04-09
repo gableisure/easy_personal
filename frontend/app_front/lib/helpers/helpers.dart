@@ -19,24 +19,24 @@ class Helpers {
     return res;
   }
 
-  // bool isTeacher(List users, String email) {
-  //   var res;
-  //
-  //   for(var i = 0; i < users.length; ++i) {
-  //     if(users[i].vhr_email == email) {
-  //       if(users[i].int_tipo == 1) {
-  //         print("true");
-  //         res = true;
-  //       }else{
-  //         print("false");
-  //         res = false;
-  //       }
-  //     }else{
-  //       if(!(i > users.length)) continue;
-  //     }
-  //   }
-  //   return res;
-  // }
+  bool isTeacher(List users, String email) {
+    var res;
+
+    for(var i = 0; i < users.length; ++i) {
+      if(users[i].vhr_email == email) {
+        if(users[i].int_tipo == 1) {
+          print("true");
+          res = true;
+        }else{
+          print("false");
+          res = false;
+        }
+      }else{
+        if(!(i > users.length)) continue;
+      }
+    }
+    return res;
+  }
 
 
   String getTokenTeacher(List users, String email) {
