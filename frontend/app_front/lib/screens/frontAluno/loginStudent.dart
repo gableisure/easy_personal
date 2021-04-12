@@ -146,7 +146,7 @@ class _StateLoginStudent extends State<LoginStudent> {
               var listStudents = await APIGetStudents().getAllStudents();
               var users = listStudents.data;
 
-              if(Helpers().isStudent(users, email)) {
+              if(Helpers().isStudent(users, email) != null) {
                 var response =  await APILoginStudent().login(email, senha);
                 if(response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -172,7 +172,7 @@ class _StateLoginStudent extends State<LoginStudent> {
               }else{
                 SnackBar snackbar = new SnackBar(
                   content: Text(
-                    "E-mail ou Senha Inválidos!!",
+                    "Esse Aluno(a) não exite!!",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   backgroundColor: Colors.red[600],
