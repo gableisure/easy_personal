@@ -13,12 +13,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   //delay for page
   startTime() async {
-    var duration = Duration(seconds: 8);
+    var duration = Duration(seconds: 5);
     return Timer(duration, route);
   }
   //route navigation
   route() {
-    Navigator.of(context).pushReplacementNamed("/login");
+    Navigator.of(context).pushReplacementNamed("/listPage");
   }
 
   @override
@@ -33,18 +33,19 @@ class _SplashScreenState extends State<SplashScreen> {
              gradient: LinearGradient(
                begin: Alignment.topCenter,
                end: Alignment.bottomCenter,
-               stops: [0.1, 0.4],
+               stops: [0.1, 0.4, 0.7, 0.9],
                colors: [
-                 Colors.lightBlueAccent, Colors.blueAccent
+                 Color(0xFF3594DD),
+                 Color(0xFF4563DB),
+                 Color(0xFF5036D5),
+                 Color(0xFF5B16D0),
                ]
              ),
            ),
            child: Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: <Widget>[
-               SizedBox(
-                 child: FlutterLogo(size: 160, curve: Curves.fastOutSlowIn,),
-               ),
+               Image.asset("images/2-removebg-preview.png"),
                SizedBox(height: 60,),
                CircularProgressIndicator(
                  backgroundColor: Colors.lightBlue,

@@ -447,7 +447,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               },
               child: ButtonVoltarSingUp(labelButton: "Voltar", iconButton: Icon( Icons.chevron_left_outlined ),),
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue,
+                primary: Color(0xFF4563DB),
                 shape: new RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25),),
                 ),
@@ -465,7 +465,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               },
               child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue,
+                primary: Color(0xFF4563DB),
                 shape: new RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25),),
                 ),
@@ -483,7 +483,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                 },
                 child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightBlue,
+                  primary: Color(0xFF4563DB),
                   shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25),),
                   ),
@@ -540,7 +540,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                 },
                 child: ButtonCadastrarSingUp(labelButton: "Cadastrar"),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightBlue,
+                  primary: Color(0xFF4563DB),
                   shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25),),
                   ),

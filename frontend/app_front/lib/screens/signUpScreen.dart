@@ -7,17 +7,6 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      /*appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded, color: Colors.white,),
-          onPressed: () => Navigator.of(context).pushReplacementNamed("/login"),
-        ),
-        title: Text("Criar Nova Conta"),
-        centerTitle: true,
-        titleSpacing: 3.0,
-        backgroundColor: Color(0xFF0073B7),
-        elevation: 50,
-      ),*/
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Container(
@@ -25,12 +14,12 @@ class SignUp extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4],
-              colors: [
-                Colors.lightBlueAccent, Colors.blueAccent
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.1, 0.2],
+                colors: [
+                Color(0xFF3594DD),
+                Color(0xFF4563DB),
               ],
             ),
           ),

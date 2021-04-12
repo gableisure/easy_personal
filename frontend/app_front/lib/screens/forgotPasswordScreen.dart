@@ -16,11 +16,12 @@ class ForgotPassword extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.1, 0.2],
               colors: [
-                Colors.lightBlueAccent, Colors.blueAccent
+                Color(0xFF3594DD),
+                Color(0xFF4563DB),
               ],
             ),
           ),
@@ -36,6 +37,16 @@ class ForgotPassword extends StatelessWidget {
                   ),
                   elevation: 0,
                   backgroundColor: Colors.transparent,
+                ),
+              ),
+              Positioned(
+                left: 40,
+                right: 40,
+                bottom: 390,
+                child: Image.asset(
+                  "images/2-removebg-preview.png",
+                  width: 400,
+                  height: 430,
                 ),
               ),
               Positioned(
@@ -111,7 +122,7 @@ class ForgotPassword extends StatelessWidget {
                           child: SizedBox.expand(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.lightBlue,
+                                primary: Color(0xFF4563DB),
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(25),),
                                 ),

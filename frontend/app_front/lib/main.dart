@@ -6,6 +6,7 @@ import 'screens/loginScreen.dart';
 import 'screens/signUpScreen.dart';
 import 'screens/forgotPasswordScreen.dart';
 import 'screens/splashScreen.dart';
+import 'screens/listPage.dart';
 
 void main() {
   Paint.enableDithering = true;
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         "/forgotPassword": (context) => ForgotPassword(),
         "/pageMainTeacher": (context) => PageMainTeacher(),
         "/pageMainStudent": (context) => PageMainStudent(),
+        "/listPage": (context) => ListPage(),
       },
     );
   }
