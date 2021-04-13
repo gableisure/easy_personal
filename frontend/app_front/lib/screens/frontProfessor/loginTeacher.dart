@@ -151,7 +151,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               var listTeachers = await APIGetTeachers().getAllTeachers();
               var users = listTeachers.data;
 
-              if (Helpers().isTeacher(users, email)) {
+              if (Helpers().isTeacher(users, email) != null) {
                 String token = Helpers().getTokenTeacher(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
@@ -186,7 +186,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               } else {
                 SnackBar snackbar = new SnackBar(
                   content: Text(
-                    "E-mail ou Senha Inválidos!!",
+                    "Esse professor(a) não existe!!",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   backgroundColor: Colors.red[600],
