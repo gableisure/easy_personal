@@ -110,7 +110,7 @@ class _StateLoginStudent extends State<LoginStudent> {
           height: 60,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
+              primary: Color(0xFF4563DB),
               shape: new RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25),),
               ),

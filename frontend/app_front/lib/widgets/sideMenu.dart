@@ -12,18 +12,28 @@ class SideMenu extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Colors.blueAccent,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0.1, 0.2],
+                  colors: [
+                  Color(0xFF3594DD),
+                  Color(0xFF4563DB),
+                ],
+              ),
+            ),
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 Positioned(
-                  //width: MediaQuery.of(context).size.width,
-                  top: MediaQuery.of(context).size.width * 0.10,
-                  left: MediaQuery.of(context).size.width * 0.30,
-                  right: MediaQuery.of(context).size.width * 0.30,
-                  bottom: MediaQuery.of(context).size.width * 1.30,
-                  child: FlutterLogo(
-                    size: 500,
+                  left: 40,
+                  right: 40,
+                  bottom: 390,
+                  child: Image.asset(
+                    "images/2-removebg-preview.png",
+                    width: 400,
+                    height: 430,
                   ),
                 ),
                 Positioned(
@@ -38,34 +48,45 @@ class SideMenu extends StatelessWidget {
                     ),
                     child: ListView(
                       children: <Widget>[
-                        ListTile(
-                          leading: IconButton(icon: Icon(Icons.exit_to_app_rounded),
-                            onPressed: () async {
-                              SharedPreferences.setMockInitialValues({});
-                              SharedPreferences prefs = await SharedPreferences.getInstance();
-                              String key = 'token';
-                              final value = prefs.get(key) ?? 0;
+                       TextButton(
+                          onPressed: () async {
+                            SharedPreferences.setMockInitialValues({});
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            String key = 'token';
+                            final value = prefs.get(key) ?? 0;
 
-                              if(value != '0') {
-                                SnackBar snackbar = new SnackBar(
-                                  content: Text(
-                                    "Usuário Deslogado!!",
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            if(value != '0') {
+                              SnackBar snackbar = new SnackBar(
+                                content: Text(
+                                  "Usuário Deslogado!!",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                                backgroundColor: Colors.green[600],
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                              print("saiu!!!");
+                              Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+                            } else {
+                              print("ERRO!!!!");
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            child: SizedBox.expand(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.exit_to_app_rounded,),
+                                  Padding(padding: EdgeInsets.symmetric(horizontal: 4.0),),
+                                  Text(
+                                    "SAIR",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                  backgroundColor: Colors.green[600],
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                                print("saiu!!!");
-                                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
-                              } else {
-                                print("ERRO!!!!");
-                              }
-                            },),
-                          title: Text(
-                            "Sair",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
+                                ],
+                              ),
                             ),
                           ),
                         ),
