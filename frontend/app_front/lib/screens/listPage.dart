@@ -32,6 +32,7 @@ class _ListPageState extends State<ListPage> {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             ListTile(
               title: Text(
@@ -78,8 +79,8 @@ class _ListPageState extends State<ListPage> {
             bottom: 390,
             child: Image.asset(
               "images/2-removebg-preview.png",
-              width: 400,
-              height: 430,
+              width: MediaQuery.of(context).size.width * .3,
+              height: MediaQuery.of(context).size.height * .6,
             ),
           ),
           Column(
@@ -104,7 +105,7 @@ class _ListPageState extends State<ListPage> {
                 ),
               ),
               Container(
-                width: 400,
+                width: MediaQuery.of(context).size.width * .9,
                 height: 60,
                 padding: EdgeInsets.only(bottom: 10),
                 child: SizedBox.expand(
