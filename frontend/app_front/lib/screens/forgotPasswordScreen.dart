@@ -45,8 +45,8 @@ class ForgotPassword extends StatelessWidget {
                 bottom: 390,
                 child: Image.asset(
                   "images/2-removebg-preview.png",
-                  width: 400,
-                  height: 430,
+                  width: MediaQuery.of(context).size.width * .3,
+                  height: MediaQuery.of(context).size.height * .63 - MediaQuery.of(context).padding.top,
                 ),
               ),
               Positioned(
