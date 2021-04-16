@@ -1,5 +1,4 @@
 import 'package:app_front/api/apiGetTeachers.dart';
-import 'package:app_front/api/apiLoginStudent.dart';
 import 'package:app_front/api/apiLoginTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';

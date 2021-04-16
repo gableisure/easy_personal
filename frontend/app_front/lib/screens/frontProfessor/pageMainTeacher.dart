@@ -1,4 +1,6 @@
+import 'package:app_front/models/Student.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
+import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -14,9 +16,7 @@ class PageMainTeacher extends StatefulWidget {
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  Map data;
-  Map alunosData;
-
+  List alunosData;
 
 
   @override
@@ -38,38 +38,101 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     ],
   );
 
+  // Código antigo
+  // Widget buildAlunos() => Container(
+  //   // color: Color(0XFFF5F5F5),
+  //   // child: Column(
+  //   //   children: [
+  //   //     Expanded(
+  //   //       child: FutureBuilder(
+  //   //         future: _getAlunos(),
+  //   //         builder: (context, snapshot) {
+  //   //           switch(snapshot.connectionState) {
+  //   //             case ConnectionState.waiting:
+  //   //             case ConnectionState.none:
+  //   //               return Container(
+  //   //                 width: 200.0,
+  //   //                 height: 200.0,
+  //   //                 alignment: Alignment.center,
+  //   //                 child: CircularProgressIndicator(
+  //   //                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+  //   //                   strokeWidth: 5.0,
+  //   //                 ),
+  //   //               );
+  //   //             default:
+  //   //               if(snapshot.hasError) return Container();
+  //   //               else return _buildListAlunos(context, snapshot);
+  //   //           }
+  //   //         },
+  //   //       ),
+  //   //     ),
+  //   //   ]
+  //   // ),
+  //   child: Center(
+  //     child: Text("${widget.token}"),
+  //   )
+  // );
+
+  // Future getStudentsForTeacher() async {
+  //   var listStudents = await APIGetStudents().getAllStudents();
+  //   var users = listStudents.data;
+  //   print("[DEBUG: TAM users] ${users[5].vhr_nome}");
+  //   //print("[DEBUG: alunosData] ${alunosData[0]}");
+  //   setState(() {
+  //     alunosData = users;
+  //     print("[DEBUG: alunosData] ${alunosData[0]}");
+  //   });
+  //
+  //   return users;
+  // }
+
+
   Widget buildAlunos() => Container(
-    // color: Color(0XFFF5F5F5),
-    // child: Column(
-    //   children: [
-    //     Expanded(
-    //       child: FutureBuilder(
-    //         future: _getAlunos(),
-    //         builder: (context, snapshot) {
-    //           switch(snapshot.connectionState) {
-    //             case ConnectionState.waiting:
-    //             case ConnectionState.none:
-    //               return Container(
-    //                 width: 200.0,
-    //                 height: 200.0,
-    //                 alignment: Alignment.center,
-    //                 child: CircularProgressIndicator(
-    //                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-    //                   strokeWidth: 5.0,
-    //                 ),
-    //               );
-    //             default:
-    //               if(snapshot.hasError) return Container();
-    //               else return _buildListAlunos(context, snapshot);
-    //           }
-    //         },
-    //       ),
-    //     ),
-    //   ]
-    // ),
-    child: Center(
-      child: Text("${widget.token}"),
-    )
+    child: Column(
+      children: [
+        //Container pesquisa aluno
+        Container(
+          padding: EdgeInsets.only(top: 30.0, right: 10.0, left: 10.0),
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25),),
+              ),
+              suffix: Icon(Icons.search_outlined),
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+
+        // //Container lista de alunos
+        // Container(
+        //   padding: EdgeInsets.only(top: 30.0),
+        //   child: FutureBuilder(
+        //     future: getStudentsForTeacher(),
+        //     builder: (context, snapshot){
+        //       switch(snapshot.connectionState){
+        //         case ConnectionState.waiting:
+        //         case ConnectionState.none:
+        //             return Container(
+        //               width: 200.0,
+        //               height: 200.0,
+        //               alignment: Alignment.center,
+        //               child: CircularProgressIndicator(
+        //                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        //                 strokeWidth: 5.0,
+        //               ),
+        //             );
+        //         default:
+        //             return _buildListAlunos(context, snapshot);
+        //       }
+        //     },
+        //   ),
+        // ),
+      ],
+    ),
   );
 
   /*  Funções buildAluno  */
@@ -86,7 +149,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return ListView.separated(
       padding: EdgeInsets.only(top: 30, left: 10, right: 10),
       separatorBuilder: (context, index) => Divider(),
-      itemCount: alunosData.length,
+      itemCount: snapshot.data.length,
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
