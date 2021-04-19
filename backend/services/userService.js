@@ -13,7 +13,9 @@ exports.getAllStudents = async () => {
   const { rows: users } = await db.query(
     `SELECT * FROM tbl_usuario 
     INNER JOIN tbr_aluno 
-    ON tbr_aluno.int_idfaluno = tbl_usuario.int_idausuario;`
+    ON tbr_aluno.int_idfaluno = tbl_usuario.int_idausuario
+    INNER JOIN user_instructors 
+    ON user_instructors.user_id = tbl_usuario.int_idausuario;`
   );
 
   return users;
@@ -34,6 +36,8 @@ exports.getUser = async req => {
     `SELECT * FROM tbl_usuario 
     LEFT JOIN tbr_aluno 
     ON tbr_aluno.int_idfaluno = tbl_usuario.int_idausuario
+    INNER JOIN user_instructors 
+    ON user_instructors.user_id = tbl_usuario.int_idausuario
     LEFT JOIN tbr_professor 
     ON tbr_professor.int_idfprofessor = tbl_usuario.int_idausuario
     AND tbl_usuario.int_idausuario = $1;`,
