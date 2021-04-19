@@ -18,7 +18,6 @@ class PageMainTeacher extends StatefulWidget {
 class _PageMainTeacherState extends State<PageMainTeacher> {
   List alunosData;
 
-
   @override
   Widget build(BuildContext context) => TabBarWidget(
     title: 'Easy Personal',
