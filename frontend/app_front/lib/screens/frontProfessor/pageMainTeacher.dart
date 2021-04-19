@@ -18,7 +18,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   Map alunosData;
 
 
-
   @override
   Widget build(BuildContext context) => TabBarWidget(
     title: 'Easy Personal',
