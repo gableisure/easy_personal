@@ -151,7 +151,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               var users = listTeachers.data;
 
               if (Helpers().isTeacher(users, email) != null) {
-                String token = Helpers().getTokenTeacher(users, email);
+                int instructorId = Helpers().getIntructorId(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -168,7 +168,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher(token: token)
+                          builder: (context) => PageMainTeacher(instructorId: instructorId)
                       ),
                   );
                 } else {

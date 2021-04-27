@@ -1,4 +1,3 @@
-import 'package:app_front/models/Student.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
 import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +5,9 @@ import 'package:flutter/painting.dart';
 
 
 class PageMainTeacher extends StatefulWidget {
-  final String token;
+  final int instructorId;
 
-  PageMainTeacher({Key key, @required this.token}) : super(key: key);
+  PageMainTeacher({Key key, @required this.instructorId}) : super(key: key);
 
   @override
   _PageMainTeacherState createState() => _PageMainTeacherState();
@@ -39,6 +38,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
+    print(widget.instructorId);
     alunosData = listStudents.data;
     return alunosData;
   }
