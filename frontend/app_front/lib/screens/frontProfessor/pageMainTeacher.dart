@@ -37,54 +37,17 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     ],
   );
 
-  // Código antigo
-  // Widget buildAlunos() => Container(
-  //   // color: Color(0XFFF5F5F5),
-  //   // child: Column(
-  //   //   children: [
-  //   //     Expanded(
-  //   //       child: FutureBuilder(
-  //   //         future: _getAlunos(),
-  //   //         builder: (context, snapshot) {
-  //   //           switch(snapshot.connectionState) {
-  //   //             case ConnectionState.waiting:
-  //   //             case ConnectionState.none:
-  //   //               return Container(
-  //   //                 width: 200.0,
-  //   //                 height: 200.0,
-  //   //                 alignment: Alignment.center,
-  //   //                 child: CircularProgressIndicator(
-  //   //                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-  //   //                   strokeWidth: 5.0,
-  //   //                 ),
-  //   //               );
-  //   //             default:
-  //   //               if(snapshot.hasError) return Container();
-  //   //               else return _buildListAlunos(context, snapshot);
-  //   //           }
-  //   //         },
-  //   //       ),
-  //   //     ),
-  //   //   ]
-  //   // ),
-  //   child: Center(
-  //     child: Text("${widget.token}"),
-  //   )
-  // );
+  Future getStudentsForTeacher() async {
+    var listStudents = await APIGetStudents().getAllStudents();
+    alunosData = listStudents.data;
+    return alunosData;
+  }
 
-  // Future getStudentsForTeacher() async {
-  //   var listStudents = await APIGetStudents().getAllStudents();
-  //   var users = listStudents.data;
-  //   print("[DEBUG: TAM users] ${users[5].vhr_nome}");
-  //   //print("[DEBUG: alunosData] ${alunosData[0]}");
-  //   setState(() {
-  //     alunosData = users;
-  //     print("[DEBUG: alunosData] ${alunosData[0]}");
-  //   });
-  //
-  //   return users;
-  // }
-
+  @override
+  void initState() {
+    super.initState();
+    getStudentsForTeacher();
+  }
 
   Widget buildAlunos() => Container(
     child: Column(
@@ -107,29 +70,42 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
         ),
 
         // //Container lista de alunos
-        // Container(
-        //   padding: EdgeInsets.only(top: 30.0),
-        //   child: FutureBuilder(
-        //     future: getStudentsForTeacher(),
-        //     builder: (context, snapshot){
-        //       switch(snapshot.connectionState){
-        //         case ConnectionState.waiting:
-        //         case ConnectionState.none:
-        //             return Container(
-        //               width: 200.0,
-        //               height: 200.0,
-        //               alignment: Alignment.center,
-        //               child: CircularProgressIndicator(
-        //                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        //                 strokeWidth: 5.0,
-        //               ),
-        //             );
-        //         default:
-        //             return _buildListAlunos(context, snapshot);
-        //       }
-        //     },
-        //   ),
-        // ),
+        Container(
+          padding: EdgeInsets.only(top: 30.0),
+          child: FutureBuilder(
+            future: getStudentsForTeacher(),
+            builder: (context, snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.waiting:
+                case ConnectionState.none:
+                    return Container(
+                      width: 200.0,
+                      height: 200.0,
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        strokeWidth: 5.0,
+                      ),
+                    );
+                default:
+                  if(snapshot.hasError){
+                    return Center(child: Text("Erro ao carregar..."));
+                  } else {
+                    return ListView.builder(
+                      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                      shrinkWrap: true,
+                      itemCount: alunosData.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          "${alunosData[index].vhr_nome}",
+                        );
+                      },
+                    );
+                  }
+              }
+            },
+          ),
+        ),
       ],
     ),
   );
@@ -144,99 +120,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   }
 
-  Widget _buildListAlunos(BuildContext context, AsyncSnapshot snapshot) {
-    return ListView.separated(
-      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-      separatorBuilder: (context, index) => Divider(),
-      itemCount: snapshot.data.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: const Color(0XFFFFFFFF),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Color(0XFFCECECE),
-            ),
-          ),
-          height: 150.0,
-          padding: EdgeInsets.all(5.0),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10.0, top: 5.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      maxRadius: 35.0,
-                      child:
-                      Text(
-                        "${_getIniciais(alunosData[index]["vhr_nome"], alunosData[index]["vhr_sobrenome"])}",
-                        style: TextStyle(
-                          fontSize: 35.0,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-
-                ),
-              ),
-              SizedBox(width: 10,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 15,),
-                  Text(
-                    "${alunosData[index]["vhr_nome"]} ${alunosData[index]["vhr_sobrenome"]}",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 23.0,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0XFF2E2E2E),
-
-                    ),
-                  ),
-                  SizedBox(height: 30,),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.assignment_outlined,
-                          size: 40,
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      TextButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.feedback_outlined,
-                          size: 40,
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      TextButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.face_outlined,
-                          size: 40,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   Widget buildTreinos() => Center(
     child: Text("Texto"),
