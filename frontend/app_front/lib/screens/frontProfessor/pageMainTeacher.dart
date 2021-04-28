@@ -15,7 +15,7 @@ class PageMainTeacher extends StatefulWidget {
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  List alunosData = [];
+  List alunosData;
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -38,21 +38,14 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
-    // alunosData = listStudents.data;
+    alunosData = [];
     for(var aluno in listStudents.data) {
       if(aluno.instructor_id == widget.instructorId) {
         alunosData.add(aluno);
       }
     }
-    print("Alunos: ${alunosData.length}");
     return alunosData;
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getStudentsForTeacher();
-  // }
 
   Widget buildAlunos() => Container(
     child: Column(
@@ -74,15 +67,16 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
           ),
         ),
 
-        // //Container lista de alunos
-        Container(
-          padding: EdgeInsets.only(top: 30.0),
-          child: FutureBuilder(
-            future: getStudentsForTeacher(),
-            builder: (context, snapshot){
-              switch(snapshot.connectionState){
-                case ConnectionState.waiting:
-                case ConnectionState.none:
+        //Container lista de alunos
+        SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(top: 30.0),
+            child: FutureBuilder(
+              future: getStudentsForTeacher(),
+              builder: (context, snapshot){
+                switch(snapshot.connectionState){
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
                     return Container(
                       width: 200.0,
                       height: 200.0,
@@ -92,24 +86,23 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                         strokeWidth: 5.0,
                       ),
                     );
-                default:
-                  if(snapshot.hasError){
-                    print('DEBUG: ${snapshot.hasError}');
-                    return Center(child: Text("Erro ao carregar..."));
-                  } else {
-                    return ListView.builder(
-                      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-                      shrinkWrap: true,
-                      itemCount: alunosData.length,
-                      itemBuilder: (context, index) {
-                        return Text(
-                          "${alunosData[index].vhr_nome}",
-                        );
-                      },
-                    );
-                  }
-              }
-            },
+                  default:
+                    if(snapshot.hasError){
+                      print('DEBUG: ${snapshot.hasError}');
+                      return Center(child: Text("Erro ao carregar..."));
+                    } else {
+                      return ListView.builder(
+                        padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                        shrinkWrap: true,
+                        itemCount: alunosData.length,
+                        itemBuilder: (context, index) {
+                          return Text("${alunosData[index].vhr_nome}");
+                        },
+                      );
+                    }
+                }
+              },
+            ),
           ),
         ),
       ],
@@ -117,14 +110,12 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   );
 
   /*  Funções buildAluno  */
-
   String _getIniciais(String nome, String sobrenome) {
     if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
       return nome[0] + sobrenome[3];
     }
     return nome[0] + sobrenome[0];
   }
-
 
   Widget buildTreinos() => Center(
     child: Text("Texto"),
