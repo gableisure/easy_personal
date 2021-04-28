@@ -15,7 +15,18 @@ class PageMainTeacher extends StatefulWidget {
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  List alunosData = [];
+  List alunosData = [
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+    "Felipe",
+  ];
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -38,93 +49,62 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
-    // alunosData = listStudents.data;
+    alunosData = [];
     for(var aluno in listStudents.data) {
       if(aluno.instructor_id == widget.instructorId) {
         alunosData.add(aluno);
       }
     }
-    print("Alunos: ${alunosData.length}");
     return alunosData;
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getStudentsForTeacher();
-  // }
-
-  Widget buildAlunos() => Container(
-    child: Column(
-      children: [
-        //Container pesquisa aluno
-        Container(
-          padding: EdgeInsets.only(top: 30.0, right: 10.0, left: 10.0),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25),),
+  Widget buildAlunos() => FutureBuilder(
+      future: getStudentsForTeacher(),
+      builder: (context, snapshot) {
+        switch(snapshot.connectionState){
+          case ConnectionState.waiting:
+          case ConnectionState.none:
+            return  Container(
+              width: 200.0,
+              height: 200.0,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                strokeWidth: 5.0,
               ),
-              suffix: Icon(Icons.search_outlined),
-              labelStyle: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 15,
-              ),
-            ),
-          ),
-        ),
-
-        // //Container lista de alunos
-        Container(
-          padding: EdgeInsets.only(top: 30.0),
-          child: FutureBuilder(
-            future: getStudentsForTeacher(),
-            builder: (context, snapshot){
-              switch(snapshot.connectionState){
-                case ConnectionState.waiting:
-                case ConnectionState.none:
-                    return Container(
-                      width: 200.0,
-                      height: 200.0,
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                        strokeWidth: 5.0,
-                      ),
-                    );
-                default:
-                  if(snapshot.hasError){
-                    print('DEBUG: ${snapshot.hasError}');
-                    return Center(child: Text("Erro ao carregar..."));
-                  } else {
-                    return ListView.builder(
-                      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-                      shrinkWrap: true,
-                      itemCount: alunosData.length,
-                      itemBuilder: (context, index) {
-                        return Text(
-                          "${alunosData[index].vhr_nome}",
-                        );
-                      },
-                    );
-                  }
-              }
-            },
-          ),
-        ),
-      ],
-    ),
+            );
+          default:
+            if(snapshot.hasError) {
+              return Center(child: Text("Erro ao carregar..."));
+            }else{
+              return ListView.builder(
+                padding: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                shrinkWrap: true,
+                itemCount: alunosData.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.fromLTRB(10,10,10,0),
+                    height: 200,
+                    width: double.maxFinite,
+                    child: Card(
+                      elevation: 5,
+                      child: Text(alunosData[index].vhr_nome),
+                    ),
+                  );
+                },
+              );
+            }
+        }
+      }
   );
 
   /*  Funções buildAluno  */
-
   String _getIniciais(String nome, String sobrenome) {
     if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
       return nome[0] + sobrenome[3];
     }
     return nome[0] + sobrenome[0];
   }
-
 
   Widget buildTreinos() => Center(
     child: Text("Texto"),
