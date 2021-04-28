@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
 import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +17,8 @@ class PageMainTeacher extends StatefulWidget {
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  List alunosData = [
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-    "Felipe",
-  ];
+  List alunosData;
+
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -46,6 +38,8 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
       buildFinanceiro(),
     ],
   );
+
+
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
@@ -85,10 +79,76 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                   return Container(
                     padding: EdgeInsets.fromLTRB(10,10,10,0),
                     height: 200,
-                    width: double.maxFinite,
                     child: Card(
                       elevation: 5,
-                      child: Text(alunosData[index].vhr_nome),
+                      child: Column(
+                        children: [
+
+                          // nome e avatar
+                          Container(
+                            padding: EdgeInsets.fromLTRB(15,10,15,0),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.grey,
+                                  child: Text(_getIniciais(alunosData[index].vhr_nome, alunosData[index].vhr_sobrenome)),
+                                ),
+                                SizedBox(
+                                  width: 80.0,
+                                ),
+                                Text(
+                                  alunosData[index].vhr_nome + " " + alunosData[index].vhr_sobrenome,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.black12,
+                            thickness: 2,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+
+                          // icones
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                  onPressed: (){},
+                                  iconSize: 50,
+                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
+                                  color: Color(0xff808080),
+                                  icon: Icon(Icons.assignment_outlined)
+                              ),
+                              IconButton(
+                                  onPressed: (){},
+                                  iconSize: 50,
+                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
+                                  color: Color(0xff808080),
+                                  icon: Icon(Icons.feedback_outlined)
+                              ),
+                              IconButton(
+                                  onPressed: (){},
+                                  iconSize: 50,
+                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
+                                  color: Color(0xff808080),
+                                  icon: Icon(Icons.account_circle_outlined)
+                              ),
+                              IconButton(
+                                  onPressed: (){},
+                                  iconSize: 50,
+                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
+                                  color: Color(0xff808080),
+                                  icon: Icon(Icons.phone)
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
