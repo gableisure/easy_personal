@@ -107,7 +107,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                             ),
                           ),
                           Divider(
-                            color: Colors.black12,
+                            color: Colors.black,
                             thickness: 2,
                             indent: 15,
                             endIndent: 15,
@@ -115,14 +115,20 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
                           // icones
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               IconButton(
                                   onPressed: (){},
                                   iconSize: 50,
                                   padding: EdgeInsets.fromLTRB(15,25,15,0),
                                   color: Color(0xff808080),
-                                  icon: Icon(Icons.assignment_outlined)
+                                  icon: Icon(Icons.fitness_center_outlined)
+                              ),
+                              IconButton(
+                                  onPressed: (){},
+                                  iconSize: 50,
+                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
+                                  color: Color(0xff808080),
+                                  icon: Icon(Icons.all_inbox_outlined)
                               ),
                               IconButton(
                                   onPressed: (){},
@@ -137,14 +143,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                   padding: EdgeInsets.fromLTRB(15,25,15,0),
                                   color: Color(0xff808080),
                                   icon: Icon(Icons.account_circle_outlined)
-                              ),
-                              IconButton(
-                                  onPressed: (){},
-                                  iconSize: 50,
-                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
-                                  color: Color(0xff808080),
-                                  icon: Icon(Icons.phone)
-                              ),
+                              )
                             ],
                           ),
                         ],
