@@ -1,5 +1,4 @@
 import 'package:app_front/api/apiGetTeachers.dart';
-import 'package:app_front/api/apiLoginStudent.dart';
 import 'package:app_front/api/apiLoginTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
@@ -81,16 +80,16 @@ class _StateLoginTeacher extends State<LoginTeacher> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-       Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            _buildEmail(),
-            SizedBox(height: 18,),
-            _buildSenha(),
-          ],
+        Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              _buildEmail(),
+              SizedBox(height: 18,),
+              _buildSenha(),
+            ],
+          ),
         ),
-       ),
         SizedBox(height: 13,),
         Container(
           height: 35,
@@ -152,7 +151,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               var users = listTeachers.data;
 
               if (Helpers().isTeacher(users, email) != null) {
-                String token = Helpers().getTokenTeacher(users, email);
+                int instructorId = Helpers().getIntructorId(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -167,10 +166,10 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   print(response.data);
                   // Navigator.of(context).pushReplacementNamed("/pageMainTeacher", arguments: {token: token});
                   Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher(token: token)
-                      ),
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => PageMainTeacher(instructorId: instructorId)
+                    ),
                   );
                 } else {
                   SnackBar snackbar = new SnackBar(
