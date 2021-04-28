@@ -15,7 +15,7 @@ class PageMainTeacher extends StatefulWidget {
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
-  List alunosData;
+  List alunosData = [];
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -38,16 +38,21 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
-    print(widget.instructorId);
-    alunosData = listStudents.data;
+    // alunosData = listStudents.data;
+    for(var aluno in listStudents.data) {
+      if(aluno.instructor_id == widget.instructorId) {
+        alunosData.add(aluno);
+      }
+    }
+    print("Alunos: ${alunosData.length}");
     return alunosData;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getStudentsForTeacher();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getStudentsForTeacher();
+  // }
 
   Widget buildAlunos() => Container(
     child: Column(
@@ -89,6 +94,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                     );
                 default:
                   if(snapshot.hasError){
+                    print('DEBUG: ${snapshot.hasError}');
                     return Center(child: Text("Erro ao carregar..."));
                   } else {
                     return ListView.builder(
@@ -117,7 +123,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
       return nome[0] + sobrenome[3];
     }
     return nome[0] + sobrenome[0];
-
   }
 
 

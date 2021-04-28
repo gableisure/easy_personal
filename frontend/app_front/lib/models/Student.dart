@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Student {
   String status;
   int results;
@@ -39,6 +37,8 @@ class Data {
   String vhr_descricao;
   String num_peso;
   String num_altura;
+  int user_id;
+  int instructor_id;
 
   Data(
       this.int_idausuario,
@@ -54,7 +54,9 @@ class Data {
       this.int_idfaluno,
       this.vhr_descricao,
       this.num_peso,
-      this.num_altura
+      this.num_altura,
+      this.user_id,
+      this.instructor_id
   );
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -73,6 +75,8 @@ class Data {
       json['vhr_descricao'] as String,
       json['num_peso'] as String,
       json['num_altura'] as String,
+      json['user_id'] as int,
+      json['instructor_id'] as int,
     );
   }
 }
