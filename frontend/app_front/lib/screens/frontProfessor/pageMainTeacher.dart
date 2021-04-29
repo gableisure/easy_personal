@@ -150,7 +150,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacementNamed("/treinosAluno");
+                                    },
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
                                     color: Colors.white,
