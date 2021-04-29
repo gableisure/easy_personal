@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
 import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   Widget build(BuildContext context) => TabBarWidget(
     title: 'Easy Personal',
     tabs: [
-      Tab(icon: Icon(Icons.face), text: 'Alunos'),
+      Tab(icon: Icon(Icons.face), text: 'Alunos',),
       Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
       Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
       Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
@@ -55,10 +55,10 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
       builder: (context, snapshot) {
-        switch(snapshot.connectionState){
+        switch (snapshot.connectionState) {
           case ConnectionState.waiting:
           case ConnectionState.none:
-            return  Container(
+            return Container(
               width: 200.0,
               height: 200.0,
               alignment: Alignment.center,
@@ -68,83 +68,113 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
               ),
             );
           default:
-            if(snapshot.hasError) {
+            if (snapshot.hasError) {
               return Center(child: Text("Erro ao carregar..."));
-            }else{
+            } else {
               return ListView.builder(
-                padding: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                padding:
+                    EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
                 shrinkWrap: true,
                 itemCount: alunosData.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.fromLTRB(10,10,10,0),
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 25),
                     height: 200,
-                    child: Card(
-                      elevation: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.8),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          stops: [0.1, 0.8],
+                          colors: [
+                            Color(0xFF3594DD),
+                            Color(0xFF4563DB),
+                          ],
+                        ),
+                      ),
                       child: Column(
                         children: [
 
                           // nome e avatar
                           Container(
-                            padding: EdgeInsets.fromLTRB(15,10,15,0),
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
                             child: Row(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  child: Text(_getIniciais(alunosData[index].vhr_nome, alunosData[index].vhr_sobrenome)),
+                                  backgroundColor: Color(0XFFddd9ce),
+                                  child: Text(_getIniciais(
+                                      alunosData[index].vhr_nome,
+                                      alunosData[index].vhr_sobrenome)),
                                 ),
                                 SizedBox(
-                                  width: 80.0,
+                                  width: 60.0,
                                 ),
                                 Text(
-                                  alunosData[index].vhr_nome + " " + alunosData[index].vhr_sobrenome,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                  alunosData[index].vhr_nome +
+                                      " " +
+                                      alunosData[index].vhr_sobrenome,
+                                  style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  )
                                 ),
                               ],
                             ),
                           ),
+
+                          // Divisor do container
                           Divider(
-                            color: Colors.black,
+                            color: Colors.grey,
                             thickness: 2,
                             indent: 15,
                             endIndent: 15,
                           ),
 
                           // icones
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: (){},
-                                  iconSize: 50,
-                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
-                                  color: Color(0xff808080),
-                                  icon: Icon(Icons.fitness_center_outlined)
-                              ),
-                              IconButton(
-                                  onPressed: (){},
-                                  iconSize: 50,
-                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
-                                  color: Color(0xff808080),
-                                  icon: Icon(Icons.all_inbox_outlined)
-                              ),
-                              IconButton(
-                                  onPressed: (){},
-                                  iconSize: 50,
-                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
-                                  color: Color(0xff808080),
-                                  icon: Icon(Icons.feedback_outlined)
-                              ),
-                              IconButton(
-                                  onPressed: (){},
-                                  iconSize: 50,
-                                  padding: EdgeInsets.fromLTRB(15,25,15,0),
-                                  color: Color(0xff808080),
-                                  icon: Icon(Icons.account_circle_outlined)
-                              )
-                            ],
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                    onPressed: () {},
+                                    iconSize: 50,
+                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+                                    color: Colors.white,
+                                    icon: Icon(Icons.assignment_outlined)),
+                                IconButton(
+                                    onPressed: () {},
+                                    iconSize: 50,
+                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+                                    color: Colors.white,
+                                    icon: Icon(Icons.all_inbox_outlined)),
+                                IconButton(
+                                    onPressed: () {},
+                                    iconSize: 50,
+                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+                                    color: Colors.white,
+                                    icon: Icon(Icons.feedback_outlined)),
+                                IconButton(
+                                    onPressed: () {},
+                                    iconSize: 50,
+                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+                                    color: Colors.white,
+                                    icon: Icon(Icons.account_circle_outlined))
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -154,8 +184,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
               );
             }
         }
-      }
-  );
+      });
 
   /*  Funções buildAluno  */
   String _getIniciais(String nome, String sobrenome) {
