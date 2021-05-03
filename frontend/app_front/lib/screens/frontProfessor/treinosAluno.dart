@@ -1,6 +1,13 @@
+import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TreinosAluno extends StatefulWidget {
+  final int instructorId;
+  final int studentId;
+
+  TreinosAluno({Key key, @required this.instructorId, this.studentId}) : super(key: key);
+
   @override
   _TreinosAlunoState createState() => _TreinosAlunoState();
 }
@@ -121,7 +128,13 @@ class _TreinosAlunoState extends State<TreinosAluno> {
             children: [
               ElevatedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+                  print("[DEBUG ID]: ${widget.instructorId}");
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => PageMainTeacher(instructorId: widget.instructorId)
+                    ),
+                  );
                 },
                 child: Text(
                   "VOLTAR",
