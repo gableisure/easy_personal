@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
 import 'package:app_front/api/apiGetStudents.dart';
@@ -151,7 +153,12 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      Navigator.of(context).pushReplacementNamed("/treinosAluno");
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) => TreinosAluno(instructorId: widget.instructorId, studentId: alunosData[index].int_idausuario)
+                                        ),
+                                      );
                                     },
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
