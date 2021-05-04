@@ -1,3 +1,4 @@
+import 'package:app_front/screens/frontProfessor/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,9 +94,45 @@ class SideMenu extends StatelessWidget {
                       children: <Widget>[
                         TextButton(
                           onPressed: () async {
+                            Navigator.of(context).pushReplacementNamed("/profile");
+                          },
+                          child: Container(
+                            height: 50,
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox.expand(
+                              child: Row(
+                                //mainAxisAlignment: MainAxisAlignment.center,
+                                //CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.account_circle_outlined,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                  ),
+                                  Text(
+                                    "PERFIL",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[100],
+                          thickness: 2,
+                          indent: 5,
+                          endIndent: 5,
+                        ),
+                        TextButton(
+                          onPressed: () async {
                             SharedPreferences.setMockInitialValues({});
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
                             String key = 'token';
                             final value = prefs.get(key) ?? 0;
 
@@ -120,16 +157,18 @@ class SideMenu extends StatelessWidget {
                           },
                           child: Container(
                             height: 50,
+                            alignment: Alignment.centerLeft,
                             child: SizedBox.expand(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                //mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Icon(
                                     Icons.exit_to_app_rounded,
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                    EdgeInsets.symmetric(horizontal: 4.0),
                                   ),
                                   Text(
                                     "SAIR",
