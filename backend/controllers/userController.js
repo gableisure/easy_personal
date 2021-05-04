@@ -48,3 +48,21 @@ exports.addUser = catchAsync(async (req, res, next) => {
     data: 'Usuário criado!',
   });
 });
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  await userServices.deleteUser(req);
+
+  res.status(204).json({
+    status: 'success',
+    data: 'Usuário deletado!',
+  });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  await userServices.updateUser(req);
+
+  res.status(200).json({
+    status: 'success',
+    data: 'Usuário editado!',
+  });
+});
