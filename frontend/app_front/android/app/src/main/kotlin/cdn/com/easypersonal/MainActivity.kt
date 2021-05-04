@@ -1,4 +1,4 @@
-package cdn.com.app_front
+package com.easypersonal
 
 import io.flutter.embedding.android.FlutterActivity
 

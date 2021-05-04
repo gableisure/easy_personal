@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cdn.com.app_front">
+    package="com.easypersonal">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="app_front"
+        android:label="Easy Personal"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
