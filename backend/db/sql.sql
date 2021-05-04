@@ -9,7 +9,7 @@ CREATE TABLE tbl_usuario (
   vhr_whatsapp VARCHAR(20) NOT NULL,
   int_tipo INT NOT NULL,
   changedpasswordat BIGINT DEFAULT NULL,
-  vhr_descricao VARCHAR(120) NOT NULL
+  vhr_descricao VARCHAR(120) DEFAULT NULL
 );
 
 CREATE TABLE tbr_aluno (

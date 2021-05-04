@@ -71,8 +71,8 @@ exports.signup = async (req, res) => {
   // Inserir usuário.
   const { rows: createdUser } = await db.query(
     `
-    INSERT INTO tbl_usuario (vhr_email, vhr_senha, vhr_nome, vhr_sobrenome, dtt_nascimento, int_genero, vhr_whatsapp, int_tipo)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING int_idausuario;`,
+    INSERT INTO tbl_usuario (vhr_email, vhr_senha, vhr_nome, vhr_sobrenome, dtt_nascimento, int_genero, vhr_whatsapp, int_tipo, vhr_descricao)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING int_idausuario;`,
     [
       req.body.vhr_email,
       password,
@@ -82,20 +82,16 @@ exports.signup = async (req, res) => {
       req.body.int_genero,
       req.body.vhr_whatsapp,
       req.body.int_tipo,
+      req.body.vhr_descricao,
     ]
   );
 
   if (req.body.int_tipo === 0) {
     await db.query(
       `
-      INSERT INTO tbr_aluno (int_idfaluno, vhr_descricao, num_peso, num_altura)
-      VALUES ($1, $2, $3, $4);`,
-      [
-        createdUser[0].int_idausuario,
-        req.body.vhr_descricao,
-        req.body.num_peso,
-        req.body.num_altura,
-      ]
+      INSERT INTO tbr_aluno (int_idfaluno, num_peso, num_altura)
+      VALUES ($1, $2, $3);`,
+      [createdUser[0].int_idausuario, req.body.num_peso, req.body.num_altura]
     );
 
     if (validUser) {
@@ -111,14 +107,9 @@ exports.signup = async (req, res) => {
 
     await db.query(
       `
-      INSERT INTO tbr_professor (int_idfprofessor, vhr_cref, vhr_token, vhr_descricao)
-      VALUES ($1, $2, $3, $4);`,
-      [
-        createdUser[0].int_idausuario,
-        req.body.vhr_cref,
-        token,
-        req.body.vhr_descricao,
-      ]
+      INSERT INTO tbr_professor (int_idfprofessor, vhr_cref, vhr_token)
+      VALUES ($1, $2, $3);`,
+      [createdUser[0].int_idausuario, req.body.vhr_cref, token]
     );
   }
 
