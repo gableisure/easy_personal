@@ -3,6 +3,18 @@ const crypto = require('crypto');
 const db = require('../db');
 const AppError = require('../utils/AppError');
 
+const filterObj = (obj, ...allowedArgs) => {
+  const newObj = {};
+
+  Object.keys(obj).forEach(key => {
+    if (allowedArgs.includes(key)) {
+      newObj[key] = obj[key];
+    }
+  });
+
+  return newObj;
+};
+
 exports.gelAllUsers = async () => {
   const { rows: users } = await db.query('SELECT * FROM tbl_usuario');
 
@@ -44,11 +56,11 @@ exports.getUser = async req => {
     [req.params.id]
   );
 
+  if (!user[0]) throw new AppError('Usuário não existe.', 404);
+
   Object.entries(user[0]).forEach(([key, value]) => {
     if (value === null) delete user[0][key];
   });
-
-  console.log(user[0]);
 
   return user[0];
 };
@@ -68,8 +80,8 @@ exports.addUser = async req => {
   // Inserir usuário.
   const { rows: createdUser } = await db.query(
     `
-    INSERT INTO tbl_usuario (vhr_email, vhr_senha, vhr_nome, vhr_sobrenome, dtt_nascimento, int_genero, vhr_whatsapp, int_tipo)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING int_idausuario;`,
+    INSERT INTO tbl_usuario (vhr_email, vhr_senha, vhr_nome, vhr_sobrenome, dtt_nascimento, int_genero, vhr_whatsapp, int_tipo, vhr_descricao)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING int_idausuario;`,
     [
       req.body.vhr_email,
       password,
@@ -79,20 +91,16 @@ exports.addUser = async req => {
       req.body.int_genero,
       req.body.vhr_whatsapp,
       req.body.int_tipo,
+      req.body.vhr_descricao,
     ]
   );
 
   if (req.body.int_tipo === 0) {
     await db.query(
       `
-      INSERT INTO tbr_aluno (int_idfaluno, vhr_descricao, num_peso, num_altura)
-      VALUES ($1, $2, $3, $4);`,
-      [
-        createdUser[0].int_idausuario,
-        req.body.vhr_descricao,
-        req.body.num_peso,
-        req.body.num_altura,
-      ]
+      INSERT INTO tbr_aluno (int_idfaluno, num_peso, num_altura)
+      VALUES ($1, $2, $3);`,
+      [createdUser[0].int_idausuario, req.body.num_peso, req.body.num_altura]
     );
   }
 
@@ -101,14 +109,67 @@ exports.addUser = async req => {
 
     await db.query(
       `
-      INSERT INTO tbr_professor (int_idfprofessor, vhr_cref, vhr_token, vhr_descricao)
-      VALUES ($1, $2, $3, $4);`,
-      [
-        createdUser[0].int_idausuario,
-        req.body.vhr_cref,
-        token,
-        req.body.vhr_descricao,
-      ]
+      INSERT INTO tbr_professor (int_idfprofessor, vhr_cref, vhr_token)
+      VALUES ($1, $2, $3);`,
+      [createdUser[0].int_idausuario, req.body.vhr_cref, token]
+    );
+  }
+};
+
+exports.deleteUser = async req => {
+  const {
+    rowCount,
+  } = await db.query(`DELETE FROM tbl_usuario WHERE int_idausuario = $1`, [
+    req.params.id,
+  ]);
+
+  if (!rowCount) throw new AppError('Usuário não existe.', 404);
+};
+
+exports.updateUser = async req => {
+  const fields = [req.params.id];
+  const str = [];
+
+  const filteredUser = filterObj(
+    req.body,
+    'vhr_nome',
+    'vhr_sobrenome',
+    'dtt_nascimento',
+    'int_genero',
+    'vhr_whatsapp',
+    'vhr_descricao'
+  );
+
+  // Editar valores do usuario.
+  if (filteredUser.length <= 0) {
+    Object.entries(filteredUser).forEach(([key, value], i) => {
+      fields.push(value);
+      str.push(`${key} = $${i + 2}`);
+    });
+
+    const { rowCount } = await db.query(
+      `UPDATE tbl_usuario SET ${str} WHERE int_idausuario = $1`,
+      fields
+    );
+
+    if (!rowCount) throw new AppError('Usuário não existe.', 404);
+  }
+
+  // Editando dados do estudante
+  const userInfo = await this.getUser(req);
+  if ((req.body.num_peso || req.body.num_altura) && userInfo.int_tipo === 0) {
+    const studentObj = filterObj(req.body, 'num_peso', 'num_altura');
+    const studentFields = [req.params.id];
+    const studentStr = [];
+
+    Object.entries(studentObj).forEach(([key, value], i) => {
+      studentFields.push(value);
+      studentStr.push(`${key} = $${i + 2}`);
+    });
+
+    await db.query(
+      `UPDATE tbr_aluno SET ${studentStr} WHERE int_idfaluno = $1`,
+      studentFields
     );
   }
 };
