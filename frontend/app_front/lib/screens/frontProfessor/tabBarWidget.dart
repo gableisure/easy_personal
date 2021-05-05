@@ -11,8 +11,9 @@ class TabBarWidget extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.tabs,
-    @required this.children,
+    @required this.children
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
