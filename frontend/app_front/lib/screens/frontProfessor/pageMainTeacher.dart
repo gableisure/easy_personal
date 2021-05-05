@@ -54,6 +54,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return alunosData;
   }
 
+  // TODO: Implementar lógica para retornar o nome curso do aluno
+  //String getFullName(String name, String surname) => "${name} ${}";
+
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
       builder: (context, snapshot) {
@@ -161,7 +164,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       Navigator.push(
                                         context,
                                         CupertinoPageRoute(
-                                            builder: (context) => TreinosAluno(instructorId: widget.instructorId, studentId: alunosData[index].int_idausuario)
+                                            builder: (context) => TreinosAluno(instructorId: widget.instructorId, studentId: alunosData[index].int_idausuario, studentName: alunosData[index].vhr_nome)
                                         ),
                                       );
                                     },

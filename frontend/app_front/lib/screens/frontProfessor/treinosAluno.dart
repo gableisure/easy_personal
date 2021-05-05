@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class TreinosAluno extends StatefulWidget {
   final int instructorId;
   final int studentId;
+  final String studentName;
 
-  TreinosAluno({Key key, @required this.instructorId, this.studentId})
+  TreinosAluno({Key key, @required this.instructorId, this.studentId, this.studentName})
       : super(key: key);
 
   @override
@@ -60,20 +61,23 @@ class _TreinosAlunoState extends State<TreinosAluno> {
         padding: EdgeInsets.only(top: 20, right: 10, left: 20),
         child: Row(
           children: [
+
             // Container nome do aluno
             Container(
               // color: Colors.blueAccent,
               child: Text(
-                "Renê Boaventura",
+                widget.studentName,
                 style: TextStyle(
                   fontSize: 21.0,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
+
             SizedBox(
               width: 80,
             ),
+
             // Container qtd. de treinos
             Container(
               child: Row(
