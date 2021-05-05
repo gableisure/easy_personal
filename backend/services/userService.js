@@ -141,7 +141,8 @@ exports.updateUser = async req => {
   );
 
   // Editar valores do usuario.
-  if (filteredUser.length <= 0) {
+  if (Object.keys(filteredUser).length >= 0) {
+    console.log('aaa');
     Object.entries(filteredUser).forEach(([key, value], i) => {
       fields.push(value);
       str.push(`${key} = $${i + 2}`);
