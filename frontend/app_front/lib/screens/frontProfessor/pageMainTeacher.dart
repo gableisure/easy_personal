@@ -77,8 +77,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
               return Center(child: Text("Erro ao carregar..."));
             } else {
               return ListView.builder(
-                padding:
-                    EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                padding: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
                 shrinkWrap: true,
                 itemCount: alunosData.length,
                 itemBuilder: (context, index) {
@@ -211,8 +210,28 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return nome[0] + sobrenome[0];
   }
 
-  Widget buildTreinos() => Center(
-    child: Text("Texto"),
+  Widget buildTreinos() => Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Container(
+        padding: EdgeInsets.only(right: 20, bottom: 35),
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+          elevation: 3,
+          icon: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          label: Text(
+            "Criar",
+            style: TextStyle(
+              fontSize: 17.0,
+            ),
+          ),
+        ),
+      ),
+    ],
   );
 
   Widget buildExercicios() => Center(
