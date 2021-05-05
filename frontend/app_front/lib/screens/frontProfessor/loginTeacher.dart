@@ -163,8 +163,8 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                     backgroundColor: Colors.green[600],
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  print(response.data);
-                  // Navigator.of(context).pushReplacementNamed("/pageMainTeacher", arguments: {token: token});
+
+                  // Navega para a página principal do professor
                   Navigator.push(
                       context,
                       CupertinoPageRoute(

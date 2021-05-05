@@ -4,7 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SideMenu extends StatelessWidget {
+
+
+class SideMenu extends StatefulWidget {
+
+  @override
+  _SideMenuState createState() => _SideMenuState();
+
+}
+
+class _SideMenuState extends State<SideMenu> {
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -56,7 +66,7 @@ class SideMenu extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Token",
+                        Text("token",
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                   color: Colors.white,
@@ -109,7 +119,7 @@ class SideMenu extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                    EdgeInsets.symmetric(horizontal: 4.0),
                                   ),
                                   Text(
                                     "PERFIL",
@@ -193,4 +203,5 @@ class SideMenu extends StatelessWidget {
       ),
     );
   }
+
 }

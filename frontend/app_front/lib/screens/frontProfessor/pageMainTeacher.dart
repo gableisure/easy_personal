@@ -115,9 +115,14 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                               children: [
                                 CircleAvatar(
                                   backgroundColor: Color(0XFFddd9ce),
-                                  child: Text(_getIniciais(
-                                      alunosData[index].vhr_nome,
-                                      alunosData[index].vhr_sobrenome)),
+                                  child: Text(
+                                    _getIniciais(alunosData[index].vhr_nome,
+                                          alunosData[index].vhr_sobrenome).toUpperCase(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 21.0,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 60.0,
