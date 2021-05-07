@@ -4,6 +4,7 @@ import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../helpers/globals.dart' as globals;
 
 class LoginTeacher extends StatefulWidget {
   @override
@@ -103,6 +104,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               ),
             ),
             onPressed: () {
+
               Navigator.of(context).pushReplacementNamed("/forgotPassword");
             },
           ),
@@ -151,7 +153,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               var users = listTeachers.data;
 
               if (Helpers().isTeacher(users, email) != null) {
-                int instructorId = Helpers().getIntructorId(users, email);
+                Map instructorLogged = Helpers().getInstructorForEmail(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -164,11 +166,17 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
+                  /*TODO: área para desenvolvimento de teste de navegação após o login*/
+
+                  //TODO: Bloco em desenvolvimento
+                  Helpers().saveDataUser(instructorLogged['vhr_nome'], instructorLogged['vhr_sobrenome'], instructorLogged['vhr_token']);
+
+
                   // Navega para a página principal do professor
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher(instructorId: instructorId)
+                          builder: (context) => PageMainTeacher(instructorId: instructorLogged['int_idfprofessor'])
                       ),
                   );
                 } else {
