@@ -1,10 +1,10 @@
+import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/screens/frontProfessor/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import '../helpers/globals.dart' as globals;
 
 class SideMenu extends StatefulWidget {
 
@@ -55,7 +55,7 @@ class _SideMenuState extends State<SideMenu> {
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Rene Boaventura Junior",
+                        Text("${globals.vhr_nome} ${globals.vhr_sobrenome}",
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                   color: Colors.white,
@@ -66,7 +66,7 @@ class _SideMenuState extends State<SideMenu> {
                         SizedBox(
                           height: 5,
                         ),
-                        Text("token",
+                        Text(globals.vhr_token,
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                   color: Colors.white,
@@ -147,6 +147,10 @@ class _SideMenuState extends State<SideMenu> {
                             final value = prefs.get(key) ?? 0;
 
                             if (value != '0') {
+
+                              // Apaga os dados do usuário que deslogou
+                              Helpers().deleteDataUser();
+
                               SnackBar snackbar = new SnackBar(
                                 content: Text(
                                   "Usuário Deslogado!!",
@@ -158,7 +162,8 @@ class _SideMenuState extends State<SideMenu> {
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackbar);
-                              print("saiu!!!");
+                              // print("saiu!!!");
+
                               Navigator.pushNamedAndRemoveUntil(
                                   context, "/login", (route) => false);
                             } else {
