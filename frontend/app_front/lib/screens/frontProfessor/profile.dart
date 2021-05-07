@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../../helpers/globals.dart' as globals;
 
 class ProfileTeacher extends StatefulWidget {
   final int instructorId;
@@ -91,6 +92,22 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                     centerTitle: true,
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 70),
+                  child: Center(
+                    child: Column(
+                      children: [
+
+                        Text("Dados do usuário", style: TextStyle(fontWeight: FontWeight.w700),),
+                        Text("Nome: ${globals.vhr_nome}", style: TextStyle(color: Colors.white),),
+                        Text("Sobrenome ${globals.vhr_sobrenome}", style: TextStyle(color: Colors.white),),
+                        Text("Token: ${globals.vhr_token}", style: TextStyle(color: Colors.white),),
+
+                      ],
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ),
