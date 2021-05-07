@@ -240,20 +240,19 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Container(
                 width: MediaQuery.of(context).size.width * .60,
                 height: 60,
                 child: SizedBox.expand(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF5B16D0),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25),),
+                  child: TextButton(
+                    onPressed: (){},
+                    child: Text(
+                      "Excluir conta",
+                      style: TextStyle(
+                        color: Colors.red,
                       ),
                     ),
-                    child: Text("Excluir conta"),
-                    onPressed: (){},
                   ),
                 ),
               ),
