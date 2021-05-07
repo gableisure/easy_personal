@@ -12,6 +12,13 @@ class ProfileTeacher extends StatefulWidget {
 }
 
 class _ProfileTeacherState extends State<ProfileTeacher> {
+  //Iniciais do nome de  usuário
+  String _getIniciais(String nome, String sobrenome) {
+    if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
+      return nome[0] + sobrenome[3];
+    }
+    return nome[0] + sobrenome[0];
+  }
   //Modal PageView
   void _modalPage(context) {
     showModalBottomSheet(
@@ -93,21 +100,36 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 70),
+                  padding: EdgeInsets.only(top: 60),
                   child: Center(
                     child: Column(
                       children: [
-
-                        Text("Dados do usuário", style: TextStyle(fontWeight: FontWeight.w700),),
-                        Text("Nome: ${globals.vhr_nome}", style: TextStyle(color: Colors.white),),
-                        Text("Sobrenome ${globals.vhr_sobrenome}", style: TextStyle(color: Colors.white),),
-                        Text("Token: ${globals.vhr_token}", style: TextStyle(color: Colors.white),),
-
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            _getIniciais('${globals.vhr_nome}', '${globals.vhr_sobrenome}').toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text("Dados do usuário", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),),
+                        SizedBox(height: 5,),
+                        Text("Nome: ${globals.vhr_nome} ${globals.vhr_sobrenome}", style: TextStyle(color: Colors.white, fontSize: 14),
+                          textAlign: TextAlign.center,),
+                        SizedBox(height: 5,),
+                        Text("Email: ${globals.vhr_email}", style: TextStyle(color: Colors.white, fontSize: 14),
+                          textAlign: TextAlign.center,),
+                        SizedBox(height: 5,),
+                        Text("Token: ${globals.vhr_token}", style: TextStyle(color: Colors.white, fontSize: 14),
+                          textAlign: TextAlign.center,),
                       ],
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

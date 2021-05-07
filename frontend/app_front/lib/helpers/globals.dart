@@ -11,7 +11,7 @@ String vhr_token = "";
 
 // TODO: Adicionar outras variáveis conforme a necessidade
 // String vhr_whatsapp = "";
-// int int_tipo = 0;
+int int_tipo = 0;
 // String vhr_descricao = "";
 // String vhr_cref = "";
 
