@@ -147,6 +147,7 @@ class _StateLoginStudent extends State<LoginStudent> {
               var users = listStudents.data;
 
               if(Helpers().isStudent(users, email) != null) {
+                Map studentLogged = Helpers().getStudentsForEmail(users, email);
                 var response =  await APILoginStudent().login(email, senha);
                 if(response.token != null) {
                   SnackBar snackbar = new SnackBar(
@@ -157,6 +158,8 @@ class _StateLoginStudent extends State<LoginStudent> {
                     backgroundColor: Colors.green[600],
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  //salvando dados do user
+                  Helpers().saveDataUserStudent(studentLogged['vhr_nome'], studentLogged['vhr_sobrenome'],studentLogged['vhr_email'], studentLogged['int_tipo']);
                   print(response.data);
                   Navigator.of(context).pushReplacementNamed("/pageMainStudent");
                 } else {

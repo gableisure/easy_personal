@@ -169,7 +169,8 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   /*TODO: área para desenvolvimento de teste de navegação após o login*/
 
                   //TODO: Bloco em desenvolvimento
-                  Helpers().saveDataUser(instructorLogged['vhr_nome'], instructorLogged['vhr_sobrenome'], instructorLogged['vhr_token']);
+                  Helpers().saveDataUserInstructor(instructorLogged['vhr_nome'], instructorLogged['vhr_sobrenome'], instructorLogged['vhr_token'], instructorLogged['vhr_email'],
+                      instructorLogged['int_tipo']);
 
 
                   // Navega para a página principal do professor
