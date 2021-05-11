@@ -9,12 +9,9 @@ class PageMainStudent extends StatefulWidget {
 
 class _PageMainStudentState extends State<PageMainStudent> {
   final List<String> items = [
-    'Gabriel Ribeiro de Araújo',
-    'Guilherme Silva Freitas',
-    'Iago da Cunha Nogueira',
-    'Lucas Sodre Menezes',
-    'Rene Boaventura Junior',
-    'Romario Santos Oliveira',
+    'Treino Montado',
+    'FeedBack Respondido',
+
   ];
 
   @override
