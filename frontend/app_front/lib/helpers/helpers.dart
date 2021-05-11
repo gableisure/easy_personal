@@ -53,26 +53,32 @@ class Helpers {
   //   }
   // }
 
+  // Método que busca um professor por email e retorna um Map com os dados do professor
   Map getInstructorForEmail(List users, String email) {
-    // var usuario = {'usuario':'admin','senha':'admin123'};
     var usuario = {};
     for (var user in users) {
       if (user.vhr_email == email) {
-        usuario['int_idfprofessor'] = user.int_idfprofessor;
+        usuario['int_idausuario'] = user.int_idausuario;
         usuario['vhr_email'] = user.vhr_email;
         usuario['vhr_nome'] = user.vhr_nome;
         usuario['vhr_sobrenome'] = user.vhr_sobrenome;
         usuario['dtt_nascimento'] = user.dtt_nascimento;
+        usuario['vhr_whatsapp'] = user.vhr_whatsapp;
+        usuario['vhr_descricao'] = user.vhr_descricao;
+        usuario['int_tipo'] = user.int_tipo;
         usuario['int_genero'] = user.int_genero;
         usuario['vhr_token'] = user.vhr_token;
-        usuario['int_tipo'] = user.int_tipo;
+        usuario['int_idfprofessor'] = user.int_idfprofessor;
+        usuario['vhr_cref'] = user.vhr_cref;
+        usuario['vhr_token'] = user.vhr_token;
+
         return usuario;
       }
     }
   }
-  //Pegando aluno pelo email
+
+  // Buscando aluno pelo email
   Map getStudentsForEmail(List users, String email) {
-    // var usuario = {'usuario':'admin','senha':'admin123'};
     var usuario = {};
     for (var user in users) {
       if (user.vhr_email == email) {
@@ -89,12 +95,29 @@ class Helpers {
   }
 
   // TODO: Método em desenvolvimento
-  void saveDataUserInstructor(String nome, String sobrenome, String token, String email, int tipo) {
-    globals.vhr_nome = nome;
-    globals.vhr_sobrenome = sobrenome;
-    globals.vhr_token = token;
-    globals.vhr_email = email;
-    globals.int_tipo = tipo;
+  // void saveDataUserInstructor(String nome, String sobrenome, String token, String email, int tipo) {
+  //   globals.vhr_nome = nome;
+  //   globals.vhr_sobrenome = sobrenome;
+  //   globals.vhr_token = token;
+  //   globals.vhr_email = email;
+  //   globals.int_tipo = tipo;
+  // }
+
+  // Método que recebe um Map com os dados do professor
+  void saveDataUserInstructor(Map instructorLogged) {
+    globals.int_idausuario = instructorLogged['int_idausuario'];
+    globals.vhr_email = instructorLogged['vhr_email'];
+    globals.vhr_nome = instructorLogged['vhr_nome'];
+    globals.vhr_sobrenome = instructorLogged['vhr_sobrenome'];
+    globals.dtt_nascimento = instructorLogged['dtt_nascimento'];
+    globals.vhr_whatsapp = instructorLogged['vhr_whatsapp'];
+    globals.vhr_descricao = instructorLogged['vhr_descricao'];
+    globals.int_tipo = instructorLogged['int_tipo'];
+    globals.int_genero = instructorLogged['int_genero'];
+    globals.vhr_token = instructorLogged['vhr_token'];
+    globals.int_idfprofessor = instructorLogged['int_idfprofessor'];
+    globals.vhr_cref = instructorLogged['vhr_cref'];
+    globals.vhr_token = instructorLogged['vhr_token'];
   }
 
   void saveDataUserStudent(String nome, String sobrenome, String email, int tipo) {
@@ -102,6 +125,7 @@ class Helpers {
     globals.vhr_sobrenome = sobrenome;
     globals.vhr_email = email;
     globals.int_tipo = tipo;
+
   }
 
   void deleteDataUser() {

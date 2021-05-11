@@ -14,11 +14,14 @@ class LoginTeacher extends StatefulWidget {
 }
 
 class _StateLoginTeacher extends State<LoginTeacher> {
+
   //váriaveis
   String email;
   String senha;
+
   //chaves paras os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   //Widgets
   //E-mail
   Widget _buildEmail() {
@@ -166,18 +169,14 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
-                  /*TODO: área para desenvolvimento de teste de navegação após o login*/
-
-                  //TODO: Bloco em desenvolvimento
-                  Helpers().saveDataUserInstructor(instructorLogged['vhr_nome'], instructorLogged['vhr_sobrenome'], instructorLogged['vhr_token'], instructorLogged['vhr_email'],
-                      instructorLogged['int_tipo']);
-
+                  // Envia o Map Professor para que seja registrado os dados do professor logado
+                  Helpers().saveDataUserInstructor(instructorLogged);
 
                   // Navega para a página principal do professor
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher(instructorId: instructorLogged['int_idfprofessor'])
+                          builder: (context) => PageMainTeacher()
                       ),
                   );
                 } else {
