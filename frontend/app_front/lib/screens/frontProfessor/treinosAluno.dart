@@ -3,11 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TreinosAluno extends StatefulWidget {
-  final int instructorId;
   final int studentId;
   final String studentName;
 
-  TreinosAluno({Key key, @required this.instructorId, this.studentId, this.studentName})
+  TreinosAluno({Key key, @required this.studentId, this.studentName})
       : super(key: key);
 
   @override

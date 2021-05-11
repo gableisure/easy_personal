@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,12 +5,10 @@ import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
 import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:app_front/helpers/globals.dart' as globals;
 
 
 class PageMainTeacher extends StatefulWidget {
-  final int instructorId;
-
-  PageMainTeacher({Key key, @required this.instructorId}) : super(key: key);
 
   @override
   _PageMainTeacherState createState() => _PageMainTeacherState();
@@ -47,14 +44,14 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     var listStudents = await APIGetStudents().getAllStudents();
     alunosData = [];
     for(var aluno in listStudents.data) {
-      if(aluno.instructor_id == widget.instructorId) {
+      if(aluno.instructor_id == globals.int_idfprofessor) {
         alunosData.add(aluno);
       }
     }
     return alunosData;
   }
 
-  // TODO: Implementar lógica para retornar o nome curso do aluno
+  // TODO: Implementar lógica para retornar o nome curto do aluno
   //String getFullName(String name, String surname) => "${name} ${}";
 
   Widget buildAlunos() => FutureBuilder(
@@ -163,7 +160,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       Navigator.push(
                                         context,
                                         CupertinoPageRoute(
-                                            builder: (context) => TreinosAluno(instructorId: widget.instructorId, studentId: alunosData[index].int_idausuario, studentName: alunosData[index].vhr_nome)
+                                            builder: (context) => TreinosAluno(studentId: alunosData[index].int_idausuario, studentName: alunosData[index].vhr_nome)
                                         ),
                                       );
                                     },
