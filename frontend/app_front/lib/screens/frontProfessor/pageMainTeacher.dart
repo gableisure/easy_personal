@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
+import 'criarTreino.dart';
 
 class PageMainTeacher extends StatefulWidget {
-
   @override
   _PageMainTeacherState createState() => _PageMainTeacherState();
-
 }
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
@@ -21,30 +20,31 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
-    title: 'Easy Personal',
-    tabs: [
-      Tab(icon: Icon(Icons.face), text: 'Alunos',),
-      Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
-      Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
-      Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
-      Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
-    ],
-    children: [
-      buildAlunos(),
-      buildTreinos(),
-      buildExercicios(),
-      buildAgenda(),
-      buildFinanceiro(),
-    ],
-  );
-
-
+        title: 'Easy Personal',
+        tabs: [
+          Tab(
+            icon: Icon(Icons.face),
+            text: 'Alunos',
+          ),
+          Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
+          Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
+          Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
+          Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
+        ],
+        children: [
+          buildAlunos(),
+          buildTreinos(),
+          buildExercicios(),
+          buildAgenda(),
+          buildFinanceiro(),
+        ],
+      );
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
     alunosData = [];
-    for(var aluno in listStudents.data) {
-      if(aluno.instructor_id == globals.int_idfprofessor) {
+    for (var aluno in listStudents.data) {
+      if (aluno.instructor_id == globals.int_idfprofessor) {
         alunosData.add(aluno);
       }
     }
@@ -74,7 +74,8 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
               return Center(child: Text("Erro ao carregar..."));
             } else {
               return ListView.builder(
-                padding: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                padding:
+                    EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
                 shrinkWrap: true,
                 itemCount: alunosData.length,
                 itemBuilder: (context, index) {
@@ -106,7 +107,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                       ),
                       child: Column(
                         children: [
-
                           // nome e avatar
                           Container(
                             padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -116,7 +116,8 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                   backgroundColor: Color(0XFFddd9ce),
                                   child: Text(
                                     _getIniciais(alunosData[index].vhr_nome,
-                                          alunosData[index].vhr_sobrenome).toUpperCase(),
+                                            alunosData[index].vhr_sobrenome)
+                                        .toUpperCase(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       fontSize: 21.0,
@@ -127,17 +128,15 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                   width: 60.0,
                                 ),
                                 Text(
-                                  alunosData[index].vhr_nome +
-                                      " " +
-                                      alunosData[index].vhr_sobrenome,
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  )
-                                ),
+                                    alunosData[index].vhr_nome +
+                                        " " +
+                                        alunosData[index].vhr_sobrenome,
+                                    style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                               ],
                             ),
                           ),
@@ -160,8 +159,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       Navigator.push(
                                         context,
                                         CupertinoPageRoute(
-                                            builder: (context) => TreinosAluno(studentId: alunosData[index].int_idausuario, studentName: alunosData[index].vhr_nome)
-                                        ),
+                                            builder: (context) => TreinosAluno(
+                                                studentId: alunosData[index]
+                                                    .int_idausuario,
+                                                studentName: alunosData[index]
+                                                    .vhr_nome)),
                                       );
                                     },
                                     iconSize: 50,
@@ -200,48 +202,54 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
       });
 
   /*  Funções buildAluno  */
+
+  // Retorna uma String com as iniciais do nome e sobrenome do usuário
   String _getIniciais(String nome, String sobrenome) {
-    if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
+    if (sobrenome.substring(0, 3) == "da " ||
+        sobrenome.substring(0, 3) == "de ") {
       return nome[0] + sobrenome[3];
     }
     return nome[0] + sobrenome[0];
   }
 
   Widget buildTreinos() => Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      Container(
-        padding: EdgeInsets.only(right: 20, bottom: 35),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-          elevation: 3,
-          icon: Icon(Icons.add),
-          backgroundColor: Colors.green,
-          label: Text(
-            "Criar",
-            style: TextStyle(
-              fontSize: 17.0,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            padding: EdgeInsets.only(right: 20, bottom: 35),
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => CriarTreino(),
+                  )
+                );
+              },
+              elevation: 3,
+              icon: Icon(Icons.add),
+              backgroundColor: Colors.green,
+              label: Text(
+                "Criar",
+                style: TextStyle(
+                  fontSize: 17.0,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 
   Widget buildExercicios() => Center(
-    child: Text("Texto"),
-  );
+        child: Text("Texto"),
+      );
 
   Widget buildAgenda() => Center(
-    child: Text("Texto"),
-  );
+        child: Text("Texto"),
+      );
 
   Widget buildFinanceiro() => Center(
-    child: Text("Texto"),
-  );
-
-
+        child: Text("Texto"),
+      );
 }

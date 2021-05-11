@@ -159,7 +159,7 @@ class _StateLoginStudent extends State<LoginStudent> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                   //salvando dados do user
-                  Helpers().saveDataUserStudent(studentLogged['vhr_nome'], studentLogged['vhr_sobrenome'],studentLogged['vhr_email'], studentLogged['int_tipo']);
+                  Helpers().saveDataUserStudent(studentLogged);
                   print(response.data);
                   Navigator.of(context).pushReplacementNamed("/pageMainStudent");
                 } else {
