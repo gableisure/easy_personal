@@ -2,7 +2,7 @@ import '../helpers/globals.dart' as globals;
 
 class Helpers {
 
-  // Método para verificar se um usuario é aluno
+  // Método para verificar se o usuario é um aluno
   bool isStudent(List users, String email) {
     var res;
 
@@ -23,7 +23,7 @@ class Helpers {
     return res;
   }
 
-  // Método para verificar se um usuario é professor
+  // Método para verificar se o usuario é um professor
   bool isTeacher(List users, String email) {
     var res;
 
@@ -43,15 +43,6 @@ class Helpers {
 
     return res;
   }
-
-  // Método para buscar um instrutor no banco a partir do email
-  // int getIntructorId(List users, String email) {
-  //   for (var user in users) {
-  //     if (user.vhr_email == email) {
-  //       return user.int_idfprofessor;
-  //     }
-  //   }
-  // }
 
   // Método que busca um professor por email e retorna um Map com os dados do professor
   Map getInstructorForEmail(List users, String email) {
@@ -77,31 +68,30 @@ class Helpers {
     }
   }
 
-  // Buscando aluno pelo email
+  // Método que busca um aluno por email e retorna um Map com os dados do aluno
   Map getStudentsForEmail(List users, String email) {
     var usuario = {};
     for (var user in users) {
       if (user.vhr_email == email) {
-        usuario[' int_idfaluno'] = user.int_idfaluno;
+        usuario['int_idausuario'] = user.int_idausuario;
         usuario['vhr_email'] = user.vhr_email;
         usuario['vhr_nome'] = user.vhr_nome;
         usuario['vhr_sobrenome'] = user.vhr_sobrenome;
         usuario['dtt_nascimento'] = user.dtt_nascimento;
-        usuario['int_genero'] = user.int_genero;
+        usuario['vhr_whatsapp'] = user.vhr_whatsapp;
+        usuario['vhr_descricao'] = user.vhr_descricao;
         usuario['int_tipo'] = user.int_tipo;
+        usuario['int_genero'] = user.int_genero;
+        usuario['int_idfaluno'] = user.int_idfaluno;
+        usuario['num_peso'] = user.num_peso;
+        usuario['num_altura'] = user.num_altura;
+        usuario['user_id'] = user.user_id;
+        usuario['instructor_id'] = user.instructor_id;
+
         return usuario;
       }
     }
   }
-
-  // TODO: Método em desenvolvimento
-  // void saveDataUserInstructor(String nome, String sobrenome, String token, String email, int tipo) {
-  //   globals.vhr_nome = nome;
-  //   globals.vhr_sobrenome = sobrenome;
-  //   globals.vhr_token = token;
-  //   globals.vhr_email = email;
-  //   globals.int_tipo = tipo;
-  // }
 
   // Método que recebe um Map com os dados do professor
   void saveDataUserInstructor(Map instructorLogged) {
@@ -120,17 +110,43 @@ class Helpers {
     globals.vhr_token = instructorLogged['vhr_token'];
   }
 
-  void saveDataUserStudent(String nome, String sobrenome, String email, int tipo) {
-    globals.vhr_nome = nome;
-    globals.vhr_sobrenome = sobrenome;
-    globals.vhr_email = email;
-    globals.int_tipo = tipo;
-
+  // Método que recebe um Map com os dados do aluno
+  void saveDataUserStudent(Map studentLogged) {
+    globals.int_idausuario = studentLogged['int_idausuario'];
+    globals.vhr_email = studentLogged['vhr_email'];
+    globals.vhr_nome = studentLogged['vhr_nome'];
+    globals.vhr_sobrenome = studentLogged['vhr_sobrenome'];
+    globals.dtt_nascimento = studentLogged['dtt_nascimento'];
+    globals.vhr_whatsapp = studentLogged['vhr_whatsapp'];
+    globals.vhr_descricao = studentLogged['vhr_descricao'];
+    globals.int_tipo = studentLogged['int_tipo'];
+    globals.int_genero = studentLogged['int_genero'];
+    globals.int_idfaluno = studentLogged['int_idfaluno'];
+    globals.num_peso = studentLogged['num_peso'];
+    globals.num_altura = studentLogged['num_altura'];
+    globals.user_id = studentLogged['user_id'];
+    globals.instructor_id = studentLogged['instructor_id'];
   }
 
+  // Método que deleta todos os dados do usuário cadastrada (limpa as variáveis globais)
   void deleteDataUser() {
+    globals.int_idausuario = 0;
+    globals.vhr_email = "";
     globals.vhr_nome = "";
     globals.vhr_sobrenome = "";
+    globals.dtt_nascimento = "";
+    globals.vhr_whatsapp = "";
+    globals.vhr_descricao = "";
+    globals.int_tipo = 0;
+    globals.int_genero = 0;
     globals.vhr_token = "";
+    globals.int_idfprofessor = 0;
+    globals.vhr_cref = "";
+    globals.vhr_token = "";
+    globals.int_idfaluno = 0;
+    globals.num_peso = "";
+    globals.num_altura = "";
+    globals.user_id = 0;
+    globals.instructor_id = 0;
   }
 }
