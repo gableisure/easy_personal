@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:app_front/widgets/alert.dart';
+import 'package:app_front/widgets/clipper.dart';
 import '../../helpers/globals.dart' as globals;
 
 class ProfileTeacher extends StatefulWidget {
@@ -19,269 +21,245 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
     }
     return nome[0] + sobrenome[0];
   }
-  //Modal PageView
-  void _modalPage(context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.70,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(40.0),
-            topRight: const Radius.circular(40.0),
-          ),
-        ),
-        padding: EdgeInsets.only(top: 40, left: 35, right: 35),
-        child: ListView(
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Spacer(),
-                IconButton(
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.orange,
-                    size: 30,
+            ClipPath(
+              clipper: Clipper(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.1, 0.4, 0.7, 0.9],
+                      colors: [
+                        Color(0xFF3594DD),
+                        Color(0xFF4563DB),
+                        Color(0xFF5036D5),
+                        Color(0xFF5B16D0),
+                      ]
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                ),
+                child: Column(
+                  children: <Widget>[
+                    _appBar(),
+                    SizedBox(height: 20),
+                    Padding(
+                        padding: EdgeInsets.only(left: 23),
+                        child: Row(
+                          children: [
+                            _avatarCircle(),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: _contador(),
+                              ),
+                            ),
+                          ],
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: _informationUser(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Descrição",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 50, right: 50),
+                  child: Text(
+                    "${globals.vhr_descricao}",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey[600],
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 50),
+            Padding(
+              padding: EdgeInsets.only(top: 90, left: 40, right: 40),
+              child:buttons(context),
+            ),
           ],
         ),
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 3,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.1, 0.4, 0.7, 0.9],
-                colors: [
-                  Color(0xFF3594DD),
-                  Color(0xFF4563DB),
-                  Color(0xFF5036D5),
-                  Color(0xFF5B16D0),
-                ]
+  //appbar
+  Widget _appBar() {
+    return Stack(
+      children: [
+        Positioned(
+          child:AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
               ),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30.0),
-              ),
+              onPressed: (){
+                Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+              },
             ),
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: AppBar(
-                    leading: IconButton(
-                      icon: Icon(Icons.arrow_back_rounded, color: Color(0xFFFFFFFF),),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
-                      },
-                    ),
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    title: Text("PERFIL"),
-                    centerTitle: true,
-                  ),
+            title: Align(
+              alignment: Alignment.centerRight,
+              child:Text(
+                "${globals.vhr_nome} ${globals.vhr_sobrenome}",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 60),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.white,
-                          child: Text(
-                            _getIniciais('${globals.vhr_nome}', '${globals.vhr_sobrenome}').toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        SizedBox(height: 5,),
-                        Text("Dados do usuário", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),),
-                        SizedBox(height: 5,),
-                        Text("Nome: ${globals.vhr_nome} ${globals.vhr_sobrenome}", style: TextStyle(color: Colors.white, fontSize: 14),
-                          textAlign: TextAlign.center,),
-                        SizedBox(height: 5,),
-                        Text("Email: ${globals.vhr_email}", style: TextStyle(color: Colors.white, fontSize: 14),
-                          textAlign: TextAlign.center,),
-                        SizedBox(height: 5,),
-                        Text("Token: ${globals.vhr_token}", style: TextStyle(color: Colors.white, fontSize: 14),
-                          textAlign: TextAlign.center,),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                textAlign: TextAlign.end,
+              ),
             ),
           ),
+        ),
+      ],
+    );
+  }
+  //circleAvatar
+  Widget _avatarCircle() {
+    return CircleAvatar(
+      radius: 40,
+      backgroundColor: Colors.white,
+      child: Text(
+        _getIniciais("${globals.vhr_nome}", "${globals.vhr_sobrenome}").toUpperCase(),
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.w400,
+          color: Colors.blue,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+  //User
+  Widget _informationUser() {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            "${globals.vhr_email}",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+        SizedBox(height: 10),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            "${globals.vhr_token}",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+      ],
+    );
+  }
+  //alunos e data de pagamento
+  Widget _contador() {
+    return Container(
+      height: 50,
+      child: Row(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
           Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20,left: 30, right: 10),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 5,
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox.expand(
-                        child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF5B16D0),
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30),),
-                            ),
-                          ),
-                          onPressed: () {
-                            _modalPage(context);
-                          },
-                          child: Center(
-                              child: Text(
-                                "Alunos",
-                                textAlign: TextAlign.center,
-                              ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20,left: 10, right: 30),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 5,
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox.expand(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF5B16D0),
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30),),
-                            ),
-                          ),
-                          onPressed: () {
-                            _modalPage(context);
-                          },
-                          child: Center(
-                            child: Text(
-                              "Pagamentos não recebidos",
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20, left: 30, right: 10),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 5,
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox.expand(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF5B16D0),
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30),),
-                            ),
-                          ),
-                          onPressed: () {
-                            _modalPage(context);
-                          },
-                          child: Center(
-                            child: Text(
-                              "Editar Senha",
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20, left: 10, right: 30),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 5,
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox.expand(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF5B16D0),
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30),),
-                            ),
-                          ),
-                          onPressed: () {
-                            _modalPage(context);
-                          },
-                          child: Center(
-                            child: Text(
-                              "Editar Dados Pessoais",
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Container(
-                width: MediaQuery.of(context).size.width * .60,
-                height: 60,
-                child: SizedBox.expand(
-                  child: TextButton(
-                    onPressed: (){},
-                    child: Text(
-                      "Excluir conta",
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("SEUS ALUNOS", style: TextStyle(color: Colors.white),),
+              SizedBox(height: 10),
+              Text("7",style: TextStyle(color: Colors.white),),
+            ],
+          ),
+          VerticalDivider(
+            thickness: 2.0,
+            color: Colors.white,
+            indent: 3,
+            endIndent: 8,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("PAGAMENTOS PEDENTES",style: TextStyle(color: Colors.white),),
+              SizedBox(height: 10),
+              Text("2", style: TextStyle(color: Colors.white),),
             ],
           ),
         ],
       ),
+    );
+  }
+  //button
+  Widget buttons(BuildContext context){
+    return Row(
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: (){
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) =>  Alert(),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+            ),
+          ),
+          child: Text("Excluir Conta", textAlign: TextAlign.center,),
+        ),
+        Spacer(
+          flex: 2,
+        ),
+        ElevatedButton(
+          onPressed: (){},
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+            ),
+          ),
+          child: Text("Editar Dados", textAlign: TextAlign.center,),
+        ),
+      ],
     );
   }
 }
