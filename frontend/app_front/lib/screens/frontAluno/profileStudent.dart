@@ -45,7 +45,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
               clipper: Clipper(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -62,28 +62,34 @@ class _ProfileStudentState extends State<ProfileStudent> {
                 child: Column(
                   children: <Widget>[
                     _appBar(),
-                    SizedBox(height: 20),
-                    Padding(
-                        padding: EdgeInsets.only(left: 23),
-                        child: Row(
-                          children: [
-                            _avatarCircle(),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: _contador(),
-                              ),
+                    SizedBox(height: 6),
+                    ClipPath(
+                      clipper: Clipper(),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 2.55,
+                        //color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 25, right: 25),
+                                  child: _avatarCircle(),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 25, right: 25),
+                                  child: _informationUser(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 35),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 45),
+                              child: _contador(),
                             ),
                           ],
-                        )
-                    ),
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: _informationUser(),
+                        ),
                       ),
                     ),
                   ],
@@ -201,36 +207,40 @@ class _ProfileStudentState extends State<ProfileStudent> {
   }
   //alunos e data de pagamento
   Widget _contador() {
-    return Container(
-      height: 50,
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Column(
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("SEUS TREINOS", style: TextStyle(color: Colors.white),),
+              Text("SEU PROFESSOR", style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,),
               SizedBox(height: 10),
-              Text("4",style: TextStyle(color: Colors.white),),
+              Text("Julia Oliveira",style: TextStyle(color: Colors.white),),
             ],
           ),
-          VerticalDivider(
-            thickness: 2.0,
+        ),
+        Container(
+          height: 54,
+          child: VerticalDivider(
+            thickness: 2,
             color: Colors.white,
-            indent: 3,
-            endIndent: 8,
           ),
-          Column(
+        ),
+        Expanded(
+          flex: 5,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("DATA DE PAGAMENTO",style: TextStyle(color: Colors.white),),
+              Text("DATA DE PAGAMENTO", style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,),
               SizedBox(height: 10),
-              Text("30/5/2021", style: TextStyle(color: Colors.white),),
+              Text("30/5/2021",style: TextStyle(color: Colors.white),),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
   //button

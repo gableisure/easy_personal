@@ -14,6 +14,7 @@ class _StateLoginStudent extends State<LoginStudent> {
   //váriaveis
   String email;
   String senha;
+  bool _showPassword = false;
   //chaves paras os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   //Widgets
@@ -50,7 +51,7 @@ class _StateLoginStudent extends State<LoginStudent> {
   Widget _buildSenha() {
     return TextFormField(
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: _showPassword == false ? true : false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -60,6 +61,17 @@ class _StateLoginStudent extends State<LoginStudent> {
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
+        ),
+        suffixIcon: GestureDetector(
+          child: Icon(
+            _showPassword == false ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[800],
+          ),
+          onTap: () {
+            setState(() {
+              _showPassword = !_showPassword;
+            });
+          },
         ),
       ),
       validator: (String value) {
