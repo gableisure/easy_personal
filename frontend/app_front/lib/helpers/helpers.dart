@@ -128,7 +128,7 @@ class Helpers {
     globals.instructor_id = studentLogged['instructor_id'];
   }
 
-  // Método que deleta todos os dados do usuário cadastrada (limpa as variáveis globais)
+  // Método que deleta todos os dados do usuário cadastrado (limpa as variáveis globais)
   void deleteDataUser() {
     globals.int_idausuario = 0;
     globals.vhr_email = "";

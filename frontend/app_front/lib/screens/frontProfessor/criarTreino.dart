@@ -15,6 +15,10 @@ class _CriarTreinoState extends State<CriarTreino> {
   final _controllerTextFieldDataInicio = TextEditingController();
   final _controllerTextFieldDataFim = TextEditingController();
 
+  String nomeCidade = "";
+  var _tiposDeTreio = ['Tipo de treino', 'Semanal', 'Treino A, B, C'];
+  var _itemSelecionado = 'Tipo de treino';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,18 +40,7 @@ class _CriarTreinoState extends State<CriarTreino> {
               // color: Colors.redAccent,
               child: Column(
                 children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "Criar treino",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.w500,
-                        // fontFamily: 'Roboto',
-                      ),
-                    ),
-                  ),
+                  _buildTituloSection("Criar treino"),
                   SizedBox(
                     height: 13,
                   ),
@@ -64,12 +57,39 @@ class _CriarTreinoState extends State<CriarTreino> {
                     height: 25,
                   ),
                   _buildTipoTreino(),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  _buildDescricao(),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  _buildTituloSection("Exercícios"),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  _buildButtonCriarExercicio(),
+                  _buildButtonSalvar(),
+
                 ],
               ),
             ),
           ),
         ));
   }
+
+  Widget _buildTituloSection(String titulo) => Container(
+    alignment: Alignment.bottomLeft,
+    child: Text(
+      titulo,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w500,
+        // fontFamily: 'Roboto',
+      ),
+    ),
+  );
 
   Widget _buildTextFieldTitulo(String tituloTextField) => TextFormField(
         decoration: InputDecoration(
@@ -160,31 +180,84 @@ class _CriarTreinoState extends State<CriarTreino> {
     return Row(
       children: [
         DropdownButton<String>(
-          value: dropdownValue,
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.blueAccent),
-          underline: Container(height: 2, color: Colors.blueAccent),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-            });
-          },
-          items: <String>['Tipo de treino', 'Semanal', 'Treino A, B, C']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+            items: _tiposDeTreio.map((String dropDownStringItem) {
+              return DropdownMenuItem<String>(
+                value: dropDownStringItem,
+                child: Text(dropDownStringItem),
+              );
+            }).toList(),
+            onChanged: (String novoItemSelecionado) {
+              _dropDownItemSelected(novoItemSelecionado);
+              setState(() {
+                this._itemSelecionado = novoItemSelecionado;
+              });
+            },
+            value: _itemSelecionado),
       ],
     );
-
-
   }
 
+  void _dropDownItemSelected(String novoItem) {
+    setState(() {
+      this._itemSelecionado = novoItem;
+    });
+  }
 
+  // descrição
+  Widget _buildDescricao() {
+    return TextFormField(
+      keyboardType: TextInputType.multiline,
+      maxLength: 255,
+      maxLines: 10,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25),),
+        ),
+        prefixIcon: Icon(Icons.text_snippet_rounded),
+        labelText: "Breve Descrição",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return;
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildButtonCriarExercicio() => Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Container(
+        padding: EdgeInsets.only(right: 20, bottom: 35),
+        child: FloatingActionButton.extended(
+          onPressed: () {},
+          elevation: 3,
+          icon: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          label: Text(
+            "Adicionar exercício",
+            style: TextStyle(
+              fontSize: 17.0,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildButtonSalvar() => Container(
+    width: 500.0,
+    height: 50.0,
+    child: ElevatedButton(
+      onPressed: () {},
+      child: Text('Salvar'),
+    ),
+  );
 
 }

@@ -35,6 +35,8 @@ dependencies:
   smooth_page_indicator: ^0.2.3
   google_fonts: ^2.0.0
   icon_shadow: ^1.0.1
+#  stagehand: 3.1.11
+#  shelf: 1.1.4
 
 dev_dependencies:
   flutter_test:
