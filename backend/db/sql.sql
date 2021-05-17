@@ -52,3 +52,14 @@ CREATE TABLE user_instructors (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
+
+CREATE TABLE tbr_tipotreino (
+  int_idatipotreino SERIAL PRIMARY KEY NOT NULL,
+  vhr_nome VARCHAR(14) NOT NULL,
+  vhr_descricao VARCHAR(54) NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY(user_id)
+    REFERENCES tbl_usuario (int_idausuario)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE 
+);
