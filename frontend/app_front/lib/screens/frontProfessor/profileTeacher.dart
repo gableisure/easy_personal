@@ -32,7 +32,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
               clipper: Clipper(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -49,28 +49,34 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                 child: Column(
                   children: <Widget>[
                     _appBar(),
-                    SizedBox(height: 20),
-                    Padding(
-                        padding: EdgeInsets.only(left: 23),
-                        child: Row(
-                          children: [
-                            _avatarCircle(),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 15, right: 15),
-                                child: _contador(),
-                              ),
+                    SizedBox(height: 6),
+                    ClipPath(
+                      clipper: Clipper(),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 2.55,
+                        //color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 25, right: 25),
+                                  child: _avatarCircle(),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 25, right: 25),
+                                  child: _informationUser(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 35),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 45),
+                              child: _contador(),
                             ),
                           ],
-                        )
-                    ),
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: _informationUser(),
+                        ),
                       ),
                     ),
                   ],
@@ -113,6 +119,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ),
     );
   }
+
   //appbar
   Widget _appBar() {
     return Stack(
@@ -146,6 +153,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ],
     );
   }
+
   //circleAvatar
   Widget _avatarCircle() {
     return CircleAvatar(
@@ -162,6 +170,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ),
     );
   }
+
   //User
   Widget _informationUser() {
     return Column(
@@ -192,38 +201,43 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ],
     );
   }
+
   //alunos e data de pagamento
   Widget _contador() {
-    return Container(
-      height: 50,
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Column(
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("SEUS ALUNOS", style: TextStyle(color: Colors.white),),
+              Text("QUANTIDADE DE ALUNOS", style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,),
               SizedBox(height: 10),
               Text("7",style: TextStyle(color: Colors.white),),
             ],
           ),
-          VerticalDivider(
-            thickness: 2.0,
+        ),
+        Container(
+          height: 54,
+          child: VerticalDivider(
+            thickness: 2,
             color: Colors.white,
-            indent: 3,
-            endIndent: 8,
           ),
-          Column(
+        ),
+        Expanded(
+          flex: 5,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("PAGAMENTOS PEDENTES",style: TextStyle(color: Colors.white),),
+              Text("PAGAMENTOS ATRASADOS", style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,),
               SizedBox(height: 10),
-              Text("2", style: TextStyle(color: Colors.white),),
+              Text("3",style: TextStyle(color: Colors.white),),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
   //button
@@ -241,7 +255,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
           style: ElevatedButton.styleFrom(
             primary: Color(0xFF4563DB),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+              borderRadius: BorderRadius.all(Radius.circular(20.0),),
             ),
           ),
           child: Text("Excluir Conta", textAlign: TextAlign.center,),
@@ -254,7 +268,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
           style: ElevatedButton.styleFrom(
             primary: Color(0xFF4563DB),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+              borderRadius: BorderRadius.all(Radius.circular(20.0),),
             ),
           ),
           child: Text("Editar Dados", textAlign: TextAlign.center,),

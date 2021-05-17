@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 class APIGetStudents {
   Future<Student> getAllStudents() async {
-    String url = "10.0.2.2:3000";
+    // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
 
     final http.Response response = await http.get(Uri.http(url,"/api/v1/usuarios/alunos/"));
 

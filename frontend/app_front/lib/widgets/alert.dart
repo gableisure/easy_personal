@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
 class Alert extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(25.0),),
+        borderRadius: BorderRadius.all(Radius.circular(20.0),),
       ),
-      titlePadding: EdgeInsets.only(top: 20, left: 30, right: 30),
+      titlePadding: EdgeInsets.only(top: 25, left: 40, right: 40),
       title: Text(
-        "${globals.vhr_nome} ${globals.vhr_sobrenome}, tem certeza que deseja nós abandonar?",
+        "${globals.vhr_nome} ${globals.vhr_sobrenome}, tem certeza que deseja nos abandonar?",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
         textAlign: TextAlign.justify,
       ),
-      contentPadding: EdgeInsets.only(top: 15, left: 30, right: 30),
+      contentPadding: EdgeInsets.only(top: 15, left: 40, right: 40),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -29,7 +30,7 @@ class Alert extends StatelessWidget {
               ),
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
