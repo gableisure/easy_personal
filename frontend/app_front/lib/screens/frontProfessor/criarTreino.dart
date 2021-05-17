@@ -1,3 +1,4 @@
+import 'package:app_front/widgets/alertCheckSalvo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -255,8 +256,19 @@ class _CriarTreinoState extends State<CriarTreino> {
     width: 500.0,
     height: 50.0,
     child: ElevatedButton(
-      onPressed: () {},
-      child: Text('Salvar'),
+      onPressed: () {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) =>  AlertCheckSalvo(),
+        );
+      },
+      child: Text(
+        'Salvar',
+        style: TextStyle(
+          fontSize: 19.0
+        ),
+      ),
     ),
   );
 

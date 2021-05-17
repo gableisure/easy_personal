@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
 class Alert extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
