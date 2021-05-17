@@ -113,6 +113,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ),
     );
   }
+
   //appbar
   Widget _appBar() {
     return Stack(
@@ -146,6 +147,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ],
     );
   }
+
   //circleAvatar
   Widget _avatarCircle() {
     return CircleAvatar(
@@ -162,6 +164,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ),
     );
   }
+
   //User
   Widget _informationUser() {
     return Column(
@@ -192,6 +195,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ],
     );
   }
+
   //alunos e data de pagamento
   Widget _contador() {
     return Container(

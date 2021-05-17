@@ -10,6 +10,7 @@ class TreinosAluno extends StatefulWidget {
 
   @override
   _TreinosAlunoState createState() => _TreinosAlunoState();
+
 }
 
 class _TreinosAlunoState extends State<TreinosAluno> {
