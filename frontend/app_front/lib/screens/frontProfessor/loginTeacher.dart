@@ -36,7 +36,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
         labelText: "E-mail",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 15,
+
         ),
       ),
       validator: (String value) {
@@ -66,7 +66,6 @@ class _StateLoginTeacher extends State<LoginTeacher> {
         labelText: "Senha",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 15,
         ),
         suffixIcon: GestureDetector(
           child: Icon(
@@ -114,7 +113,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               "Esqueceu a Senha?",
               style: TextStyle(
                 color: Color(0xFF0073B7),
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
             ),
@@ -220,7 +219,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Não Tem Uma Conta?",
+              "Não tem uma conta?",
               style: TextStyle(
                 color: Color(0xFF00253F),
                 fontWeight: FontWeight.w400,
