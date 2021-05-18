@@ -54,6 +54,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   // TODO: Implementar lógica para retornar o nome curto do aluno
   //String getFullName(String name, String surname) => "${name} ${}";
 
+
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
       builder: (context, snapshot) {
@@ -75,34 +76,26 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
             } else {
               return ListView.builder(
                 padding:
-                    EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                    EdgeInsets.only(top: 30, bottom: 10),
                 shrinkWrap: true,
                 itemCount: alunosData.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 25),
+                    padding: EdgeInsets.only(bottom: 15, right: 10, left: 10, top: 5),
                     height: 200,
                     child: Container(
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.8),
-                            spreadRadius: 5,
-                            blurRadius: 7,
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 4,
                             offset: Offset(0, 3), // changes position of shadow
                           ),
                         ],
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          stops: [0.1, 0.8],
-                          colors: [
-                            Color(0xFF3594DD),
-                            Color(0xFF4563DB),
-                          ],
                         ),
                       ),
                       child: Column(
@@ -113,7 +106,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                             child: Row(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Color(0XFFddd9ce),
                                   child: Text(
                                     _getIniciais(alunosData[index].vhr_nome,
                                             alunosData[index].vhr_sobrenome)
@@ -133,9 +125,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                         alunosData[index].vhr_sobrenome,
                                     style: GoogleFonts.lato(
                                       textStyle: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                          ),
                                     )),
                               ],
                             ),
@@ -168,25 +160,25 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                     },
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-                                    color: Colors.white,
+
                                     icon: Icon(Icons.assignment_outlined)),
                                 IconButton(
                                     onPressed: () {},
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-                                    color: Colors.white,
+
                                     icon: Icon(Icons.all_inbox_outlined)),
                                 IconButton(
                                     onPressed: () {},
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-                                    color: Colors.white,
+
                                     icon: Icon(Icons.feedback_outlined)),
                                 IconButton(
                                     onPressed: () {},
                                     iconSize: 50,
                                     padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-                                    color: Colors.white,
+
                                     icon: Icon(Icons.account_circle_outlined))
                               ],
                             ),
