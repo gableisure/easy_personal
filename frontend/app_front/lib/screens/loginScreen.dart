@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                         Text(
                           "Deseja logar como Personal ou Aluno?",
                           style: TextStyle(
-                            color: Color(0xFF0073B7),
+                            color: Colors.black,
                             fontWeight: FontWeight.w400,
                             fontSize: 15,
                           ),

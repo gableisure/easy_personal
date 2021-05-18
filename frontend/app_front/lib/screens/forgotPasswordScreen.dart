@@ -102,7 +102,6 @@ class ForgotPassword extends StatelessWidget {
                               labelText: "Digite seu E-mail",
                               labelStyle: TextStyle(
                                 fontWeight: FontWeight.normal,
-                                fontSize: 20,
                               ),
                             ),
                             validator: (String val) {
@@ -133,9 +132,9 @@ class ForgotPassword extends StatelessWidget {
                                   Text(
                                     "Enviar",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 20,
                                       color: Color(0xFFFFFFFF),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
                                     ),
                                   ),
                                   Container(

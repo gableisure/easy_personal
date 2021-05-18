@@ -82,7 +82,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 itemBuilder: (context, index) {
                   return Container(
                     padding: EdgeInsets.only(bottom: 15, right: 10, left: 10, top: 5),
-                    height: 200,
+                    height: 180,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -128,7 +128,8 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                           color: Colors.black,
                                           fontSize: 20,
                                           ),
-                                    )),
+                                    )
+                                ),
                               ],
                             ),
                           ),
@@ -143,8 +144,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
                           // icones
                           Container(
+                            padding: EdgeInsets.only(top: 15),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -158,27 +160,19 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                                     .vhr_nome)),
                                       );
                                     },
-                                    iconSize: 50,
-                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-
+                                    iconSize: 45,
                                     icon: Icon(Icons.assignment_outlined)),
                                 IconButton(
                                     onPressed: () {},
-                                    iconSize: 50,
-                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-
+                                    iconSize: 45,
                                     icon: Icon(Icons.all_inbox_outlined)),
                                 IconButton(
                                     onPressed: () {},
-                                    iconSize: 50,
-                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-
+                                    iconSize: 45,
                                     icon: Icon(Icons.feedback_outlined)),
                                 IconButton(
                                     onPressed: () {},
-                                    iconSize: 50,
-                                    padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-
+                                    iconSize: 45,
                                     icon: Icon(Icons.account_circle_outlined))
                               ],
                             ),
@@ -225,6 +219,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
               label: Text(
                 "Criar",
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 17.0,
                 ),
               ),
