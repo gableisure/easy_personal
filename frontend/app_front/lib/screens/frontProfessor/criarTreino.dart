@@ -61,7 +61,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                   SizedBox(
                     height: 25,
                   ),
-                  _buildDescricao(),
+                  _buildObservacoes(),
                   SizedBox(
                     height: 25,
                   ),
@@ -105,7 +105,7 @@ class _CriarTreinoState extends State<CriarTreino> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 300,
+            width: 250,
             child: TextFormField(
               controller: _controllerTextFieldDataInicio,
               enabled: false,
@@ -117,7 +117,6 @@ class _CriarTreinoState extends State<CriarTreino> {
             ),
           ),
           Container(
-            width: 50,
             child: TextButton(
               onPressed: () {
                 showDatePicker(
@@ -127,8 +126,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                   lastDate: DateTime(2022),
                 ).then((date) {
                   setState(() {
-                    _dateTime = date;
-                    _controllerTextFieldDataInicio.text = _dateTime.toString();
+                    _controllerTextFieldDataInicio.text = formatDate(date.toString());
                   });
                 });
               },
@@ -143,7 +141,7 @@ class _CriarTreinoState extends State<CriarTreino> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 300,
+            width: 250,
             child: TextFormField(
               controller: _controllerTextFieldDataFim,
               enabled: false,
@@ -155,7 +153,6 @@ class _CriarTreinoState extends State<CriarTreino> {
             ),
           ),
           Container(
-            width: 50,
             child: TextButton(
               onPressed: () {
                 showDatePicker(
@@ -165,8 +162,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                   lastDate: DateTime(2022),
                 ).then((date) {
                   setState(() {
-                    _dateTime = date;
-                    _controllerTextFieldDataFim.text = _dateTime.toString();
+                    _controllerTextFieldDataFim.text = formatDate(date.toString());
                   });
                 });
               },
@@ -205,7 +201,7 @@ class _CriarTreinoState extends State<CriarTreino> {
   }
 
   // descrição
-  Widget _buildDescricao() {
+  Widget _buildObservacoes() {
     return TextFormField(
       keyboardType: TextInputType.multiline,
       maxLength: 255,
@@ -214,8 +210,7 @@ class _CriarTreinoState extends State<CriarTreino> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
         ),
-        prefixIcon: Icon(Icons.text_snippet_rounded),
-        labelText: "Breve Descrição",
+        labelText: "Observações",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
@@ -271,5 +266,16 @@ class _CriarTreinoState extends State<CriarTreino> {
       ),
     ),
   );
+
+  // Método para formatar a data no tipo dd/mm/yyyy
+  String formatDate(String date) {
+    String dia, mes, ano;
+
+    dia = date.substring(8, 10);
+    mes = date.substring(5, 7);
+    ano = date.substring(0, 4);
+
+    return "${dia}/${mes}/${ano}";
+  }
 
 }

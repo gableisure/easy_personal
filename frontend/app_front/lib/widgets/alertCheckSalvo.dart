@@ -1,5 +1,4 @@
 import 'package:app_front/screens/frontProfessor/criarTreino.dart';
-import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
@@ -36,11 +35,12 @@ class AlertCheckSalvo extends StatelessWidget {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => CriarTreino(),
-                        ));
+                    // Navigator.push(
+                    //     context,
+                    //     CupertinoPageRoute(
+                    //       builder: (context) => CriarTreino(),
+                    //     ));
+                    Navigator.of(context).pop();
                   },
                   child: Text(
                     "Continuar",
