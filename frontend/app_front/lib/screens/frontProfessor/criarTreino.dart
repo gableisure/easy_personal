@@ -210,7 +210,6 @@ class _CriarTreinoState extends State<CriarTreino> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
         ),
-        prefixIcon: Icon(Icons.text_snippet_rounded),
         labelText: "Observações",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
