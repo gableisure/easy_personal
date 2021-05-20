@@ -18,7 +18,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   // váriaveis
   int _index = 0;
   String genero;
-
+  bool _showPassword = false;
+  bool _showConfirmPassword = false;
 
   var _userObject = {};
 
@@ -121,7 +122,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
     return TextFormField(
       controller: _senhaController,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: _showPassword == false ? true : false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -131,6 +132,17 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
+        ),
+        suffixIcon: GestureDetector(
+          child: Icon(
+            _showPassword == false ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[800],
+          ),
+          onTap: () {
+            setState(() {
+              _showPassword = !_showPassword;
+            });
+          },
         ),
       ),
       validator: (String value) {
@@ -149,7 +161,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   Widget _buildConfirmaSenha() {
     return TextFormField(
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: _showConfirmPassword == false ? true : false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -159,6 +171,17 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
+        ),
+        suffixIcon: GestureDetector(
+          child: Icon(
+            _showConfirmPassword == false ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[800],
+          ),
+          onTap: () {
+            setState(() {
+              _showConfirmPassword = !_showConfirmPassword;
+            });
+          },
         ),
       ),
       validator: (String value) {
@@ -375,20 +398,9 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   SizedBox(height: 18,),
                   _buildEmail(),
                   SizedBox(height: 18,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: _buildSenha(),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.0),),
-                      Expanded(
-                        flex: 2,
-                        child: _buildConfirmaSenha(),
-                      ),
-                    ],
-                  ),
+                  _buildSenha(),
+                  SizedBox(height: 18,),
+                  _buildConfirmaSenha(),
                 ],
               ),
             ),
@@ -547,9 +559,9 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
                   elevation: 10,
                 ),
               ),
-          ],
-        ),
-      ],
+            ],
+         ),
+       ],
     );
   }
 }

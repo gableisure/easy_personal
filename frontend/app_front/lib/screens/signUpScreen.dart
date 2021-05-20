@@ -55,16 +55,15 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                   child: SingleChildScrollView(
-                    //reverse: false,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                       RadioButtonSignUp(),
+                        RadioButtonSignUp(),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
