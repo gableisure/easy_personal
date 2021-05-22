@@ -12,10 +12,21 @@ class RadioButtonSignUp extends StatefulWidget {
 class _MyStateRadioButton extends State<RadioButtonSignUp> {
   int selectedRadioButton1;
   int selectedRadioButton2;
+
+  var _userObject = {};
+
+  _defineUserObjectTeacher() {
+    _userObject['int_tipo'] = 1;
+  }
+
+  _defineUserObjectStudent() {
+    _userObject['int_tipo'] = 0;
+  }
+
   @override
   void initState() {
     super.initState();
-    selectedRadioButton1 = 1;
+    selectedRadioButton1 = 0;
     selectedRadioButton2 = 0;
   }
   //professor
@@ -38,7 +49,8 @@ class _MyStateRadioButton extends State<RadioButtonSignUp> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Radio(
               value: 1,
@@ -60,9 +72,83 @@ class _MyStateRadioButton extends State<RadioButtonSignUp> {
           ],
         ),
         if(selectedRadioButton1 == 1)
-          SignUpTeacher(),
+          _buttonTeacher(),
         if(selectedRadioButton2 == 2)
-          SignUpStudent(),
+          _buttonAluno(),
+      ],
+    );
+  }
+  //button student
+  Widget _buttonAluno() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed("/login");
+          },
+          child: Text(
+            "Cancelar",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.blueAccent,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            _defineUserObjectStudent();
+            Navigator.of(context).pushReplacementNamed("/signUpScreen");
+          },
+          child: Text(
+            "Continuar",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.blueAccent,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+  //button teacher
+  Widget _buttonTeacher() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed("/login");
+          },
+          child: Text(
+            "Cancelar",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.blueAccent,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            _defineUserObjectTeacher();
+            Navigator.of(context).pushReplacementNamed("/signUpScreenTeacher");
+          },
+          child: Text(
+            "Continuar",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.blueAccent,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ],
     );
   }

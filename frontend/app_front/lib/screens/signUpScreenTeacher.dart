@@ -1,8 +1,8 @@
-import 'package:app_front/screens/frontAluno/signUpStudent.dart';
+import 'package:app_front/screens/frontProfessor/signUpTeacher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignUp extends StatelessWidget {
+class SignUpScreenTeacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +62,13 @@ class SignUp extends StatelessWidget {
                       top: Radius.circular(60),
                     ),
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      SignUpStudent(),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        SignUpTeacher(),
+                      ],
+                    ),
                   ),
                 ),
               ),

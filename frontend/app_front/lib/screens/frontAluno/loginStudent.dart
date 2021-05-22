@@ -217,7 +217,7 @@ class _StateLoginStudent extends State<LoginStudent> {
                 ) ,
               ),
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed("/signUp");
+                Navigator.of(context).pushReplacementNamed("/showSignUp");
               },
             ),
           ],

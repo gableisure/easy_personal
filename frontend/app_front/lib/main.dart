@@ -4,7 +4,9 @@ import 'package:app_front/screens/frontProfessor/pageMainTeacher.dart';
 import 'package:app_front/screens/frontProfessor/profileTeacher.dart';
 import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:app_front/screens/profileScreen.dart';
+import 'package:app_front/screens/signUpScreenTeacher.dart';
 import 'package:app_front/screens/splashScreen.dart';
+import 'package:app_front/widgets/alertSignUp.dart';
 import 'package:flutter/material.dart';
 import 'screens/loginScreen.dart';
 import 'screens/signUpScreen.dart';
@@ -32,7 +34,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => SplashScreen(),
         "/login": (context) => LoginScreen(),
-        "/signUp": (context) => SignUp(),
+        "/signUpScreen": (context) => SignUp(),
+        "/signUpScreenTeacher": (context) => SignUpScreenTeacher(),
         "/forgotPassword": (context) => ForgotPassword(),
         "/pageMainTeacher": (context) => PageMainTeacher(),
         "/pageMainStudent": (context) => PageMainStudent(),
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/profileScreen":(context) => ProfileScreen(),
         "/profileTeacher": (context) => ProfileTeacher(),
         "/profileStudent":(context) => ProfileStudent(),
+        "/showSignUp":(context) => AlertSignUp(),
 
       },
     );
