@@ -164,6 +164,7 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               _formKey.currentState.save();
 
               var listTeachers = await APIGetTeachers().getAllTeachers();
+              // print("debug: ${listTeachers}");
               var users = listTeachers.data;
 
               if (Helpers().isTeacher(users, email) != null) {
