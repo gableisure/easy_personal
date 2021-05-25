@@ -18,7 +18,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   // váriaveis
   int _index = 0;
   String genero;
-
+  bool _showPassword = false;
+  bool _showConfirmPassword = false;
 
   var _userObject = {};
 
@@ -121,7 +122,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
     return TextFormField(
       controller: _senhaController,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: _showPassword == false ? true : false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -131,6 +132,17 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
+        ),
+        suffixIcon: GestureDetector(
+          child: Icon(
+            _showPassword == false ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[800],
+          ),
+          onTap: () {
+            setState(() {
+              _showPassword = !_showPassword;
+            });
+          },
         ),
       ),
       validator: (String value) {
@@ -149,7 +161,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
   Widget _buildConfirmaSenha() {
     return TextFormField(
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: _showConfirmPassword == false ? true : false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(25),),
@@ -159,6 +171,17 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
+        ),
+        suffixIcon: GestureDetector(
+          child: Icon(
+            _showConfirmPassword == false ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[800],
+          ),
+          onTap: () {
+            setState(() {
+              _showConfirmPassword = !_showConfirmPassword;
+            });
+          },
         ),
       ),
       validator: (String value) {
@@ -221,7 +244,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
         ),
         prefixIcon: Icon(Icons.phone),
         hintText: "(##) 9####-####",
-        labelText: "Telefone WhatsApp",
+        labelText: "Telefone",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
@@ -317,7 +340,10 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
           borderRadius: BorderRadius.all(Radius.circular(25),),
         ),
         prefixIcon: Icon(Icons.text_snippet_rounded),
-        labelText: "Breve Descrição",
+        labelText: "Breve Descrição:\n",
+        hintText: "Breve Descrição sobre você:\n"
+            "- Uma breve descrição pessoal.\n"
+            "- Experiências profissionais.",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
@@ -325,7 +351,7 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
       ),
       validator: (String value) {
         if(value.isEmpty) {
-          return;
+          return "Descrição  Obrigatória!!";
         }
         return null;
       },
@@ -360,35 +386,25 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "PASSO 1 DE 3",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      color: Color(0xFF0073B7),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      "Passo 1 de 3",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Color(0xFF0073B7),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 13,),
+                  SizedBox(height: 15,),
                   _buildNome(),
                   SizedBox(height: 18,),
                   _buildSobrenome(),
                   SizedBox(height: 18,),
                   _buildEmail(),
                   SizedBox(height: 18,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: _buildSenha(),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.0),),
-                      Expanded(
-                        flex: 2,
-                        child: _buildConfirmaSenha(),
-                      ),
-                    ],
-                  ),
+                  _buildDataNascimento(),
                 ],
               ),
             ),
@@ -396,22 +412,25 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               key: _formKey2,
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "PASSO 2 DE 3",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      color: Color(0xFF0073B7),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      "Passo 2 de 3",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Color(0xFF0073B7),
+                      ),
                     ),
                   ),
                   SizedBox(height: 18,),
-                  _buildDataNascimento(),
+                  _buildSenha(),
+                  SizedBox(height: 18,),
+                  _buildConfirmaSenha(),
                   SizedBox(height: 18,),
                   _buildTelefone(),
                   SizedBox(height: 18,),
                   _buildCref(),
-                  SizedBox(height: 18,),
-                  _buildGenero(),
                 ],
               ),
             ),
@@ -419,41 +438,48 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               key: _formKey3,
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "PASSO 3 DE 3",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      color: Color(0xFF0073B7),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      "Passo 3 de 3",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Color(0xFF0073B7),
+                      ),
                     ),
                   ),
                   SizedBox(height: 18,),
                   _buildDescricao(),
+                  SizedBox(height: 18,),
+                  _buildGenero(),
                 ],
               ),
             ),
           ],
         ),
-        SizedBox(height: 10.0,),
+        SizedBox(height: 8.0,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
           children: <Widget>[
             _index >= 1
-            ? ElevatedButton(
-
-              onPressed: () {
-                _switchInputField(_index - 1);
-              },
-              child: ButtonVoltarSingUp(labelButton: "Voltar", iconButton: Icon( Icons.chevron_left_outlined ),),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF4563DB),
-                shape: new RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25),),
+            ? Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () {
+                  _switchInputField(_index - 1);
+                },
+                child: ButtonVoltarSingUp(labelButton: "Voltar", iconButton: Icon( Icons.chevron_left_outlined ),),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF4563DB),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20),),
+                  ),
+                  elevation: 10,
                 ),
-                elevation: 10,
               ),
-            ) : Container(),
+            ) : Expanded(flex: 2, child: Container()),
             _index == 0
             ? ElevatedButton(
               onPressed: () {
@@ -467,89 +493,96 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF4563DB),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25),),
+                  borderRadius: BorderRadius.all(Radius.circular(20),),
                 ),
                 elevation: 10,
               ),
             ) : Container(),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 5.0)),
             if(_index == 1)
-              ElevatedButton(
-                onPressed: () {
-                  if(!_formKey2.currentState.validate()) {
-                    return;
-                  } else {
-                    _switchInputField(_index + 1);
-                  }
-                },
-                child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF4563DB),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25),),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if(!_formKey2.currentState.validate()) {
+                      return;
+                    } else {
+                      _switchInputField(_index + 1);
+                    }
+                  },
+                  child: ButtonAvancarSingUp(labelButton: "Avançar", iconButton: Icon( Icons.chevron_right_outlined ),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF4563DB),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20),),
+                    ),
+                    elevation: 10,
                   ),
-                  elevation: 10,
                 ),
               ),
             if(_index == 2)
-              ElevatedButton(
-                onPressed: () async {
-                  if(!_formKey3.currentState.validate()) {
-                    return;
-                  } else {
-                    _formKey.currentState.save();
-                    _formKey2.currentState.save();
-                    _formKey3.currentState.save();
-
-                    _defineUserObject();
-
-                    var response = await APISingUpTeacher().singUp(
-                      _userObject['vhr_email'],
-                      _userObject['vhr_senha'],
-                      _userObject['passwordConfirm'],
-                      _userObject['vhr_nome'],
-                      _userObject['vhr_sobrenome'],
-                      _userObject['dtt_nascimento'],
-                      _userObject['int_genero'],
-                      _userObject['vhr_whatsapp'],
-                      _userObject['int_tipo'],
-                      _userObject['vhr_cref'],
-                      _userObject['vhr_descricao'],
-                    );
-
-                    if(response.token != null) {
-                      SnackBar snackbar = new SnackBar(
-                        content: Text(
-                          "Professor cadastrado com sucesso",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        backgroundColor: Colors.green[600],
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      Navigator.of(context).pushReplacementNamed("/login");
+              Expanded(
+                flex: 2,
+                child:  ElevatedButton(
+                  onPressed: () async {
+                    if(!_formKey3.currentState.validate()) {
+                      return;
                     } else {
-                      SnackBar snackbar = new SnackBar(
-                        content: Text(
-                          "Ops, ${response.message}",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        backgroundColor: Colors.red[600],
+                      _formKey.currentState.save();
+                      _formKey2.currentState.save();
+                      _formKey3.currentState.save();
+
+                      _defineUserObject();
+
+                      var response = await APISingUpTeacher().singUp(
+                        _userObject['vhr_email'],
+                        _userObject['vhr_senha'],
+                        _userObject['passwordConfirm'],
+                        _userObject['vhr_nome'],
+                        _userObject['vhr_sobrenome'],
+                        _userObject['dtt_nascimento'],
+                        _userObject['int_genero'],
+                        _userObject['vhr_whatsapp'],
+                        _userObject['int_tipo'],
+                        _userObject['vhr_cref'],
+                        _userObject['vhr_descricao'],
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
+                      if(response.token != null) {
+                        SnackBar snackbar = new SnackBar(
+                          content: Text(
+                            "Professor cadastrado com sucesso",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          backgroundColor: Colors.green[600],
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        Navigator.of(context).pushReplacementNamed("/login");
+                      } else {
+                        SnackBar snackbar = new SnackBar(
+                          content: Text(
+                            "Ops, ${response.message}",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          backgroundColor: Colors.red[600],
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      }
                     }
-                  }
-                },
-                child: ButtonCadastrarSingUp(labelButton: "Cadastrar"),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF4563DB),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25),),
+                  },
+                  child: ButtonCadastrarSingUp(labelButton: "Cadastrar"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF4563DB),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20),),
+                    ),
+                    elevation: 10,
                   ),
-                  elevation: 10,
                 ),
               ),
-          ],
-        ),
-      ],
+            ],
+         ),
+       ],
     );
   }
 }

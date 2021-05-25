@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { promisify } = require('util');
 const AppError = require('../utils/AppError');
 const db = require('../db');
 const sendEmail = require('../utils/email');
@@ -28,6 +29,42 @@ const createSendToken = (userId, res) => {
 };
 const comparePassword = async (requestPass, userPass) =>
   await bcrypt.compare(requestPass, userPass);
+
+exports.protect = async req => {
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    throw new AppError(
+      'Você não está logado! Por favor, entre na sua conta para ter acesso.',
+      401
+    );
+  }
+  // Verification token
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_TOKEN);
+
+  const {
+    rows: user,
+  } = await db.query(`SELECT * FROM tbl_usuario WHERE int_idausuario = $1`, [
+    decoded.userId,
+  ]);
+
+  if (!user[0]) {
+    throw new AppError('Não existe nenhum usuário com este token.', 401);
+  }
+
+  return user[0];
+};
+
+exports.getUserType = async req => req.user.int_tipo;
 
 exports.signup = async (req, res) => {
   // NÃO PERMITIR REPETIÇÃO DE TOKEN DE PROFESSOR.

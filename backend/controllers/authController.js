@@ -1,5 +1,6 @@
 const authService = require('../services/authService');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const token = await authService.signup(req, res);
@@ -38,4 +39,19 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     data: 'User changed password!',
     token,
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  const user = await authService.protect(req);
+
+  req.user = user;
+  next();
+});
+
+exports.isInstructor = catchAsync(async (req, res, next) => {
+  const userType = await authService.getUserType(req);
+
+  if (userType !== 1) throw new AppError('Tipo de usuário inválido', 403);
+
+  next();
 });
