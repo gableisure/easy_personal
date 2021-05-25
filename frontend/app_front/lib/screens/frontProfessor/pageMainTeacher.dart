@@ -8,6 +8,7 @@ import 'package:flutter/painting.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
 import 'criarTreino.dart';
+import 'criarExercicio.dart';
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -228,9 +229,35 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
         ],
       );
 
-  Widget buildExercicios() => Center(
-        child: Text("Texto"),
-      );
+  Widget buildExercicios() => Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Container(
+        padding: EdgeInsets.only(right: 20, bottom: 35),
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => CriarExercicio(),
+                )
+            );
+          },
+          elevation: 3,
+          icon: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          label: Text(
+            "Criar",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 17.0,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
 
   Widget buildAgenda() => Center(
         child: Text("Texto"),

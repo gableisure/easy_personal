@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CriarTreino extends StatefulWidget {
-  const CriarTreino({Key key}) : super(key: key);
 
   @override
   _CriarTreinoState createState() => _CriarTreinoState();
@@ -16,8 +15,7 @@ class _CriarTreinoState extends State<CriarTreino> {
   final _controllerTextFieldDataInicio = TextEditingController();
   final _controllerTextFieldDataFim = TextEditingController();
 
-  String nomeCidade = "";
-  var _tiposDeTreio = ['Tipo de treino', 'Semanal', 'Treino A, B, C'];
+  var _tiposDeTreino = ['Tipo de treino', 'Semanal', 'Treino A, B, C'];
   var _itemSelecionado = 'Tipo de treino';
 
   @override
@@ -45,7 +43,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                   SizedBox(
                     height: 13,
                   ),
-                  _buildTextFieldTitulo("Título"),
+                  _buildTextFieldTitulo("Nome"),
                   SizedBox(
                     height: 25,
                   ),
@@ -173,11 +171,11 @@ class _CriarTreinoState extends State<CriarTreino> {
       );
 
   Widget _buildTipoTreino() {
-    String dropdownValue = 'Tipo de treino';
+    //String dropdownValue = 'Tipo de treino';
     return Row(
       children: [
         DropdownButton<String>(
-            items: _tiposDeTreio.map((String dropDownStringItem) {
+            items: _tiposDeTreino.map((String dropDownStringItem) {
               return DropdownMenuItem<String>(
                 value: dropDownStringItem,
                 child: Text(dropDownStringItem),
