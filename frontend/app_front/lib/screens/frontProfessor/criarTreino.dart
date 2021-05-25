@@ -71,7 +71,6 @@ class _CriarTreinoState extends State<CriarTreino> {
                   ),
                   _buildButtonCriarExercicio(),
                   _buildButtonSalvar(),
-
                 ],
               ),
             ),
@@ -80,17 +79,17 @@ class _CriarTreinoState extends State<CriarTreino> {
   }
 
   Widget _buildTituloSection(String titulo) => Container(
-    alignment: Alignment.bottomLeft,
-    child: Text(
-      titulo,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w500,
-        // fontFamily: 'Roboto',
-      ),
-    ),
-  );
+        alignment: Alignment.bottomLeft,
+        child: Text(
+          titulo,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+            // fontFamily: 'Roboto',
+          ),
+        ),
+      );
 
   Widget _buildTextFieldTitulo(String tituloTextField) => TextFormField(
         decoration: InputDecoration(
@@ -126,7 +125,8 @@ class _CriarTreinoState extends State<CriarTreino> {
                   lastDate: DateTime(2022),
                 ).then((date) {
                   setState(() {
-                    _controllerTextFieldDataInicio.text = formatDate(date.toString());
+                    _controllerTextFieldDataInicio.text =
+                        formatDate(date.toString());
                   });
                 });
               },
@@ -162,7 +162,8 @@ class _CriarTreinoState extends State<CriarTreino> {
                   lastDate: DateTime(2022),
                 ).then((date) {
                   setState(() {
-                    _controllerTextFieldDataFim.text = formatDate(date.toString());
+                    _controllerTextFieldDataFim.text =
+                        formatDate(date.toString());
                   });
                 });
               },
@@ -208,7 +209,9 @@ class _CriarTreinoState extends State<CriarTreino> {
       maxLines: 10,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25),),
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          ),
         ),
         labelText: "Observações",
         labelStyle: TextStyle(
@@ -217,7 +220,7 @@ class _CriarTreinoState extends State<CriarTreino> {
         ),
       ),
       validator: (String value) {
-        if(value.isEmpty) {
+        if (value.isEmpty) {
           return;
         }
         return null;
@@ -226,46 +229,44 @@ class _CriarTreinoState extends State<CriarTreino> {
   }
 
   Widget _buildButtonCriarExercicio() => Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      Container(
-        padding: EdgeInsets.only(right: 20, bottom: 35),
-        child: FloatingActionButton.extended(
-          onPressed: () {},
-          elevation: 3,
-          icon: Icon(Icons.add),
-          backgroundColor: Colors.green,
-          label: Text(
-            "Adicionar exercício",
-            style: TextStyle(
-              fontSize: 17.0,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            padding: EdgeInsets.only(right: 20, bottom: 35),
+            child: FloatingActionButton.extended(
+              onPressed: () {},
+              elevation: 3,
+              icon: Icon(Icons.add),
+              backgroundColor: Colors.green,
+              label: Text(
+                "Adicionar exercício",
+                style: TextStyle(
+                  fontSize: 17.0,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 
   Widget _buildButtonSalvar() => Container(
-    width: 500.0,
-    height: 50.0,
-    child: ElevatedButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) =>  AlertCheckSalvo(),
-        );
-      },
-      child: Text(
-        'Salvar',
-        style: TextStyle(
-          fontSize: 19.0
+        width: 500.0,
+        height: 50.0,
+        child: ElevatedButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => AlertCheckSalvo(),
+            );
+          },
+          child: Text(
+            'Salvar',
+            style: TextStyle(fontSize: 19.0),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   // Método para formatar a data no tipo dd/mm/yyyy
   String formatDate(String date) {
@@ -277,5 +278,4 @@ class _CriarTreinoState extends State<CriarTreino> {
 
     return "${dia}/${mes}/${ano}";
   }
-
 }
