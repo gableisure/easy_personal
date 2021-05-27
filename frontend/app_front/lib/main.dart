@@ -13,6 +13,7 @@ import 'screens/signUpScreen.dart';
 import 'screens/forgotPasswordScreen.dart';
 import 'screens/splashScreen.dart';
 import 'screens/listPage.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   Paint.enableDithering = true;
@@ -29,6 +30,20 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(primary: Color(0XFF454545)),
         ),
+      ),
+      builder: (context, widget) => ResponsiveWrapper.builder(
+        BouncingScrollWrapper.builder(context, widget),
+        maxWidth: 1200,
+        minWidth: 450,
+        defaultScale: true,
+        breakpoints: [
+          //ResponsiveBreakpoint.resize(1440, name: MOBILE),
+          ResponsiveBreakpoint.resize(450, name: MOBILE),
+          //ResponsiveBreakpoint.autoScale(800, name: TABLET),
+          //ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+          //ResponsiveBreakpoint.autoScale(1200, name: DESKTOP),
+        ],
+        //background: Container(color: Color(0xFFF5F5F5))
       ),
       initialRoute: "/",
       routes: {
