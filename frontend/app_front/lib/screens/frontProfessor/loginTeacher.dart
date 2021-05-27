@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:app_front/api/apiGetTeachers.dart';
 import 'package:app_front/api/apiLoginTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
@@ -13,15 +14,21 @@ class LoginTeacher extends StatefulWidget {
   }
 }
 
-class _StateLoginTeacher extends State<LoginTeacher> {
+class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMixin {
 
   //váriaveis
   String email;
   String senha;
   bool _showPassword = false;
+  int _state = 0;
 
   //chaves paras os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Animation _animation;
+  AnimationController _controller;
+  GlobalKey _globalKey = GlobalKey();
+  double _width = double.maxFinite;
 
   //Widgets
   //E-mail
@@ -91,6 +98,104 @@ class _StateLoginTeacher extends State<LoginTeacher> {
     );
   }
 
+  /*@override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }*/
+
+  //animation button success
+  void animateButton() {
+    double initialWidth = _globalKey.currentContext.size.width;
+
+    _controller = AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+
+    _animation = Tween(begin: 0.0, end: 1).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          _width = initialWidth - ((initialWidth - 66) * _animation.value);
+        });
+      });
+    _controller.forward();
+
+    setState(() {
+      _state = 1;
+    });
+
+    Timer(Duration(milliseconds: 1100), () {
+      setState(() {
+        _state = 2;
+      });
+    });
+  }
+  //animation buttonError
+  void animateButtonError() {
+    double initialWidth = _globalKey.currentContext.size.width;
+
+    _controller = AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+
+    _animation = Tween(begin: 0.0, end: 1).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          _width = initialWidth - ((initialWidth - 66) * _animation.value);
+        });
+      });
+    _controller.forward();
+
+    setState(() {
+      _state = 1;
+    });
+
+    Timer(Duration(milliseconds: 1100), () {
+      setState(() {
+        _state = 3;
+      });
+    });
+  }
+
+  //Button
+  setUpButton() {
+    if (_state == 0) {
+      return Padding(
+        padding: EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "ENTRAR",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+            Icon(
+              Icons.fitness_center_rounded,
+              color: Colors.white,
+              size: 25,
+            )
+          ],
+        ),
+      );
+    } else if (_state == 1) {
+      return SizedBox(
+        height: 50,
+        width: 50,
+        child: Center(
+          child: CircularProgressIndicator(
+            value: null,
+            strokeWidth: 4,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ),
+        ),
+      );
+    } else if(_state == 2){
+      return Icon(Icons.check, color: Colors.white, size: 30,);
+    } else {
+      return Icon(Icons.cancel_rounded, color: Color(0xFFFC0800), size: 30,);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -118,13 +223,14 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               ),
             ),
             onPressed: () {
-
               Navigator.of(context).pushReplacementNamed("/forgotPassword");
             },
           ),
         ),
         SizedBox(height: 20,),
         Container(
+          key: _globalKey,
+          width: _width,
           height: 60,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -133,34 +239,17 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                 borderRadius: BorderRadius.all(Radius.circular(25),),
               ),
             ),
-            child: SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Entrar",
-                    style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Container(
-                    width: 28,
-                    height: 28,
-                    child: Icon(
-                      Icons.fitness_center_rounded,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: setUpButton(),
             onPressed: () async {
               if (!_formKey.currentState.validate()) {
                 return;
               }
-
+              //Estado do button
+              setState(() {
+                if(_state >= 1) {
+                  animateButton();
+                }
+              });
               _formKey.currentState.save();
 
               var listTeachers = await APIGetTeachers().getAllTeachers();
@@ -168,9 +257,18 @@ class _StateLoginTeacher extends State<LoginTeacher> {
               var users = listTeachers.data;
 
               if (Helpers().isTeacher(users, email) != null) {
+                setState(() {
+                  if(_state == 0) {
+                    //_state = 2;
+                    animateButton();
+                  }
+                });
                 Map instructorLogged = Helpers().getInstructorForEmail(users, email);
                 var response = await APILoginTeacher().login(email, senha);
                 if (response.token != null) {
+                  setState(() {
+                    _state = 2;
+                  });
                   SnackBar snackbar = new SnackBar(
                     content: Text(
                       "Usuário Logado com Sucesso!!",
@@ -192,6 +290,9 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                       ),
                   );
                 } else {
+                  setState(() {
+                    _state = 3;
+                  });
                   SnackBar snackbar = new SnackBar(
                     content: Text(
                       "E-mail ou Senha Inválidos!!",
@@ -203,6 +304,9 @@ class _StateLoginTeacher extends State<LoginTeacher> {
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }
               } else {
+                setState(() {
+                  _state = 3;
+                });
                 SnackBar snackbar = new SnackBar(
                   content: Text(
                     "Esse professor(a) não existe!!",
