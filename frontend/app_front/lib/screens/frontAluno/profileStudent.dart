@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:app_front/widgets/alert.dart';
 import 'package:app_front/widgets/clipper.dart';
 import '../../helpers/globals.dart' as globals;
+import 'editDataStudent.dart';
 
 class ProfileStudent extends StatefulWidget {
   final int instructorId;
@@ -268,7 +269,14 @@ class _ProfileStudentState extends State<ProfileStudent> {
           flex: 2,
         ),
         ElevatedButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => EditDataStudent()
+              ),
+            );
+          },
           style: ElevatedButton.styleFrom(
             primary:Color(0xFF4563DB),
             shape: RoundedRectangleBorder(
