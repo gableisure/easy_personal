@@ -47,10 +47,10 @@ class SignUpScreenTeacher extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 160,
+                top: MediaQuery.of(context).size.height / 3.7,
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: 40,
+                    top: 28,
                     left: 40,
                     right: 40,
                   ),

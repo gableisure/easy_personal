@@ -17,11 +17,13 @@ class ForgotPassword extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.1, 0.2],
+              end: Alignment.topRight,
+              stops: [0.1, 0.4, 0.7, 0.9],
               colors: [
                 Color(0xFF3594DD),
                 Color(0xFF4563DB),
+                Color(0xFF5036D5),
+                Color(0xFF5B16D0),
               ],
             ),
           ),
@@ -40,17 +42,17 @@ class ForgotPassword extends StatelessWidget {
                 ),
               ),
               Positioned(
+                top: 20,
                 left: 40,
                 right: 40,
-                bottom: 390,
                 child: Image.asset(
                   "images/2-removebg-preview.png",
                   width: MediaQuery.of(context).size.width * .3,
-                  height: MediaQuery.of(context).size.height * .63 - MediaQuery.of(context).padding.top,
+                  height: MediaQuery.of(context).size.height * .40 - MediaQuery.of(context).padding.top,
                 ),
               ),
               Positioned(
-                top: 200,
+                top: MediaQuery.of(context).size.height / 2.88,
                 child: Container(
                   padding: EdgeInsets.only(
                     top: 60,
@@ -73,11 +75,11 @@ class ForgotPassword extends StatelessWidget {
                          "Esqueceu Sua Senha?",
                          style: TextStyle(
                            fontWeight: FontWeight.bold,
-                           fontSize: 20,
+                           fontSize: 25,
                            color:  Color(0xFF012777)
                          ),
                        ),
-                        SizedBox(height: 15,),
+                        SizedBox(height: 20,),
                         Text(
                           "Não se precupe, enviaremos as informações necessárias para seu e-mail para que possa recuperar a senha.",
                           style: TextStyle(
@@ -87,7 +89,7 @@ class ForgotPassword extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 18,),
+                        SizedBox(height: 25,),
                         Form(
                           key: _formKey,
                           child: TextFormField(

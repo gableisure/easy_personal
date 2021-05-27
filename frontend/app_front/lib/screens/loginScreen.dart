@@ -17,28 +17,30 @@ class LoginScreen extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.1, 0.2],
+              end: Alignment.topRight,
+              stops: [0.1, 0.4, 0.7, 0.9],
               colors: [
                 Color(0xFF3594DD),
                 Color(0xFF4563DB),
+                Color(0xFF5036D5),
+                Color(0xFF5B16D0),
               ],
             ),
           ),
           child: Stack(
             children: <Widget>[
               Positioned(
+                top: 20,
                 left: 40,
                 right: 40,
-                bottom: 390,
                 child: Image.asset(
                   "images/2-removebg-preview.png",
                   width: MediaQuery.of(context).size.width * .3,
-                  height: (MediaQuery.of(context).size.height * .63) - MediaQuery.of(context).padding.top,
+                  height: (MediaQuery.of(context).size.height * .40) - MediaQuery.of(context).padding.top,
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height / 3.4 - MediaQuery.of(context).padding.top,
+                top: MediaQuery.of(context).size.height / 3.2,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
