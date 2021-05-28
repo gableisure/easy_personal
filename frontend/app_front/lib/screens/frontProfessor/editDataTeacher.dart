@@ -1,3 +1,4 @@
+import 'package:app_front/api/apiUpdateTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -35,6 +36,8 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
     _controllerTextFieldCref.text = globals.vhr_cref;
     _controllerTextFieldDescricao.text = globals.vhr_descricao;
     _genero = _setVariableGenero();
+    _userEdit['int_idausuario'] = globals.int_idausuario;
+
   }
 
   @override
@@ -261,7 +264,11 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
         return null;
       },
       onSaved: (String value) {
-        _userEdit['vhr_cref'] = value;
+        setState(() {
+          globals.vhr_cref = value;
+          _userEdit['vhr_cref'] = value;
+        });
+
       },
     );
   }
@@ -337,7 +344,7 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
     width: 500.0,
     height: 50.0,
     child: ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         if (!_formKey.currentState.validate()) {
           return;
         } else {
@@ -345,6 +352,8 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
           _defineUserEdit();
           Helpers().updateDataTeacher(_userEdit);
         }
+        var res = await APIUpdateTeacher().updateTeacher(_userEdit);
+        print("debug resposta: $res");
 
         showDialog(
           context: context,
@@ -375,7 +384,13 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
     else if (_userEdit['int_genero'] == "Feminino") _userEdit['int_genero'] = 1;
     else _userEdit['int_genero'] = 2;
 
-    _userEdit['int_tipo'] = 0;
+    _userEdit['int_tipo'] = 1;
   }
+
+  // _setCref() {
+  //   if(globals.vhr_cref.length == 0) {
+  //
+  //   }
+  // }
 
 }
