@@ -1,14 +1,44 @@
-
+import 'package:app_front/widgets/alertCheckSalvo.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:app_front/helpers/globals.dart' as globals;
 
 class EditDataStudent extends StatefulWidget {
-  const EditDataStudent({Key key}) : super(key: key);
-
   @override
   _EditDataStudentState createState() => _EditDataStudentState();
 }
 
 class _EditDataStudentState extends State<EditDataStudent> {
+  String _genero;
+  var _userEdit = {};
+
+  // Valor do Border Radius dos inputs do formulário
+  final double borderRadiusInputs = 10.0;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final _controllerTextFieldNome = TextEditingController();
+  final _controllerTextFieldSobrenome = TextEditingController();
+  final _controllerTextFieldDataNascimento = TextEditingController();
+  final _controllerTextFieldTelefone = TextEditingController();
+  final _controllerTextFieldPeso = TextEditingController();
+  final _controllerTextFieldAltura = TextEditingController();
+  // TODO: implementar o controler do input do gênero
+  //final _controllerTextFieldGenero = TextEditingController();
+  final _controllerTextFieldDescricao = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controllerTextFieldNome.text = globals.vhr_nome;
+    _controllerTextFieldSobrenome.text = globals.vhr_sobrenome;
+    _controllerTextFieldDataNascimento.text = globals.dtt_nascimento;
+    _controllerTextFieldTelefone.text = globals.vhr_whatsapp;
+    _controllerTextFieldPeso.text = globals.num_peso;
+    _controllerTextFieldAltura.text = globals.num_altura;
+    _controllerTextFieldDescricao.text = globals.vhr_descricao;
+    _genero = _setVariableGenero();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +58,49 @@ class _EditDataStudentState extends State<EditDataStudent> {
           color: Colors.white,
           child: Container(
             width: 100,
-            child: Column(
-              children: [
-                _buildTituloSection("Editar dados"),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  _buildTituloSection("Editar dados"),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  _buildNome(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildSobrenome(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildDataNascimento(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildTelefone(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildPeso(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildAltura(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildGenero(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _buildDescricao(),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  _buildButtonSalvar(),
+                ],
+              ),
             ),
           ),
         ),
@@ -40,16 +109,307 @@ class _EditDataStudentState extends State<EditDataStudent> {
   }
 
   Widget _buildTituloSection(String titulo) => Container(
-    alignment: Alignment.bottomLeft,
-    child: Text(
-      titulo,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w500,
-        // fontFamily: 'Roboto',
+        alignment: Alignment.bottomLeft,
+        child: Text(
+          titulo,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+            // fontFamily: 'Roboto',
+          ),
+        ),
+      );
+
+  Widget _buildNome() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      controller: _controllerTextFieldNome,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.account_circle_rounded),
+        labelText: "Primeiro Nome",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
       ),
-    ),
-  );
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Nome Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['vhr_nome'] = value;
+      },
+    );
+  }
+
+  Widget _buildSobrenome() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      controller: _controllerTextFieldSobrenome,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.account_circle_rounded),
+        labelText: "Sobrenome",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Sobrenome Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['vhr_sobrenome'] = value;
+      },
+    );
+  }
+
+  Widget _buildDataNascimento() {
+    return TextFormField(
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        DataInputFormatter(),
+      ],
+      keyboardType: TextInputType.datetime,
+      controller: _controllerTextFieldDataNascimento,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.date_range_rounded),
+        labelText: "Data de Nascimento",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Data de Nascimento Obrigatória";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['dtt_nascimento'] = value;
+      },
+    );
+  }
+
+  Widget _buildTelefone() {
+    return TextFormField(
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        TelefoneInputFormatter(),
+      ],
+      keyboardType: TextInputType.phone,
+      controller: _controllerTextFieldTelefone,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.phone),
+        hintText: "(##) 9####-####",
+        labelText: "Telefone",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Telefone Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['vhr_whatsapp'] = value;
+      },
+    );
+  }
+
+  Widget _buildPeso() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      controller: _controllerTextFieldPeso,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.nature_people_rounded),
+        labelText: "Peso",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Peso Obrigatório";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['num_peso'] = value;
+      },
+    );
+  }
+
+  Widget _buildAltura() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      controller: _controllerTextFieldAltura,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.height),
+        labelText: "Altura",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "Altura Obrigatória";
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _userEdit['num_altura'] = value;
+      },
+    );
+  }
+
+  Widget _buildGenero() {
+    var _list = ["Masculino", "Feminino", "Indefinido"];
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.people_alt_rounded),
+        labelText: "Escolha o Gênero",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+        isDense: true,
+      ),
+      value: _genero,
+      items: _list.map<DropdownMenuItem<String>>((String drop) {
+        return DropdownMenuItem<String>(
+          child: Text(drop),
+          value: drop,
+        );
+      }).toList(),
+      validator: (String value) {
+        if (value == null || value.isEmpty) {
+          return "Escolha de gênero Obrigatória";
+        }
+        return null;
+      },
+      onChanged: (String value) {
+        setState(() {
+          _userEdit['int_genero'] = value;
+        });
+      },
+      onSaved: (String value) {
+        _userEdit['int_genero'] = value;
+      },
+    );
+  }
+
+  Widget _buildDescricao() {
+    return TextFormField(
+      keyboardType: TextInputType.multiline,
+      controller: _controllerTextFieldDescricao,
+      maxLength: 255,
+      maxLines: 10,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadiusInputs),
+          ),
+        ),
+        prefixIcon: Icon(Icons.text_snippet_rounded),
+        labelText: "Breve Descrição",
+        hintText: "Breve Descrição Sobre Você:\n"
+            "- Possui alguma comorbidade?\n"
+            "- Já praticou alguma atividade física antes?\n"
+            "- Já passou por alguma cirurgia?\n",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+      ),
+      onSaved: (String value) {
+        _userEdit['vhr_descricao'] = value;
+      },
+    );
+  }
+
+  Widget _buildButtonSalvar() => Container(
+        width: 500.0,
+        height: 50.0,
+        child: ElevatedButton(
+          onPressed: () {
+            if (!_formKey.currentState.validate()) {
+              return;
+            } else {
+              _formKey.currentState.save();
+              _defineUserEdit();
+              print("debug userEdit: ${_userEdit['int_genero']}");
+            }
+          },
+          child: Text(
+            'Salvar',
+            style: TextStyle(fontSize: 19.0),
+          ),
+        ),
+      );
+
+  String _setVariableGenero() {
+    if(globals.int_genero == 0) {
+      return "Masculino";
+    } else if (globals.int_genero == 1){
+      return "Feminino";
+    } else {
+      return "Indefinido";
+    }
+  }
+
+  _defineUserEdit() {
+    if(_userEdit['int_genero'] == "Masculino") _userEdit['int_genero'] = 0;
+    else if (_userEdit['int_genero'] == "Feminino") _userEdit['int_genero'] = 1;
+    else _userEdit['int_genero'] = 2;
+
+    _userEdit['int_tipo'] = 0;
+  }
 
 }
