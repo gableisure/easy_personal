@@ -1,3 +1,4 @@
+import 'package:app_front/api/apiUpdateStudent.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -24,8 +25,6 @@ class _EditDataStudentState extends State<EditDataStudent> {
   final _controllerTextFieldTelefone = TextEditingController();
   final _controllerTextFieldPeso = TextEditingController();
   final _controllerTextFieldAltura = TextEditingController();
-  // TODO: implementar o controler do input do gênero
-  //final _controllerTextFieldGenero = TextEditingController();
   final _controllerTextFieldDescricao = TextEditingController();
 
   @override
@@ -39,6 +38,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
     _controllerTextFieldAltura.text = globals.num_altura;
     _controllerTextFieldDescricao.text = globals.vhr_descricao;
     _genero = _setVariableGenero();
+    _userEdit['int_idausuario'] = globals.int_idausuario;
   }
 
   @override
@@ -375,11 +375,11 @@ class _EditDataStudentState extends State<EditDataStudent> {
     );
   }
 
-  Widget _buildButtonSalvar() => Container(
+  Widget _buildButtonSalvar () => Container(
         width: 500.0,
         height: 50.0,
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             if (!_formKey.currentState.validate()) {
               return;
             } else {
@@ -393,7 +393,8 @@ class _EditDataStudentState extends State<EditDataStudent> {
               barrierDismissible: false,
               builder: (context) => AlertCheckSalvo(),
             );
-
+            var res = await APIUpdateStudent().updateStudent(_userEdit);
+            print("debug resposta: $res");
           },
           child: Text(
             'Salvar',
