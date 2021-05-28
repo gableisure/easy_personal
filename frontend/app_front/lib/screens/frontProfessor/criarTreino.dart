@@ -266,7 +266,7 @@ class _CriarTreinoState extends State<CriarTreino> {
         ),
       );
 
-  // Método para formatar a data no tipo dd/mm/yyyy
+  // Método para formatar a data para o tipo dd/mm/yyyy
   String formatDate(String date) {
     String dia, mes, ano;
 

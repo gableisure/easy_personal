@@ -1,3 +1,4 @@
+import 'package:app_front/screens/frontProfessor/editDataTeacher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:app_front/widgets/alert.dart';
@@ -240,6 +241,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       ],
     );
   }
+
   //button
   Widget buttons(BuildContext context){
     return Row(
@@ -264,7 +266,14 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
           flex: 2,
         ),
         ElevatedButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => EditDataTeacher()
+              ),
+            );
+          },
           style: ElevatedButton.styleFrom(
             primary: Color(0xFF4563DB),
             shape: RoundedRectangleBorder(

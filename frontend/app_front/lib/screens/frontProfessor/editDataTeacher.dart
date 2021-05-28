@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
-class EditDataStudent extends StatefulWidget {
+class EditDataTeacher extends StatefulWidget {
   @override
-  _EditDataStudentState createState() => _EditDataStudentState();
+  _EditDataTeacherState createState() => _EditDataTeacherState();
 }
 
-class _EditDataStudentState extends State<EditDataStudent> {
+class _EditDataTeacherState extends State<EditDataTeacher> {
   String _genero;
   Map _userEdit = {};
 
@@ -22,10 +22,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
   final _controllerTextFieldSobrenome = TextEditingController();
   final _controllerTextFieldDataNascimento = TextEditingController();
   final _controllerTextFieldTelefone = TextEditingController();
-  final _controllerTextFieldPeso = TextEditingController();
-  final _controllerTextFieldAltura = TextEditingController();
-  // TODO: implementar o controler do input do gênero
-  //final _controllerTextFieldGenero = TextEditingController();
+  final _controllerTextFieldCref = TextEditingController();
   final _controllerTextFieldDescricao = TextEditingController();
 
   @override
@@ -35,8 +32,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
     _controllerTextFieldSobrenome.text = globals.vhr_sobrenome;
     _controllerTextFieldDataNascimento.text = globals.dtt_nascimento;
     _controllerTextFieldTelefone.text = globals.vhr_whatsapp;
-    _controllerTextFieldPeso.text = globals.num_peso;
-    _controllerTextFieldAltura.text = globals.num_altura;
+    _controllerTextFieldCref.text = globals.vhr_cref;
     _controllerTextFieldDescricao.text = globals.vhr_descricao;
     _genero = _setVariableGenero();
   }
@@ -83,11 +79,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
                   SizedBox(
                     height: 30,
                   ),
-                  _buildPeso(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  _buildAltura(),
+                  _buildCref(),
                   SizedBox(
                     height: 30,
                   ),
@@ -110,17 +102,17 @@ class _EditDataStudentState extends State<EditDataStudent> {
   }
 
   Widget _buildTituloSection(String titulo) => Container(
-        alignment: Alignment.bottomLeft,
-        child: Text(
-          titulo,
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.w500,
-            // fontFamily: 'Roboto',
-          ),
-        ),
-      );
+    alignment: Alignment.bottomLeft,
+    child: Text(
+      titulo,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w500,
+        // fontFamily: 'Roboto',
+      ),
+    ),
+  );
 
   Widget _buildNome() {
     return TextFormField(
@@ -247,60 +239,29 @@ class _EditDataStudentState extends State<EditDataStudent> {
     );
   }
 
-  Widget _buildPeso() {
+  Widget _buildCref() {
     return TextFormField(
       keyboardType: TextInputType.number,
-      controller: _controllerTextFieldPeso,
+      controller: _controllerTextFieldCref,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(borderRadiusInputs),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(borderRadiusInputs),),
         ),
-        prefixIcon: Icon(Icons.nature_people_rounded),
-        labelText: "Peso",
+        prefixIcon: Icon(Icons.credit_card_rounded),
+        labelText: "CREF",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
         ),
       ),
       validator: (String value) {
-        if (value.isEmpty) {
-          return "Peso Obrigatório";
+        if(value.isEmpty) {
+          return;
         }
         return null;
       },
       onSaved: (String value) {
-        _userEdit['num_peso'] = value;
-      },
-    );
-  }
-
-  Widget _buildAltura() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      controller: _controllerTextFieldAltura,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(borderRadiusInputs),
-          ),
-        ),
-        prefixIcon: Icon(Icons.height),
-        labelText: "Altura",
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-        ),
-      ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return "Altura Obrigatória";
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _userEdit['num_altura'] = value;
+        _userEdit['vhr_cref'] = value;
       },
     );
   }
@@ -360,10 +321,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
         ),
         prefixIcon: Icon(Icons.text_snippet_rounded),
         labelText: "Breve Descrição",
-        hintText: "Breve Descrição Sobre Você:\n"
-            "- Possui alguma comorbidade?\n"
-            "- Já praticou alguma atividade física antes?\n"
-            "- Já passou por alguma cirurgia?\n",
+        hintText: "Breve Descrição Sobre Você:",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
@@ -376,31 +334,31 @@ class _EditDataStudentState extends State<EditDataStudent> {
   }
 
   Widget _buildButtonSalvar() => Container(
-        width: 500.0,
-        height: 50.0,
-        child: ElevatedButton(
-          onPressed: () {
-            if (!_formKey.currentState.validate()) {
-              return;
-            } else {
-              _formKey.currentState.save();
-              _defineUserEdit();
-              Helpers().updateDataStudent(_userEdit);
-            }
+    width: 500.0,
+    height: 50.0,
+    child: ElevatedButton(
+      onPressed: () {
+        if (!_formKey.currentState.validate()) {
+          return;
+        } else {
+          _formKey.currentState.save();
+          _defineUserEdit();
+          Helpers().updateDataTeacher(_userEdit);
+        }
 
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => AlertCheckSalvo(),
-            );
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertCheckSalvo(),
+        );
 
-          },
-          child: Text(
-            'Salvar',
-            style: TextStyle(fontSize: 19.0),
-          ),
-        ),
-      );
+      },
+      child: Text(
+        'Salvar',
+        style: TextStyle(fontSize: 19.0),
+      ),
+    ),
+  );
 
   String _setVariableGenero() {
     if(globals.int_genero == 0) {

@@ -14,12 +14,12 @@ class AlertCheckSalvo extends StatelessWidget {
       ),
       titlePadding: EdgeInsets.only(top: 20, left: 30, right: 30),
       title: Text(
-        "Criação de treino em desenvolvimento!",
+        "Em desenvolvimento...",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
-        textAlign: TextAlign.justify,
+        textAlign: TextAlign.center,
       ),
       contentPadding: EdgeInsets.only(top: 15, left: 30, right: 30),
       content: SingleChildScrollView(
