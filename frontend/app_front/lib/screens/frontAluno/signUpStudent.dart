@@ -392,7 +392,7 @@ class _StateSignUpStudent extends State<SignUpStudent> {
     );
   }
 
-  // Ddscrição
+  // Descrição
   Widget _buildDescricao() {
     return TextFormField(
       keyboardType: TextInputType.multiline,
