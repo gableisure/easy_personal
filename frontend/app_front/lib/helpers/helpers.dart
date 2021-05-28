@@ -149,4 +149,28 @@ class Helpers {
     globals.user_id = 0;
     globals.instructor_id = 0;
   }
+
+  // Método para atualizar parte dos dados do aluno
+  void updateDataStudent(Map studentUpdate) {
+    globals.vhr_sobrenome = studentUpdate['vhr_nome'];
+    globals.vhr_sobrenome = studentUpdate['vhr_sobrenome'];
+    globals.dtt_nascimento = studentUpdate['dtt_nascimento'];
+    globals.vhr_whatsapp = studentUpdate['vhr_whatsapp'];
+    globals.num_peso = studentUpdate['num_peso'];
+    globals.num_altura = studentUpdate['num_altura'];
+    globals.int_genero = studentUpdate['int_genero'];
+    globals.vhr_descricao = studentUpdate['vhr_descricao'];
+  }
+
+  // Método para atualizar parte dos dados do aluno
+  void updateDataTeacher(Map teacherUpdate) {
+    globals.vhr_sobrenome = teacherUpdate['vhr_nome'];
+    globals.vhr_sobrenome = teacherUpdate['vhr_sobrenome'];
+    globals.dtt_nascimento = teacherUpdate['dtt_nascimento'];
+    globals.vhr_whatsapp = teacherUpdate['vhr_whatsapp'];
+    globals.vhr_cref = teacherUpdate['vhr_cref'];
+    globals.int_genero = teacherUpdate['int_genero'];
+    globals.vhr_descricao = teacherUpdate['vhr_descricao'];
+  }
+
 }
