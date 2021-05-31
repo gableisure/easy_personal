@@ -205,9 +205,9 @@ exports.forgotPassword = async req => {
   );
 
   // Mandar email.
-  const resetURL = `${req.protocol}//${req.get(
+  const resetURL = `${req.protocol}://${req.get(
     'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
+  )}/api/v1/usuarios/resetPassword/${resetToken}`;
 
   const message = `Perdeu sua senha? Aqui está a solução: ${resetURL}`;
 
