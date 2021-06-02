@@ -41,6 +41,7 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
         ),
         prefixIcon: Icon(Icons.email_rounded),
         labelText: "E-mail",
+        hintText: "Email Teste: professor@easy.com",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
 
@@ -71,6 +72,7 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
         ),
         prefixIcon: Icon(Icons.vpn_key_rounded),
         labelText: "Senha",
+        hintText: "Senha Teste: 123",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
@@ -211,7 +213,7 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
         ),
        ),
         SizedBox(height: 13,),
-        Container(
+        /*Container(
           height: 35,
           child: TextButton(
             child: Text(
@@ -226,7 +228,7 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
               Navigator.of(context).pushReplacementNamed("/forgotPassword");
             },
           ),
-        ),
+        ),*/
         SizedBox(height: 20,),
         Container(
           key: _globalKey,
@@ -342,6 +344,32 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
               ),
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed("/showSignUp");
+              },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Precisando de ajuda com o app?",
+              style: TextStyle(
+                color: Color(0xFF00253F),
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+              ),
+            ),
+            TextButton(
+              child: Text(
+                "Tutorial",
+                style: TextStyle(
+                  color: Color(0xFF0073B7),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ) ,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed("/webView");
               },
             ),
           ],

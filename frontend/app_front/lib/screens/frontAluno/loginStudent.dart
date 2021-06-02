@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:app_front/api/apiGetStudents.dart';
 import 'package:app_front/api/apiLoginStudent.dart';
 import 'package:app_front/helpers/helpers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app_front/screens/webView.dart';
 
 class LoginStudent extends StatefulWidget {
   @override
@@ -36,6 +38,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
         ),
         prefixIcon: Icon(Icons.email_rounded),
         labelText: "E-mail",
+        hintText: "E-mail teste: aluno@easy.com",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
@@ -65,6 +68,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
         ),
         prefixIcon: Icon(Icons.vpn_key_rounded),
         labelText: "Senha",
+        hintText: "senha Teste: 123",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
@@ -205,7 +209,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
           ),
         ),
         SizedBox(height: 13,),
-        Container(
+        /*Container(
           height: 35,
           child: TextButton(
             child: Text(
@@ -220,7 +224,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
               Navigator.of(context).pushReplacementNamed("/forgotPassword");
             },
           ),
-        ),
+        ),*/
         SizedBox(height: 20,),
         Container(
           key: _globalKey,
@@ -325,6 +329,32 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed("/showSignUp");
               },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Precisando de ajuda com o app?",
+              style: TextStyle(
+                color: Color(0xFF00253F),
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+              ),
+            ),
+            TextButton(
+              child: Text(
+                "Tutorial",
+                style: TextStyle(
+                  color: Color(0xFF0073B7),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ) ,
+              ),
+              onPressed: ()  {
+                Navigator.of(context).pushReplacementNamed("/webView");
+              }
             ),
           ],
         ),

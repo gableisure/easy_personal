@@ -6,6 +6,7 @@ import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:app_front/screens/profileScreen.dart';
 import 'package:app_front/screens/signUpScreenTeacher.dart';
 import 'package:app_front/screens/splashScreen.dart';
+import 'package:app_front/screens/webView.dart';
 import 'package:app_front/widgets/alertSignUp.dart';
 import 'package:flutter/material.dart';
 import 'screens/loginScreen.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         "/profileTeacher": (context) => ProfileTeacher(),
         "/profileStudent":(context) => ProfileStudent(),
         "/showSignUp":(context) => AlertSignUp(),
+        "/webView": (context) => WebViewLoad(),
 
       },
     );
