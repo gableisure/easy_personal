@@ -7,7 +7,11 @@ const router = express.Router();
 router.route('/professores').get(userController.getAllInstructors);
 router.route('/alunos').get(userController.getAllStudents);
 
-router.route('/').get(userController.getAllUsers).post(userController.addUser);
+router
+  .route('/trainings')
+  .get(authController.protect, userController.getUserTrainings);
+
+router.route('/').get(userController.getAllUsers).post(authController.signup);
 router
   .route('/:id')
   .get(userController.getUser)

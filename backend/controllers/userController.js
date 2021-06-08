@@ -66,3 +66,13 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     data: 'Usuário editado!',
   });
 });
+
+exports.getUserTrainings = catchAsync(async (req, res, next) => {
+  const trainings = await userServices.getUserTrainings(req);
+
+  res.status(200).json({
+    status: 'success',
+    results: trainings.length,
+    data: trainings,
+  });
+});

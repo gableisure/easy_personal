@@ -173,3 +173,24 @@ exports.updateUser = async req => {
     );
   }
 };
+
+exports.getUserTrainings = async req => {
+  const { rows: trainings } = await db.query(
+    `SELECT * FROM tbl_alunotreino 
+  LEFT JOIN tbl_treino ON tbl_treino.int_idatreino = tbl_alunotreino.int_idftreino WHERE int_idfaluno = $1`,
+    [req.user.int_idausuario]
+  );
+
+  for (let training of trainings) {
+    const { rows } = await db.query(
+      `SELECT exercicio.* FROM tbl_treinoexercicio treinoexercicio
+      LEFT JOIN tbl_exercicio exercicio ON exercicio.int_idaexercicio = treinoexercicio.int_idfexercicio 
+      WHERE treinoexercicio.int_idftreino = $1`,
+      [training.int_idatreino]
+    );
+
+    training['exercises'] = rows;
+  }
+
+  return trainings;
+};

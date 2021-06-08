@@ -53,13 +53,79 @@ CREATE TABLE user_instructors (
     ON DELETE CASCADE
 );
 
-CREATE TABLE tbr_tipotreino (
-  int_idatipotreino SERIAL PRIMARY KEY NOT NULL,
-  vhr_nome VARCHAR(14) NOT NULL,
-  vhr_descricao VARCHAR(54) NOT NULL,
-  user_id INT NOT NULL,
-  FOREIGN KEY(user_id)
+CREATE TABLE tbl_treino (
+  int_idatreino SERIAL PRIMARY KEY NOT NULL,
+  vhr_nome VARCHAR(80) NOT NULL,
+  dtt_inicio DATE NOT NULL,
+  dtt_fim DATE NOT NULL,
+  vhr_observacao TEXT,
+  int_estaarquivado INT DEFAULT 0 NOT NULL,
+  int_idftipotreino INT NOT NULL,
+  int_idfprofessor INT NOT NULL,
+  FOREIGN KEY(int_idftipotreino)
+    REFERENCES tbr_tipotreino (int_idatipotreino)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(int_idfprofessor)
     REFERENCES tbl_usuario (int_idausuario)
     ON UPDATE CASCADE
     ON DELETE CASCADE 
 );
+
+CREATE TABLE tbr_tipotreino (
+  int_idatipotreino SERIAL PRIMARY KEY NOT NULL,
+  vhr_nome VARCHAR(14) NOT NULL,
+  vhr_descricao VARCHAR(54) NOT NULL 
+);
+
+CREATE TABLE tbr_categoria (
+  int_idacategoria SERIAL PRIMARY KEY NOT NULL,
+  vhr_nome VARCHAR(30) NOT NULL,
+  vhr_descricao VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE tbl_exercicio (
+  int_idaexercicio SERIAL PRIMARY KEY NOT NULL,
+  vhr_nome VARCHAR(100) NOT NULL,
+  int_intervalor INT NOT NULL,
+  vhr_seriesrepeticoes VARCHAR(5) NOT NULL,
+  int_idfcategoria INT NOT NULL,
+  int_idfprofessor INT NOT NULL,
+  FOREIGN KEY(int_idfcategoria)
+    REFERENCES tbr_categoria (int_idacategoria)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(int_idfprofessor)
+    REFERENCES tbl_usuario (int_idausuario)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE 
+);
+
+CREATE TABLE tbl_treinoexercicio (
+  int_idatreinoexercicio SERIAL PRIMARY KEY NOT NULL,
+  int_idfexercicio INT NOT NULL,
+  int_idftreino INT NOT NULL,
+  FOREIGN KEY(int_idfexercicio)
+    REFERENCES tbl_exercicio (int_idaexercicio)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(int_idftreino)
+    REFERENCES tbl_treino (int_idatreino)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE 
+);
+
+CREATE TABLE tbl_alunotreino (
+  int_idfaluno INT NOT NULL,
+  int_idftreino INT NOT NULL,
+  int_estaemvigor INT NOT NULL DEFAULT 0,
+  FOREIGN KEY(int_idfaluno)
+    REFERENCES  tbr_aluno (int_idfaluno)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(int_idftreino)
+    REFERENCES tbl_treino (int_idatreino)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
