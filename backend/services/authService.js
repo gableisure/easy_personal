@@ -95,7 +95,7 @@ exports.signup = async (req, res) => {
   }
 
   // Verificar se senha e confirmação de senha são iguais.
-  if (req.body.vhr_senha !== req.body.passwordConfirm)
+  if (req.body.vhr_senha !== req.body.confirmSenha)
     throw new AppError('As senhas precisam ser iguais.', 400);
 
   // Verificar tipo de usuário.
