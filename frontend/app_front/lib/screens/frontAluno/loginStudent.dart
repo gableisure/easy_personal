@@ -275,7 +275,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
                   //salvando dados do user
                   Helpers().saveDataUserStudent(studentLogged);
                   print(response.data);
-                  Navigator.of(context).pushReplacementNamed("/pageMainStudent");
+                  Navigator.of(context).pushNamedAndRemoveUntil("/pageMainStudent", (route) => false);
                 } else {
                   setState(() {
                     _state = 3;
