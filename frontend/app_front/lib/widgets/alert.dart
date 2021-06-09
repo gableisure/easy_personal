@@ -1,7 +1,22 @@
+import 'package:app_front/api/apiDeleteUser.dart';
+import 'package:app_front/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 
-class Alert extends StatelessWidget {
+class Alert extends StatefulWidget {
+
+  @override
+  _AlertState createState() => _AlertState();
+}
+
+class _AlertState extends State<Alert> {
+  Map _userDelete = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _userDelete['int_idausuario'] = globals.int_idausuario;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +28,7 @@ class Alert extends StatelessWidget {
       title: Text(
         "${globals.vhr_nome} ${globals.vhr_sobrenome}, tem certeza que deseja nos abandonar?",
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
         textAlign: TextAlign.justify,
@@ -25,7 +40,7 @@ class Alert extends StatelessWidget {
             Text(
               "Caso opte por excluir a conta definitivamente, clique em continuar. Se não, clique em cancelar e continue conosco!!!",
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 17,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.justify,
@@ -49,7 +64,20 @@ class Alert extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    var res = await APIDeleteUser().deleteUser(_userDelete);
+                    Helpers().deleteDataUser();
+                    Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);
+                    SnackBar snackbar = new SnackBar(
+                      content: Text(
+                        "Usuário excluído com sucesso!!!",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.green[600],
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    print(res);
+                  },
                   child: Text(
                     "Continuar",
                     style: TextStyle(

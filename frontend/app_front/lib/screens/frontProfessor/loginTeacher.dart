@@ -285,12 +285,7 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
                   Helpers().saveDataUserInstructor(instructorLogged);
 
                   // Navega para a página principal do professor
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher()
-                      ),
-                  );
+                  Navigator.of(context).pushNamedAndRemoveUntil("/pageMainTeacher", (route) => false);
                 } else {
                   setState(() {
                     _state = 3;

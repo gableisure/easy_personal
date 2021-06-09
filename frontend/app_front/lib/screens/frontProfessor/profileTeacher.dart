@@ -4,23 +4,207 @@ import 'package:flutter/cupertino.dart';
 import 'package:app_front/widgets/alert.dart';
 import 'package:app_front/widgets/clipper.dart';
 import '../../helpers/globals.dart' as globals;
+import 'package:app_front/api/apiGetStudents.dart';
 
-class ProfileTeacher extends StatefulWidget {
-  final int instructorId;
-
-  ProfileTeacher({Key key, @required this.instructorId}) : super(key: key);
-
-  @override
-  _ProfileTeacherState createState() => _ProfileTeacherState();
-}
-
-class _ProfileTeacherState extends State<ProfileTeacher> {
+class ProfileTeacher extends StatelessWidget {
   //Iniciais do nome de  usuário
   String _getIniciais(String nome, String sobrenome) {
     if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
       return nome[0] + sobrenome[3];
     }
     return nome[0] + sobrenome[0];
+  }
+
+  List alunosData;
+  //buscando a quantidade de alunos do professor
+  Future<int> getStudents() async {
+    var listStudents = await APIGetStudents().getAllStudents();
+    alunosData = [];
+    for (var aluno in listStudents.data) {
+      if (aluno.instructor_id == globals.int_idfprofessor) {
+        alunosData.add(aluno);
+      }
+    }
+    return alunosData.length;
+  }
+
+  //appbar
+  Widget _appBar(context) {
+    return Stack(
+      children: [
+        Positioned(
+          child:AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: (){
+                Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+              },
+            ),
+            title: Align(
+              alignment: Alignment.centerRight,
+              child:Text(
+                "${globals.vhr_nome} ${globals.vhr_sobrenome}",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  //circleAvatar
+  Widget _avatarCircle() {
+    return CircleAvatar(
+      radius: 40,
+      backgroundColor: Colors.white,
+      child: Text(
+        _getIniciais("${globals.vhr_nome}", "${globals.vhr_sobrenome}").toUpperCase(),
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.w400,
+          color: Colors.blue,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  //User
+  Widget _informationUser() {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "${globals.vhr_email}",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+        SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "${globals.vhr_whatsapp}",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+      ],
+    );
+  }
+  Widget Alunos() {
+    return FutureBuilder(
+      future: getStudents(),
+      initialData: "Loading Student...",
+      builder: (context, text) {
+        return Text(
+          "${text.data}",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+        );
+      },
+    );
+  }
+  //alunos e data de pagamento
+  Widget _contador() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("QUANTIDADE DE ALUNOS", style: TextStyle(color: Colors.white, fontSize: 16),
+                textAlign: TextAlign.center,),
+              SizedBox(height: 10),
+              Alunos(),
+            ],
+          ),
+        ),
+        Container(
+          height: 54,
+          child: VerticalDivider(
+            thickness: 2,
+            color: Colors.white,
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("TOKEN PARA SEUS ALUNOS", style: TextStyle(color: Colors.white, fontSize: 16),
+                textAlign: TextAlign.center,),
+              SizedBox(height: 10),
+              Text("${globals.vhr_token}",style: TextStyle(color: Colors.white, fontSize: 15),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  //button
+  Widget buttons(BuildContext context){
+    return Row(
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: (){
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) =>  Alert(),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0),),
+            ),
+          ),
+          child: Text("Excluir Conta", textAlign: TextAlign.center,),
+        ),
+        Spacer(
+          flex: 2,
+        ),
+        ElevatedButton(
+          onPressed: (){
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => EditDataTeacher()
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0),),
+            ),
+          ),
+          child: Text("Editar Dados", textAlign: TextAlign.center,),
+        ),
+      ],
+    );
   }
 
   @override
@@ -49,7 +233,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    _appBar(),
+                    _appBar(context),
                     SizedBox(height: 6),
                     ClipPath(
                       clipper: Clipper(),
@@ -118,171 +302,6 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
           ],
         ),
       ),
-    );
-  }
-
-  //appbar
-  Widget _appBar() {
-    return Stack(
-      children: [
-        Positioned(
-          child:AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: (){
-                Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
-              },
-            ),
-            title: Align(
-              alignment: Alignment.centerRight,
-              child:Text(
-                "${globals.vhr_nome} ${globals.vhr_sobrenome}",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.end,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  //circleAvatar
-  Widget _avatarCircle() {
-    return CircleAvatar(
-      radius: 40,
-      backgroundColor: Colors.white,
-      child: Text(
-        _getIniciais("${globals.vhr_nome}", "${globals.vhr_sobrenome}").toUpperCase(),
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.w400,
-          color: Colors.blue,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  //User
-  Widget _informationUser() {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            "${globals.vhr_email}",
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.start,
-          ),
-        ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            "${globals.vhr_token}",
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.start,
-          ),
-        ),
-      ],
-    );
-  }
-
-  //alunos e data de pagamento
-  Widget _contador() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("QUANTIDADE DE ALUNOS", style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,),
-              SizedBox(height: 10),
-              Text("7",style: TextStyle(color: Colors.white),),
-            ],
-          ),
-        ),
-        Container(
-          height: 54,
-          child: VerticalDivider(
-            thickness: 2,
-            color: Colors.white,
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("PAGAMENTOS ATRASADOS", style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,),
-              SizedBox(height: 10),
-              Text("3",style: TextStyle(color: Colors.white),),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  //button
-  Widget buttons(BuildContext context){
-    return Row(
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: (){
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) =>  Alert(),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF4563DB),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0),),
-            ),
-          ),
-          child: Text("Excluir Conta", textAlign: TextAlign.center,),
-        ),
-        Spacer(
-          flex: 2,
-        ),
-        ElevatedButton(
-          onPressed: (){
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => EditDataTeacher()
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF4563DB),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0),),
-            ),
-          ),
-          child: Text("Editar Dados", textAlign: TextAlign.center,),
-        ),
-      ],
     );
   }
 }
