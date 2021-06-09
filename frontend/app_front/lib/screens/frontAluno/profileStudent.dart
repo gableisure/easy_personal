@@ -6,16 +6,7 @@ import 'package:app_front/widgets/clipper.dart';
 import '../../helpers/globals.dart' as globals;
 import 'editDataStudent.dart';
 
-class ProfileStudent extends StatefulWidget {
-  final int instructorId;
-
-  ProfileStudent({Key key, @required this.instructorId}) : super(key: key);
-
-  @override
-  _ProfileStudentState createState() => _ProfileStudentState();
-}
-
-class _ProfileStudentState extends State<ProfileStudent> {
+class ProfileStudent extends StatelessWidget {
   //Iniciais do nome de  usuário
   String _getIniciais(String nome, String sobrenome) {
     if(sobrenome.substring(0, 3) == "da " || sobrenome.substring(0, 3) == "de ") {
@@ -23,17 +14,195 @@ class _ProfileStudentState extends State<ProfileStudent> {
     }
     return nome[0] + sobrenome[0];
   }
-
+  //Professor do aluno
   List alunosData;
-  Future getStudentsForTeacher() async {
+  Future<dynamic> getStudentsForTeacher() async {
     var listStudents = await APIGetTeachers().getAllTeachers();
     alunosData = [];
-    for (var aluno in listStudents.data) {
-      if (aluno.instructor_id == globals.int_idfprofessor) {
-        alunosData.add(aluno);
+    for (var professor in listStudents.data) {
+      if (professor.int_idfprofessor == globals.instructor_id) {
+        alunosData.add(professor);
+        return '${professor.vhr_nome} ${professor.vhr_sobrenome}';
       }
     }
-    return alunosData;
+  }
+
+  //appbar
+  Widget _appBar(context) {
+    return Stack(
+      children: [
+        Positioned(
+          child:AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: (){
+                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
+              },
+            ),
+            title: Align(
+              alignment: Alignment.centerRight,
+              child:Text(
+                "${globals.vhr_nome} ${globals.vhr_sobrenome}",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  //circleAvatar
+  Widget _avatarCircle() {
+    return CircleAvatar(
+      radius: 40,
+      backgroundColor: Colors.white,
+      child: Text(
+        _getIniciais("${globals.vhr_nome}", "${globals.vhr_sobrenome}").toUpperCase(),
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.w400,
+          color: Colors.blue,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+  //User
+  Widget _informationUser() {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "${globals.vhr_email}",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+        SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "${globals.vhr_whatsapp}",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+      ],
+    );
+  }
+  //pegando nome do professor
+  Widget teacher() {
+    return FutureBuilder(
+      future: getStudentsForTeacher(),
+      initialData: "Loading Name Teacher...",
+      builder: (context, text) {
+        return Text(
+          "${text.data}",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+        );
+      },
+    );
+  }
+  //alunos e data de pagamento
+  Widget _contador() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("SEU PROFESSOR", style: TextStyle(color: Colors.white, fontSize: 16),
+                textAlign: TextAlign.center,),
+              SizedBox(height: 10),
+              teacher(),
+            ],
+          ),
+        ),
+        Container(
+          height: 54,
+          child: VerticalDivider(
+            thickness: 2,
+            color: Colors.white,
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("SEU PESO ATUAL", style: TextStyle(color: Colors.white, fontSize: 16),
+                textAlign: TextAlign.center,),
+              SizedBox(height: 10),
+              Text("${globals.num_peso} KG",style: TextStyle(color: Colors.white, fontSize: 15),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  //button
+  Widget buttons(BuildContext context){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: (){
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) =>  Alert(),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+            ),
+          ),
+          child: Text("Excluir Conta", textAlign: TextAlign.center,),
+        ),
+        Spacer(
+          flex: 2,
+        ),
+        ElevatedButton(
+          onPressed: (){
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => EditDataStudent()
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary:Color(0xFF4563DB),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0),),
+            ),
+          ),
+          child: Text("Editar Dados", textAlign: TextAlign.center,),
+        ),
+      ],
+    );
   }
 
   @override
@@ -62,7 +231,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    _appBar(),
+                    _appBar(context),
                     SizedBox(height: 6),
                     ClipPath(
                       clipper: Clipper(),
@@ -131,161 +300,6 @@ class _ProfileStudentState extends State<ProfileStudent> {
           ],
         ),
       ),
-    );
-  }
-  //appbar
-  Widget _appBar() {
-    return Stack(
-      children: [
-        Positioned(
-          child:AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: (){
-                Navigator.of(context).pushReplacementNamed("/pageMainStudent");
-              },
-            ),
-            title: Align(
-              alignment: Alignment.centerRight,
-              child:Text(
-                "${globals.vhr_nome} ${globals.vhr_sobrenome}",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.end,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-  //circleAvatar
-  Widget _avatarCircle() {
-    return CircleAvatar(
-      radius: 40,
-      backgroundColor: Colors.white,
-      child: Text(
-        _getIniciais("${globals.vhr_nome}", "${globals.vhr_sobrenome}").toUpperCase(),
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.w400,
-          color: Colors.blue,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-  //User
-  Widget _informationUser() {
-    return Column(
-      children: [
-        Text(
-          "${globals.vhr_email}",
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.left,
-        ),
-        SizedBox(height: 10),
-        Text(
-          "${globals.vhr_whatsapp}",
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.left,
-        ),
-      ],
-    );
-  }
-  //alunos e data de pagamento
-  Widget _contador() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("SEU PROFESSOR", style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,),
-              SizedBox(height: 10),
-              Text("Julia Oliveira",style: TextStyle(color: Colors.white),),
-            ],
-          ),
-        ),
-        Container(
-          height: 54,
-          child: VerticalDivider(
-            thickness: 2,
-            color: Colors.white,
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("DATA DE PAGAMENTO", style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,),
-              SizedBox(height: 10),
-              Text("30/5/2021",style: TextStyle(color: Colors.white),),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-  //button
-  Widget buttons(BuildContext context){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: (){
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) =>  Alert(),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF4563DB),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0),),
-            ),
-          ),
-          child: Text("Excluir Conta", textAlign: TextAlign.center,),
-        ),
-        Spacer(
-          flex: 2,
-        ),
-        ElevatedButton(
-          onPressed: (){
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => EditDataStudent()
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary:Color(0xFF4563DB),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0),),
-            ),
-          ),
-          child: Text("Editar Dados", textAlign: TextAlign.center,),
-        ),
-      ],
     );
   }
 }

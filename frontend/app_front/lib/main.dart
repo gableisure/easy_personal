@@ -62,7 +62,6 @@ class MyApp extends StatelessWidget {
         "/profileStudent":(context) => ProfileStudent(),
         "/showSignUp":(context) => AlertSignUp(),
         "/webView": (context) => WebViewLoad(),
-
       },
     );
   }
