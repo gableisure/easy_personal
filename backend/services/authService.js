@@ -19,9 +19,10 @@ const createSendToken = (userId, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: false,
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -95,7 +96,7 @@ exports.signup = async (req, res) => {
   }
 
   // Verificar se senha e confirmação de senha são iguais.
-  if (req.body.vhr_senha !== req.body.confirmSenha)
+  if (req.body.vhr_senha !== req.body.passwordConfirm)
     throw new AppError('As senhas precisam ser iguais.', 400);
 
   // Verificar tipo de usuário.

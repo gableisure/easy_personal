@@ -12,6 +12,11 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(express.static(__dirname));
 
+app.use((req, res, next) => {
+  console.log('COOKIES: ', req.cookies);
+  next();
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/app_front/lib/main.dart'));
 });
