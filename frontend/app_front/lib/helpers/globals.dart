@@ -24,3 +24,6 @@ String num_peso = "";
 String num_altura= "";
 int user_id = 0;
 int instructor_id = 0;
+
+// Cookie
+String rawCookie = "";
