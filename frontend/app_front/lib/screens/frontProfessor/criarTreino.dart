@@ -308,10 +308,11 @@ class _CriarTreinoState extends State<CriarTreino> {
               );
               return;
             }
+
             _formKey.currentState.save();
 
-            _treino["int_estaarquivado"] = 0;
             _treino["int_idftipotreino"] = 1;
+            print("Treino----------------- $_treino");
             var res = await APIAddTraining().addTraining(_treino);
             print("debug res: $res");
 

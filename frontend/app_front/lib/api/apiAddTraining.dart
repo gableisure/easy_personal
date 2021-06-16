@@ -33,7 +33,8 @@ class APIAddTraining {
       print("debug ADD:  ${response.body}");
       return AddTraining.fromJson(json.decode(response.body));
     }
-    print("debug ADD null status ${response.statusCode}");
+    print("Status code: ${response.statusCode}");
+    print("Body:  ${response.body}");
     return null; //throw Exception("Falha no carregamento dos dados!!!!");
   }
 }
