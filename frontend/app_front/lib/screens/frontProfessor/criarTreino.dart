@@ -146,7 +146,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                 return null;
               },
               onSaved: (String value) {
-                _treino['dtt_inicio'] = value;
+                _treino['dtt_inicio'] = invertDate(value);
               },
             ),
           ),
@@ -192,7 +192,7 @@ class _CriarTreinoState extends State<CriarTreino> {
                 return null;
               },
               onSaved: (String value) {
-                _treino['dtt_fim'] = value;
+                _treino['dtt_fim'] = invertDate(value);
               },
             ),
           ),
@@ -234,7 +234,8 @@ class _CriarTreinoState extends State<CriarTreino> {
                 this._itemSelecionado = novoItemSelecionado;
               });
             },
-            value: _itemSelecionado),
+            value: _itemSelecionado,
+        ),
       ],
     );
   }
@@ -244,6 +245,8 @@ class _CriarTreinoState extends State<CriarTreino> {
       this._itemSelecionado = novoItem;
     });
   }
+
+
 
   // descrição
   Widget _buildObservacoes() {
@@ -312,11 +315,11 @@ class _CriarTreinoState extends State<CriarTreino> {
             _formKey.currentState.save();
 
             _treino["int_idftipotreino"] = 1;
-            print("Treino----------------- $_treino");
+            print("DATA Treino----------------- ${_treino["dtt_inicio"]}");
             var res = await APIAddTraining().addTraining(_treino);
             print("debug res: $res");
 
-
+            invertDate(_treino["dtt_inicio"]);
 
             showDialog(
               context: context,
@@ -341,4 +344,16 @@ class _CriarTreinoState extends State<CriarTreino> {
 
     return "${dia}/${mes}/${ano}";
   }
+
+  // Método para formatar a data para o tipo aceito pela API mm/dd/yyyy
+  String invertDate(String date) {
+    String dia, mes, ano;
+
+    dia = date.substring(0, 2);
+    mes = date.substring(3, 5);
+    ano = date.substring(6, 10);
+
+    return "${mes}/${dia}/${ano}";
+  }
+
 }
