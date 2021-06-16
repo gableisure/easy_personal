@@ -1,4 +1,7 @@
+import 'package:app_front/api/apiAddTraining.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
+import 'package:app_front/widgets/alertCheckSaveTraining.dart';
+import 'package:app_front/widgets/alertErroTraining.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +14,16 @@ class CriarTreino extends StatefulWidget {
 class _CriarTreinoState extends State<CriarTreino> {
   DateTime _dateTime;
 
+  // Map para salvar os dados do treino
+  Map _treino = {};
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   // Variaveis de controle para manipular os textos dos campos
   final _controllerTextFieldDataInicio = TextEditingController();
+  final _controllerTextFieldTitulo = TextEditingController();
   final _controllerTextFieldDataFim = TextEditingController();
+  final _controllerTextFieldObservacoes = TextEditingController();
 
   var _tiposDeTreino = ['Tipo de treino', 'Semanal', 'Treino A, B, C'];
   var _itemSelecionado = 'Tipo de treino';
@@ -31,52 +41,59 @@ class _CriarTreinoState extends State<CriarTreino> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             padding: EdgeInsets.only(left: 30, top: 25, right: 30, bottom: 80),
             color: Colors.white,
-            child: Container(
-              width: 100,
-              // color: Colors.redAccent,
-              child: Column(
-                children: [
-                  _buildTituloSection("Criar treino"),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  _buildTextFieldTitulo("Nome"),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildTextFieldDataInicio("Data início", context),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildTextFieldDataFim("Data fim", context),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildTipoTreino(),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildObservacoes(),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildTituloSection("Exercícios"),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  _buildButtonCriarExercicio(),
-                  _buildButtonSalvar(),
-                ],
+            child: Form(
+              key: _formKey,
+              child: Container(
+                width: 100,
+                // color: Colors.redAccent,
+                child: Column(
+                  children: [
+                    _buildTituloSection("Criar treino"),
+                    SizedBox(
+                      height: 13,
+                    ),
+                    _buildTextFieldTitulo("Nome"),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildTextFieldDataInicio("Data início", context),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildTextFieldDataFim("Data fim", context),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildTipoTreino(),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildObservacoes(),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildTituloSection("Exercícios"),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    _buildButtonCriarExercicio(),
+                    _buildButtonSalvar(),
+                  ],
+                ),
               ),
             ),
           ),
         ));
   }
 
-  Widget _buildTituloSection(String titulo) => Container(
+  Widget _buildTituloSection(String titulo) =>
+      Container(
         alignment: Alignment.bottomLeft,
         child: Text(
           titulo,
@@ -89,15 +106,26 @@ class _CriarTreinoState extends State<CriarTreino> {
         ),
       );
 
-  Widget _buildTextFieldTitulo(String tituloTextField) => TextFormField(
+  Widget _buildTextFieldTitulo(String tituloTextField) =>
+      TextFormField(
+        // controller: _controllerTextFieldTitulo,
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
           labelText: tituloTextField,
         ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return "Título Obrigatória";
+          }
+          return null;
+        },
+        onSaved: (String value) {
+          _treino['vhr_nome'] = value;
+        },
       );
 
-  Widget _buildTextFieldDataInicio(
-          String tituloTextField, BuildContext context) =>
+  Widget _buildTextFieldDataInicio(String tituloTextField,
+      BuildContext context) =>
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -111,6 +139,15 @@ class _CriarTreinoState extends State<CriarTreino> {
                 labelText: tituloTextField,
                 prefixIcon: Icon(Icons.calendar_today_outlined),
               ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return "Data Obrigatória";
+                }
+                return null;
+              },
+              onSaved: (String value) {
+                _treino['dtt_inicio'] = value;
+              },
             ),
           ),
           Container(
@@ -148,6 +185,15 @@ class _CriarTreinoState extends State<CriarTreino> {
                 labelText: tituloTextField,
                 prefixIcon: Icon(Icons.calendar_today_outlined),
               ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return "Data Obrigatória";
+                }
+                return null;
+              },
+              onSaved: (String value) {
+                _treino['dtt_fim'] = value;
+              },
             ),
           ),
           Container(
@@ -202,6 +248,7 @@ class _CriarTreinoState extends State<CriarTreino> {
   // descrição
   Widget _buildObservacoes() {
     return TextFormField(
+      // controller: _controllerTextFieldObservacoes,
       keyboardType: TextInputType.multiline,
       maxLength: 255,
       maxLines: 10,
@@ -217,16 +264,14 @@ class _CriarTreinoState extends State<CriarTreino> {
           fontSize: 15,
         ),
       ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return;
-        }
-        return null;
+      onSaved: (String value) {
+        _treino['vhr_observacao'] = value;
       },
     );
   }
 
-  Widget _buildButtonCriarExercicio() => Column(
+  Widget _buildButtonCriarExercicio() =>
+      Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -248,15 +293,34 @@ class _CriarTreinoState extends State<CriarTreino> {
         ],
       );
 
-  Widget _buildButtonSalvar() => Container(
+  Widget _buildButtonSalvar() =>
+      Container(
         width: 500.0,
         height: 50.0,
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+
+            if (!_formKey.currentState.validate()) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertErroAddTraining(),
+              );
+              return;
+            }
+            _formKey.currentState.save();
+
+            _treino["int_estaarquivado"] = 0;
+            _treino["int_idftipotreino"] = 1;
+            var res = await APIAddTraining().addTraining(_treino);
+            print("debug res: $res");
+
+
+
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (context) => AlertCheckSalvo(),
+              builder: (context) => AlertCheckSaveTraining(),
             );
           },
           child: Text(
