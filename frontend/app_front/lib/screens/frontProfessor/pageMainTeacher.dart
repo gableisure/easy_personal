@@ -7,6 +7,7 @@ import 'package:app_front/api/apiGetStudents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
+import '../calendar.dart';
 import 'criarTreino.dart';
 import 'criarExercicio.dart';
 
@@ -443,7 +444,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   );
 
   Widget buildAgenda() => Center(
-    child: Text("Texto"),
+    child: Calendar(),
   );
 
   Widget buildFinanceiro() => Center(

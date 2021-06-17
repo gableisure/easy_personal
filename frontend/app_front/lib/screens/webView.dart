@@ -9,7 +9,7 @@ class WebViewLoadUI extends State<WebViewLoad>{
 
   final pdfController = PdfController(
     viewportFraction: 1.0,
-    document: PdfDocument.openAsset('images/TutorialEasyPersonal.pdf'),
+    document: PdfDocument.openAsset("images/tutorialApp.pdf"),
   );
 
 

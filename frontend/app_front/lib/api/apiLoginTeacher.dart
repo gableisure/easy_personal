@@ -6,8 +6,8 @@ import 'package:app_front/helpers/globals.dart' as globals;
 
 class APILoginTeacher {
   Future<JsonDefault> login(String email, String password) async {
-     String url = "10.0.2.2:3000";
-    //String url = "easy-personal.herokuapp.com";
+     //String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
 
     final http.Response response = await http.post(
         Uri.http(url, "/api/v1/usuarios/login"),
