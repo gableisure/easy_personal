@@ -37,6 +37,7 @@ dependencies:
   icon_shadow: ^1.0.1
   responsive_framework: ^0.1.0
   native_pdf_view: ^4.0.1
+  table_calendar: ^3.0.0
 #  stagehand: 3.1.11
 #  shelf: 1.1.4
 
@@ -58,7 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/2-removebg-preview.png
-    - images/TutorialEasyPersonal.pdf
+    - images/tutorialApp.pdf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
