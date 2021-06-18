@@ -165,7 +165,7 @@ class _CalendarState extends State<Calendar> {
                                 title: Row(
                                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Icon(Icons.circle_notifications_outlined, color: Colors.yellow[700], size: 30,),
+                                    Icon(Icons.circle_notifications, color: Colors.yellow[700], size: 30,),
                                     Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 10),
                                     ),

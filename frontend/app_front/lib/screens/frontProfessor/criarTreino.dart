@@ -16,6 +16,7 @@ class _CriarTreinoState extends State<CriarTreino> {
 
   // Map para salvar os dados do treino
   Map _treino = {};
+  String _tipoTreino;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -217,36 +218,79 @@ class _CriarTreinoState extends State<CriarTreino> {
         ],
       );
 
+  // Widget _buildTipoTreino() {
+  //   //String dropdownValue = 'Tipo de treino';
+  //   return Row(
+  //     children: [
+  //       DropdownButton<String>(
+  //           items: _tiposDeTreino.map((String dropDownStringItem) {
+  //             return DropdownMenuItem<String>(
+  //               value: dropDownStringItem,
+  //               child: Text(dropDownStringItem),
+  //             );
+  //           }).toList(),
+  //           onChanged: (String novoItemSelecionado) {
+  //             _dropDownItemSelected(novoItemSelecionado);
+  //             setState(() {
+  //               this._itemSelecionado = novoItemSelecionado;
+  //             });
+  //           },
+  //           value: _itemSelecionado,
+  //       ),
+  //     ],
+  //   );
+  // }
+
+
   Widget _buildTipoTreino() {
-    //String dropdownValue = 'Tipo de treino';
-    return Row(
-      children: [
-        DropdownButton<String>(
-            items: _tiposDeTreino.map((String dropDownStringItem) {
-              return DropdownMenuItem<String>(
-                value: dropDownStringItem,
-                child: Text(dropDownStringItem),
-              );
-            }).toList(),
-            onChanged: (String novoItemSelecionado) {
-              _dropDownItemSelected(novoItemSelecionado);
-              setState(() {
-                this._itemSelecionado = novoItemSelecionado;
-              });
-            },
-            value: _itemSelecionado,
+    var _list = ["Treino Semanel", "Treino A B C D E"];
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
         ),
-      ],
+        prefixIcon: Icon(Icons.people_alt_rounded),
+        labelText: "Escolha o Gênero",
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+        ),
+        isDense: true,
+      ),
+      value: _tipoTreino,
+      items: _list.map<DropdownMenuItem<String>>((String drop) {
+        return DropdownMenuItem<String>(
+          child: Text(drop),
+          value: drop,
+        );
+      }).toList(),
+      validator: (String value) {
+        if (value == null || value.isEmpty) {
+          return "Escolha um tipo de treino";
+        }
+        return null;
+      },
+      onChanged: (String value) {
+        setState(() {
+          _treino['int_idftipotreino'] = value;
+        });
+      },
+      onSaved: (String value) {
+        _treino['int_idftipotreino'] = value;
+        print("debug treino: ${_treino['int_idftipotreino']}");
+      },
     );
   }
+
+
 
   void _dropDownItemSelected(String novoItem) {
     setState(() {
       this._itemSelecionado = novoItem;
     });
   }
-
-
 
   // descrição
   Widget _buildObservacoes() {
@@ -314,12 +358,12 @@ class _CriarTreinoState extends State<CriarTreino> {
 
             _formKey.currentState.save();
 
-            _treino["int_idftipotreino"] = 1;
-            print("DATA Treino----------------- ${_treino["dtt_inicio"]}");
+            _defineTypeTraining();
+            invertDate(_treino["dtt_inicio"]);
+            invertDate(_treino["dtt_fim"]);
             var res = await APIAddTraining().addTraining(_treino);
             print("debug res: $res");
 
-            invertDate(_treino["dtt_inicio"]);
 
             showDialog(
               context: context,
@@ -354,6 +398,14 @@ class _CriarTreinoState extends State<CriarTreino> {
     ano = date.substring(6, 10);
 
     return "${mes}/${dia}/${ano}";
+  }
+
+  _defineTypeTraining() {
+    if(_treino['int_idftipotreino'] == "Treino semanal"){
+      _treino['int_idftipotreino'] = 1;
+    }else{
+      _treino['int_idftipotreino'] = 2;
+    }
   }
 
 }

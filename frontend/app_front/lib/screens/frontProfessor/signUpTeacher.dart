@@ -303,6 +303,8 @@ class _StateSignUpTeacher extends State<SignUpTeacher> {
           fontWeight: FontWeight.w400,
           fontSize: 15,
         ),
+
+
         isDense: true,
       ),
       value: genero,
