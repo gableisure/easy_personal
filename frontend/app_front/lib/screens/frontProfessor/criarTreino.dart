@@ -26,8 +26,6 @@ class _CriarTreinoState extends State<CriarTreino> {
   final _controllerTextFieldDataFim = TextEditingController();
   final _controllerTextFieldObservacoes = TextEditingController();
 
-  var _tiposDeTreino = ['Tipo de treino', 'Semanal', 'Treino A, B, C'];
-  var _itemSelecionado = 'Tipo de treino';
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +77,11 @@ class _CriarTreinoState extends State<CriarTreino> {
                     SizedBox(
                       height: 25,
                     ),
-                    _buildTituloSection("Exercícios"),
+                    // _buildTituloSection("Exercícios"),
                     SizedBox(
                       height: 25,
                     ),
-                    _buildButtonCriarExercicio(),
+                    // _buildButtonCriarExercicio(),
                     _buildButtonSalvar(),
                   ],
                 ),
@@ -243,7 +241,7 @@ class _CriarTreinoState extends State<CriarTreino> {
 
 
   Widget _buildTipoTreino() {
-    var _list = ["Treino Semanel", "Treino A B C D E"];
+    var _list = ["Treino Semanal", "Treino A B C D E"];
     return DropdownButtonFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -252,7 +250,7 @@ class _CriarTreinoState extends State<CriarTreino> {
           ),
         ),
         prefixIcon: Icon(Icons.people_alt_rounded),
-        labelText: "Escolha o Gênero",
+        labelText: "Tipo de treino",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 15,
@@ -284,14 +282,6 @@ class _CriarTreinoState extends State<CriarTreino> {
     );
   }
 
-
-
-  void _dropDownItemSelected(String novoItem) {
-    setState(() {
-      this._itemSelecionado = novoItem;
-    });
-  }
-
   // descrição
   Widget _buildObservacoes() {
     return TextFormField(
@@ -316,29 +306,29 @@ class _CriarTreinoState extends State<CriarTreino> {
       },
     );
   }
-
-  Widget _buildButtonCriarExercicio() =>
-      Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            padding: EdgeInsets.only(right: 20, bottom: 35),
-            child: FloatingActionButton.extended(
-              onPressed: () {},
-              elevation: 3,
-              icon: Icon(Icons.add),
-              backgroundColor: Colors.green,
-              label: Text(
-                "Adicionar exercício",
-                style: TextStyle(
-                  fontSize: 17.0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
+  //
+  // Widget _buildButtonCriarExercicio() =>
+  //     Column(
+  //       mainAxisAlignment: MainAxisAlignment.end,
+  //       crossAxisAlignment: CrossAxisAlignment.end,
+  //       children: [
+  //         Container(
+  //           padding: EdgeInsets.only(right: 20, bottom: 35),
+  //           child: FloatingActionButton.extended(
+  //             onPressed: () {},
+  //             elevation: 3,
+  //             icon: Icon(Icons.add),
+  //             backgroundColor: Colors.green,
+  //             label: Text(
+  //               "Adicionar exercício",
+  //               style: TextStyle(
+  //                 fontSize: 17.0,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     );
 
   Widget _buildButtonSalvar() =>
       Container(
