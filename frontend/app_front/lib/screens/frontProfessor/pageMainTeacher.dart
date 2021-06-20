@@ -1,4 +1,5 @@
 import 'package:app_front/api/apiAddTraining.dart';
+import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,14 @@ class PageMainTeacher extends StatefulWidget {
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
   List alunosData;
+  List<dynamic> _treinos;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserTraining();
+  }
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -52,8 +61,17 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return alunosData;
   }
 
-  // TODO: Implementar lógica para retornar o nome curto do aluno
-  //String getFullName(String name, String surname) => "${name} ${}";
+  Future getUserTraining() async {
+    var listTrainings = await APIGetUserTrainings().getAllTrainings();
+    _treinos = [];
+    for (var treino in listTrainings.data) {
+      // _defineTypeTraining(treino.int_idftipotreino);
+      print("PRINTTTTTTTTTTTTTTTTTTTTTTT - ${treino.int_idftipotreino}");
+      _treinos.add(treino);
+    }
+    return _treinos;
+  }
+
 
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
@@ -197,177 +215,193 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return nome[0] + sobrenome[0];
   }
 
-  Widget buildTreinos() => SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
-      child: Column(
-        children: [
-          _buildTituloSection("Treinos"),
-          FutureBuilder(
-              future: getStudentsForTeacher(),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                  case ConnectionState.none:
-                    return Container(
-                      width: 200.0,
-                      height: 200.0,
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                        strokeWidth: 5.0,
-                      ),
-                    );
-                  default:
-                    if (snapshot.hasError) {
-                      return Center(child: Text("Erro ao carregar..."));
-                    } else {
-                      return ListView.builder(
-                        padding: EdgeInsets.only(top: 30, bottom: 10),
-                        shrinkWrap: true,
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.only(
-                                bottom: 15, right: 10, left: 10, top: 5),
-                            height: 210,
-                            child: Container(
+  Widget buildTreinos() {
+    return SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Column(
+          children: [
+            _buildTituloSection("Treinos"),
+            FutureBuilder(
+                future: getUserTraining(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    case ConnectionState.none:
+                      return Container(
+                        width: 200.0,
+                        height: 200.0,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          strokeWidth: 5.0,
+                        ),
+                      );
+                    default:
+                      if (snapshot.hasError) {
+                        return Center(child: Text("Erro ao carregar..."));
+                      } else {
+                        return ListView.builder(
+                          padding: EdgeInsets.only(top: 30, bottom: 10),
+                          shrinkWrap: true,
+                          itemCount: _treinos.length,
+                          itemBuilder: (context, index) {
+                            return Container(
                               padding: EdgeInsets.only(
-                                  bottom: 15, right: 20, left: 20, top: 18),
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                                // gradient: LinearGradient(
-                                //   begin: Alignment.topLeft,
-                                //   end: Alignment.bottomRight,
-                                //   stops: [0.1, 0.4],
-                                //   colors: [
-                                //     Color(0xFF3594DD),
-                                //     Color(0xFF4563DB),
-                                //   ],
-                                // ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
+                                  bottom: 15, right: 10, left: 10, top: 5),
+                              height: 210,
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    bottom: 15, right: 20, left: 20, top: 18),
+                                decoration: BoxDecoration(
+                                  color: Colors.white70,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 3,
+                                      blurRadius: 4,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
                                   ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          _treinos[index].vhr_nome,
+                                          style: TextStyle(
+                                              color: Colors.blueAccent,
+                                              fontSize: 25.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${formatDate(_treinos[index].dtt_inicio)} a ${formatDate(_treinos[index].dtt_fim)}",
+                                          style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 6,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${_defineTypeTraining(_treinos[index].int_idftipotreino)}",
+                                          style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            getUserTraining();
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Ver treino",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Treino iniciante",
-                                        style: TextStyle(
-                                            color: Colors.blueAccent,
-                                            fontSize: 25.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "20/06/2021 - 20/07/2021",
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Treino Semanal",
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 13,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {},
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Ver treino",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w800,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                }
-              }),
-          Container(
-            child: FloatingActionButton.extended(
-              onPressed: () async {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => CriarTreino(),
-                    ));
+                            );
+                          },
+                        );
+                      }
+                  }
+                }),
+            Container(
+              child: FloatingActionButton.extended(
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => CriarTreino(),
+                      ));
 
-                // TODO: Código de referência para adicionar treino
-                // Map _treino = {};
-                // _treino['vhr_nome'] = "Criação de treino pela interface";
-                // _treino['dtt_inicio'] = "10/05/2021";
-                // _treino['dtt_fim'] = "10/06/2021";
-                // _treino['vhr_observacao'] = "Observações do treino criado pela interface";
-                // _treino['int_idftipotreino'] = 1;
-                // print("debug treino: ${_treino['vhr_nome']}");
-                // var res = await APIAddTraining().addTraining(_treino);
-                // print("debug res: $res");
+                  // TODO: Código de referência para adicionar treino
+                  // Map _treino = {};
+                  // _treino['vhr_nome'] = "Criação de treino pela interface";
+                  // _treino['dtt_inicio'] = "10/05/2021";
+                  // _treino['dtt_fim'] = "10/06/2021";
+                  // _treino['vhr_observacao'] = "Observações do treino criado pela interface";
+                  // _treino['int_idftipotreino'] = 1;
+                  // print("debug treino: ${_treino['vhr_nome']}");
+                  // var res = await APIAddTraining().addTraining(_treino);
+                  // print("debug res: $res");
 
-                // var res = await APIGetTraining().getAllTraining();
-                // print("debug res: $res");
-              },
-              elevation: 3,
-              icon: Icon(Icons.add),
-              backgroundColor: Colors.green,
-              label: Text(
-                "Criar",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
+                  // var res = await APIGetTraining().getAllTraining();
+                  // print("debug res: $res");
+                },
+                elevation: 3,
+                icon: Icon(Icons.add),
+                backgroundColor: Colors.green,
+                label: Text(
+                  "Criar",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ));
+          ],
+        ));
+  }
+
+  /*   Funções buildTreinos     */
+  String _defineTypeTraining(int typeTraining) {
+    if(typeTraining == 1){
+      return "Treino semanal";
+    }else{
+      return "Treino ABCDE";
+    }
+  }
+
+  // Método para formatar a data para o tipo dd/mm/yyyy
+  String formatDate(String date) {
+    String dia, mes, ano;
+
+    dia = date.substring(5, 7);
+    mes = date.substring(8, 10);
+    ano = date.substring(0, 4);
+
+    return "${dia}/${mes}/${ano}";
+  }
+
 
   Widget _buildTituloSection(String titulo) => Container(
     alignment: Alignment.bottomLeft,
