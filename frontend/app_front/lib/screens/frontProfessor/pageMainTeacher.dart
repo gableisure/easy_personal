@@ -11,6 +11,7 @@ import 'package:app_front/helpers/globals.dart' as globals;
 import '../calendar.dart';
 import 'criarTreino.dart';
 import 'criarExercicio.dart';
+import 'detailsTraining.dart';
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -66,7 +67,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     _treinos = [];
     for (var treino in listTrainings.data) {
       // _defineTypeTraining(treino.int_idftipotreino);
-      print("PRINTTTTTTTTTTTTTTTTTTTTTTT - ${treino.int_idftipotreino}");
       _treinos.add(treino);
     }
     return _treinos;
@@ -317,7 +317,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            getUserTraining();
+                                            Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (context) => DetailsTraining(idTraining: 5,),
+                                                ));
                                           },
                                           child: Row(
                                             children: [
