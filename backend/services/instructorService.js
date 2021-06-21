@@ -186,3 +186,14 @@ exports.addExerciseToTraining = async req => {
     [req.params.exerciseId, req.params.trainingId]
   );
 };
+
+exports.getExercises = async req => {
+  const { rows } = await db.query(
+    `SELECT exercicio.*, categoria.vhr_nome, categoria.vhr_descricao 
+    FROM tbl_exercicio exercicio INNER JOIN tbr_categoria categoria ON categoria.int_idacategoria = exercicio.int_idfcategoria 
+    WHERE exercicio.int_idfprofessor = $1`,
+    [req.user.int_idausuario]
+  );
+
+  return rows;
+};

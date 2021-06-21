@@ -13,7 +13,10 @@ router
   .get(instructorController.getUserTrainings)
   .post(instructorController.addTraining);
 
-router.route('/exercise').post(instructorController.addExercise);
+router
+  .route('/exercise')
+  .get(instructorController.getExercises)
+  .post(instructorController.addExercise);
 
 router
   .route('/training/:trainingId/exercise/:exerciseId')
