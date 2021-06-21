@@ -1,4 +1,5 @@
-import 'package:app_front/api/apiGetUserTrainings.dart';
+import 'package:app_front/api/apiGetTrainingByID.dart';
+import 'package:app_front/widgets/treinoSemanal.dart';
 import 'package:flutter/material.dart';
 
 class DetailsTraining extends StatefulWidget {
@@ -13,7 +14,16 @@ class DetailsTraining extends StatefulWidget {
 
 class _DetailsTrainingState extends State<DetailsTraining> {
 
-  List<dynamic> _treinos;
+  List<dynamic> _treino;
+
+  Future getTrainingByID() async {
+    var traning = await APIGetTraningByID().getTrainingByID(widget.idTraining);
+    _treino = [];
+    for (var treino in traning.data) {
+      _treino.add(treino);
+    }
+    return _treino;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +37,12 @@ class _DetailsTrainingState extends State<DetailsTraining> {
           ),
         ),
         body: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
+            // physics: ClampingScrollPhysics(),
             child: Column(
               children: [
                 _buildTituloSection("Treino"),
                 FutureBuilder(
-                    future: getUserTraining(),
+                    future: getTrainingByID(),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -53,7 +63,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                             return ListView.builder(
                               padding: EdgeInsets.only(top: 30, bottom: 10),
                               shrinkWrap: true,
-                              itemCount: 1,
+                              itemCount: _treino.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                   padding: EdgeInsets.only(
@@ -82,7 +92,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                         Row(
                                           children: [
                                             Text(
-                                              "Texto",
+                                              "${_treino[index].vhr_nome}",
                                               style: TextStyle(
                                                   color: Colors.blueAccent,
                                                   fontSize: 25.0,
@@ -96,7 +106,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                         Row(
                                           children: [
                                             Text(
-                                              "Texto",
+                                              "${formatDate(_treino[index].dtt_inicio)} a ${formatDate(_treino[index].dtt_fim)}",
                                               style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: 18.0,
@@ -110,7 +120,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                         Row(
                                           children: [
                                             Text(
-                                              "Texto",
+                                              "${_defineTypeTraining(_treino[index].int_idftipotreino)}",
                                               style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: 18.0,
@@ -125,7 +135,8 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                         Row(
                                           children: [
                                             Text(
-                                              "Texto",
+                                              "${_treino[index].vhr_observacao}",
+                                              overflow: TextOverflow.fade,
                                               style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: 18.0,
@@ -142,7 +153,10 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                             );
                           }
                       }
-                    }),
+                    }
+                    ),
+                _buildTituloSection("Exercícios"),
+                TreinoSemanal(),
               ],
             )
         )
@@ -152,7 +166,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
   Widget _buildTituloSection(String titulo) => Container(
     alignment: Alignment.bottomLeft,
     width: MediaQuery.of(context).size.width,
-    padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+    padding: EdgeInsets.only(left: 30, top: 10, right: 30),
     child: Text(
       titulo,
       textAlign: TextAlign.left,
@@ -164,14 +178,25 @@ class _DetailsTrainingState extends State<DetailsTraining> {
     ),
   );
 
-  Future getUserTraining() async {
-    var listTrainings = await APIGetUserTrainings().getAllTrainings();
-    _treinos = [];
-    for (var treino in listTrainings.data) {
-      // _defineTypeTraining(treino.int_idftipotreino);
-      _treinos.add(treino);
+  String _defineTypeTraining(int typeTraining) {
+    if(typeTraining == 1){
+      return "Treino semanal";
+    }else{
+      return "Treino ABCDE";
     }
-    return _treinos;
   }
+
+// Método para formatar a data para o tipo dd/mm/yyyy
+  String formatDate(String date) {
+    String dia, mes, ano;
+
+    dia = date.substring(5, 7);
+    mes = date.substring(8, 10);
+    ano = date.substring(0, 4);
+
+    return "${dia}/${mes}/${ano}";
+  }
+
+
 
 }
