@@ -320,7 +320,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                             Navigator.push(
                                                 context,
                                                 CupertinoPageRoute(
-                                                  builder: (context) => DetailsTraining(idTraining: 5,),
+                                                  builder: (context) => DetailsTraining(idTraining: _treinos[index].int_idatreino,),
                                                 ));
                                           },
                                           child: Row(
