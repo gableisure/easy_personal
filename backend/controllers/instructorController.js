@@ -94,3 +94,13 @@ exports.addExerciseToTraining = catchAsync(async (req, res, next) => {
     data: 'Exercício atribuido ao treino!',
   });
 });
+
+exports.getExercises = catchAsync(async (req, res, next) => {
+  const rows = await instructorService.getExercises(req);
+
+  res.status(200).json({
+    status: 'success',
+    results: rows.length,
+    data: rows,
+  });
+});
