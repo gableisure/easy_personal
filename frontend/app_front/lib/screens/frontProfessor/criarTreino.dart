@@ -352,8 +352,6 @@ class _CriarTreinoState extends State<CriarTreino> {
             invertDate(_treino["dtt_inicio"]);
             invertDate(_treino["dtt_fim"]);
             var res = await APIAddTraining().addTraining(_treino);
-            print("debug res: $res");
-
 
             showDialog(
               context: context,

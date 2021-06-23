@@ -1,3 +1,4 @@
+import 'package:app_front/api/apiAddExercise.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,20 @@ class CriarExercicio extends StatefulWidget {
 
 class _CriarExercicioState extends State<CriarExercicio> {
 
+  Map _exercise = {};
 
   var _categoria = ['Categoria', 'Ombro', 'Peito', 'Bíceps', 'Tríceps', 'Abdômen', 'Quadríceps', 'Posterior de Coxa', 'Panturrilha'];
   var _itemSelecionado = 'Categoria';
+
+  Future getUserTraining() async {
+    _exercise["vhr_nome"] = "Exercício APP";
+    _exercise["int_intervalor"] = 5;
+    _exercise["vhr_seriesrepeticoes"] = "3/10";
+    _exercise["int_idfcategoria"] = 1;
+
+    var res = await APIAddExercise().addExercise(_exercise);
+    print(res);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,11 +156,14 @@ class _CriarExercicioState extends State<CriarExercicio> {
     height: 50.0,
     child: ElevatedButton(
       onPressed: () {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) =>  AlertCheckSalvo(),
-        );
+
+        // showDialog(
+        //   context: context,
+        //   barrierDismissible: false,
+        //   builder: (context) =>  AlertCheckSalvo(),
+        // );
+
+        getUserTraining();
       },
       child: Text(
         'Salvar',

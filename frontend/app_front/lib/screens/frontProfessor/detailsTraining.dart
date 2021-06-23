@@ -135,8 +135,9 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                         Row(
                                           children: [
                                             Text(
-                                              "${_treino[index].vhr_observacao}",
-                                              overflow: TextOverflow.fade,
+                                              "",
+                                              // "${_treino[index].vhr_observacao}",
+                                              // overflow: TextOverflow.fade,
                                               style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: 18.0,
@@ -194,7 +195,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
     mes = date.substring(8, 10);
     ano = date.substring(0, 4);
 
-    return "${dia}/${mes}/${ano}";
+    return "${mes}/${dia}/${ano}";
   }
 
 
