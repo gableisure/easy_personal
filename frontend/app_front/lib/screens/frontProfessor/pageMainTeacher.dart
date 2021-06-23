@@ -1,4 +1,5 @@
 import 'package:app_front/api/apiAddTraining.dart';
+import 'package:app_front/api/apiGetExercises.dart';
 import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,8 +11,8 @@ import 'package:flutter/painting.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 import '../calendar.dart';
 import 'criarTreino.dart';
-import 'criarExercicio.dart';
-import 'detailsTraining.dart';
+import 'detailsTrai'
+    'ning.dart';
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -20,7 +21,9 @@ class PageMainTeacher extends StatefulWidget {
 
 class _PageMainTeacherState extends State<PageMainTeacher> {
   List alunosData;
+  List _exercises;
   List<dynamic> _treinos;
+
 
   @override
   void initState() {
@@ -31,25 +34,25 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
-    title: 'Easy Personal',
-    tabs: [
-      Tab(
-        icon: Icon(Icons.face),
-        text: 'Alunos',
-      ),
-      Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
-      Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
-      Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
-      Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
-    ],
-    children: [
-      buildAlunos(),
-      buildTreinos(),
-      buildExercicios(),
-      buildAgenda(),
-      buildFinanceiro(),
-    ],
-  );
+        title: 'Easy Personal',
+        tabs: [
+          Tab(
+            icon: Icon(Icons.face),
+            text: 'Alunos',
+          ),
+          Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
+          Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
+          Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
+          Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
+        ],
+        children: [
+          buildAlunos(),
+          buildTreinos(),
+          buildExercicios(),
+          buildAgenda(),
+          buildFinanceiro(),
+        ],
+      );
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
@@ -66,12 +69,19 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     var listTrainings = await APIGetUserTrainings().getAllTrainings();
     _treinos = [];
     for (var treino in listTrainings.data) {
-      // _defineTypeTraining(treino.int_idftipotreino);
       _treinos.add(treino);
     }
     return _treinos;
   }
 
+  Future getUserExercises() async {
+    var listExercises = await APIGetExercises().getAllExercises();
+    _exercises = [];
+    for (var exercise in listExercises.data) {
+      _exercises.add(exercise);
+    }
+    return _exercises;
+  }
 
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
@@ -126,7 +136,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                 CircleAvatar(
                                   child: Text(
                                     _getIniciais(alunosData[index].vhr_nome,
-                                        alunosData[index].vhr_sobrenome)
+                                            alunosData[index].vhr_sobrenome)
                                         .toUpperCase(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
@@ -232,7 +242,8 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                         height: 200.0,
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blue),
                           strokeWidth: 5.0,
                         ),
                       );
@@ -320,7 +331,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                             Navigator.push(
                                                 context,
                                                 CupertinoPageRoute(
-                                                  builder: (context) => DetailsTraining(idTraining: _treinos[index].int_idatreino,),
+                                                  builder: (context) =>
+                                                      DetailsTraining(
+                                                    idTraining: _treinos[index]
+                                                        .int_idatreino,
+                                                  ),
                                                 ));
                                           },
                                           child: Row(
@@ -355,20 +370,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                       CupertinoPageRoute(
                         builder: (context) => CriarTreino(),
                       ));
-
-                  // TODO: Código de referência para adicionar treino
-                  // Map _treino = {};
-                  // _treino['vhr_nome'] = "Criação de treino pela interface";
-                  // _treino['dtt_inicio'] = "10/05/2021";
-                  // _treino['dtt_fim'] = "10/06/2021";
-                  // _treino['vhr_observacao'] = "Observações do treino criado pela interface";
-                  // _treino['int_idftipotreino'] = 1;
-                  // print("debug treino: ${_treino['vhr_nome']}");
-                  // var res = await APIAddTraining().addTraining(_treino);
-                  // print("debug res: $res");
-
-                  // var res = await APIGetTraining().getAllTraining();
-                  // print("debug res: $res");
                 },
                 elevation: 3,
                 icon: Icon(Icons.add),
@@ -388,9 +389,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   /*   Funções buildTreinos     */
   String _defineTypeTraining(int typeTraining) {
-    if(typeTraining == 1){
+    if (typeTraining == 1) {
       return "Treino semanal";
-    }else{
+    } else {
       return "Treino ABCDE";
     }
   }
@@ -403,89 +404,211 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     mes = date.substring(8, 10);
     ano = date.substring(0, 4);
 
-    return "${dia}/${mes}/${ano}";
+    return "${mes}/${dia}/${ano}";
   }
 
-
   Widget _buildTituloSection(String titulo) => Container(
-    alignment: Alignment.bottomLeft,
-    width: MediaQuery.of(context).size.width,
-    padding: EdgeInsets.only(left: 30, top: 30, right: 30),
-    child: Text(
-      titulo,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w500,
-        // fontFamily: 'Roboto',
-      ),
-    ),
-  );
-
-  // Widget buildTreinos() => Column(
-  //       mainAxisAlignment: MainAxisAlignment.end,
-  //       crossAxisAlignment: CrossAxisAlignment.end,
-  //       children: [
-  //         Container(
-  //           padding: EdgeInsets.only(right: 20, bottom: 35),
-  //           child: FloatingActionButton.extended(
-  //             onPressed: () {
-  //               Navigator.push(
-  //                 context,
-  //                 CupertinoPageRoute(
-  //                     builder: (context) => CriarTreino(),
-  //                 )
-  //               );
-  //             },
-  //             elevation: 3,
-  //             icon: Icon(Icons.add),
-  //             backgroundColor: Colors.green,
-  //             label: Text(
-  //               "Criar",
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //                 fontSize: 17.0,
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     );
-
-  Widget buildExercicios() => Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      Container(
-        padding: EdgeInsets.only(right: 20, bottom: 35),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => CriarExercicio(),
-                ));
-          },
-          elevation: 3,
-          icon: Icon(Icons.add),
-          backgroundColor: Colors.green,
-          label: Text(
-            "Criar",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 17.0,
-            ),
+        alignment: Alignment.bottomLeft,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+        child: Text(
+          titulo,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+            // fontFamily: 'Roboto',
           ),
         ),
-      ),
-    ],
-  );
+      );
+
+  Widget buildExercicios() => FutureBuilder(
+      future: getUserExercises(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+          case ConnectionState.none:
+            return Container(
+              width: 200.0,
+              height: 200.0,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                strokeWidth: 5.0,
+              ),
+            );
+          default:
+            if (snapshot.hasError) {
+              return Center(child: Text("Erro ao carregar..."));
+            } else {
+              return ListView.builder(
+                padding: EdgeInsets.only(top: 30, bottom: 10),
+                shrinkWrap: true,
+                itemCount: _exercises.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.only(
+                        bottom: 15, right: 10, left: 10, top: 5),
+                    height: 210,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: 15, right: 20, left: 20, top: 18),
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 4,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                _exercises[index].vhr_nome,
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                _exercises[index].vhr_seriesrepeticoes,
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                _exercises[index].int_intervalor.toString(),
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 13,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     CupertinoPageRoute(
+                                  //       builder: (context) => DetailsTraining(
+                                  //         idTraining:
+                                  //             _treinos[index].int_idatreino,
+                                  //       ),
+                                  //     ));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Adicionar a treino",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                ),
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     CupertinoPageRoute(
+                                  //       builder: (context) => DetailsTraining(
+                                  //         idTraining:
+                                  //         _treinos[index].int_idatreino,
+                                  //       ),
+                                  //     ));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Excluir",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+        }
+      });
+
+  // Container(
+  //   padding: EdgeInsets.only(right: 20, bottom: 35),
+  //   child: FloatingActionButton.extended(
+  //     onPressed: () {
+  //       Navigator.push(
+  //           context,
+  //           CupertinoPageRoute(
+  //             builder: (context) => CriarExercicio(),
+  //           ));
+  //     },
+  //     elevation: 3,
+  //     icon: Icon(Icons.add),
+  //     backgroundColor: Colors.green,
+  //     label: Text(
+  //       "Criar",
+  //       style: TextStyle(
+  //         fontWeight: FontWeight.bold,
+  //         fontSize: 17.0,
+  //       ),
+  //     ),
+  //   ),
+  // ),
 
   Widget buildAgenda() => Center(
-    child: Calendar(),
-  );
+        child: Calendar(),
+      );
 
   Widget buildFinanceiro() => Center(
-    child: Text("Texto"),
-  );
+        child: Text("Texto"),
+      );
 }

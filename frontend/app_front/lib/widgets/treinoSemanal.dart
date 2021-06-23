@@ -1,3 +1,5 @@
+import 'package:app_front/screens/frontProfessor/dayExercises.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TreinoSemanal extends StatefulWidget {
@@ -54,7 +56,13 @@ class _StateTreinoSemanal extends State<TreinoSemanal> {
                           fontWeight: FontWeight.w500),
                     ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => DayExercises(),
+                              ));
+                        },
                         child: Row(
                           children: [
                             Text("Abrir"),
