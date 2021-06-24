@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 class APIUpdateTeacher {
   Future<UserForgotPassword> updateTeacher(Map user) async {
-    // String url = "10.0.2.2:3000";
-    String url = "easy-personal.herokuapp.com";
+    String url = "10.0.2.2:3000";
+    //String url = "easy-personal.herokuapp.com";
 
     final http.Response response = await http.patch(Uri.http(url,"/api/v1/usuarios/${user['int_idausuario']}"),
         body: jsonEncode(<String, dynamic>{
@@ -19,12 +19,8 @@ class APIUpdateTeacher {
           "vhr_descricao": user['vhr_descricao'],
         }), headers: <String, String>{"content-type": "application/json; charset=UTF-8"});
     if(response.statusCode == 200 || response.statusCode == 204) {
-      print("${response.statusCode}");
-      print("${response.body}");
       return UserForgotPassword.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401) {
-      print("${response.statusCode}");
-      print("${response.body}");
       return UserForgotPassword.fromJson(json.decode(response.body));
     }
     return null;

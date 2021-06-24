@@ -387,10 +387,5 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
     _userEdit['int_tipo'] = 1;
   }
 
-  // _setCref() {
-  //   if(globals.vhr_cref.length == 0) {
-  //
-  //   }
-  // }
 
 }

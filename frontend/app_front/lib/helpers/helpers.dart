@@ -40,7 +40,6 @@ class Helpers {
         if (!(i > users.length)) continue;
       }
     }
-
     return res;
   }
 

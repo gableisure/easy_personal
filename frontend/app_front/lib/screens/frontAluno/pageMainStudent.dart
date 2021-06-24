@@ -29,7 +29,7 @@ class _PageMainStudentState extends State<PageMainStudent> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _buildContainerPesquisa(),
+              // _buildContainerPesquisa(),
               _buildContainerInfo(),
               _buildListaTreinos("Treino de aquecimento", "03/05/2021",
                   "03/06/2021", "ATIVO", Colors.green),
@@ -37,27 +37,31 @@ class _PageMainStudentState extends State<PageMainStudent> {
                   "03/05/2021", "INATIVO", Colors.red),
               _buildListaTreinos("Treino teste", "25/03/2021", "01/04/2021",
                   "INATIVO", Colors.red),
+              _buildListaTreinos("Treino teste", "25/03/2021", "01/04/2021",
+                  "INATIVO", Colors.red),
+              _buildListaTreinos("Treino teste", "25/03/2021", "01/04/2021",
+                  "INATIVO", Colors.red),
             ],
           ),
         ),
       );
 
-  Widget _buildContainerPesquisa() => Container(
-    color: Colors.blue,
-    width: MediaQuery.of(context).size.width,
-    padding: EdgeInsets.only(top: 20, right: 10, bottom: 20, left: 10),
-    child: TextField(
-      decoration: InputDecoration(
-        suffixIcon: Icon(Icons.search),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        fillColor: Colors.white,
-        filled: true,
-        labelText: 'Pesquisar treino',
-      ),
-    ),
-  );
+  // Widget _buildContainerPesquisa() => Container(
+  //   color: Colors.blue,
+  //   width: MediaQuery.of(context).size.width,
+  //   padding: EdgeInsets.only(top: 20, right: 10, bottom: 20, left: 10),
+  //   child: TextField(
+  //     decoration: InputDecoration(
+  //       suffixIcon: Icon(Icons.search),
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+  //       ),
+  //       fillColor: Colors.white,
+  //       filled: true,
+  //       labelText: 'Pesquisar treino',
+  //     ),
+  //   ),
+  // );
 
   Widget _buildContainerInfo() => Container(
     width: MediaQuery.of(context).size.width,
@@ -188,56 +192,26 @@ class _PageMainStudentState extends State<PageMainStudent> {
       );
 
   Widget buildFeedback() => Center(
-    child: Text("Treino Feedbacks"),
-    /*ListView.separated(
-      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-      separatorBuilder: (context, index) => Divider(),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return TextButton(
-          onPressed: () {},
-          child: ListTile(
-            leading: Icon(
-                Icons.person,
-                size: 30
-            ),
-            title: Text(
-              '${items[index]}',
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            subtitle: Text("Aluno há 2 meses"),
-          ),
-        );
-      },
-    ),*/
+    child: Text(
+      "Page Feedbacks",
+      style: TextStyle(
+        fontSize: 25.0,
+        fontWeight: FontWeight.w500,
+        color: Colors.grey
+      ),
+
+    ),
   );
 
   Widget buildTreinosArquivados() => Center(
-    child: Text("Treino arquivados"),
-    /*ListView.separated(
-      padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-      separatorBuilder: (context, index) => Divider(),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return TextButton(
-          onPressed: () {},
-          child: ListTile(
-            leading: Icon(
-                Icons.person,
-                size: 30
-            ),
-            title: Text(
-              '${items[index]}',
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            subtitle: Text("Aluno há 2 meses"),
-          ),
-        );
-      },
-    ),*/
+    child: Text(
+      "Page Training Archived",
+      style: TextStyle(
+      fontSize: 25.0,
+      fontWeight: FontWeight.w500,
+      color: Colors.grey
+    ),
+  )
   );
+
 }

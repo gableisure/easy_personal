@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Teacher {
   String status;
   int results;

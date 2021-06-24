@@ -6,11 +6,12 @@ import 'package:app_front/helpers/globals.dart' as globals;
 
 class APILoginTeacher {
   Future<JsonDefault> login(String email, String password) async {
-     //String url = "10.0.2.2:3000";
-    String url = "easy-personal.herokuapp.com";
+    String url = "10.0.2.2:3000";
+    //String url = "easy-personal.herokuapp.com";
+    String route = "/api/v1/usuarios/login";
 
     final http.Response response = await http.post(
-        Uri.http(url, "/api/v1/usuarios/login"),
+        Uri.http(url, route),
         body: jsonEncode(<String, String>{
           "email": email,
           "password": password,
@@ -21,12 +22,8 @@ class APILoginTeacher {
     if (response.statusCode == 200) {
       String rawCookie = response.headers['set-cookie'];
       globals.rawCookie = rawCookie;
-      print("${response.statusCode}");
-      print("${response.body}");
       return JsonDefault.fromJson(json.decode(response.body));
     } else if (response.statusCode == 401) {
-      print("${response.statusCode}");
-      print("${response.body}");
       return JsonDefault.fromJson(json.decode(response.body));
     }
     return null; //throw Exception("Falha no carregamento dos dados!!!!");
