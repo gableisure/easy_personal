@@ -375,7 +375,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
     );
   }
 
-  Widget _buildButtonSalvar () => Container(
+  Widget _buildButtonSalvar() => Container(
         width: 500.0,
         height: 50.0,
         child: ElevatedButton(

@@ -25,16 +25,10 @@ class APIAddTraining {
           "Cookie": globals.rawCookie
         });
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print("debug ADD: ${response.statusCode}");
-      print("debug ADD:  ${response.body}");
       return AddTraining.fromJson(json.decode(response.body));
     } else if (response.statusCode == 404) {
-      print("debug ADD:  ${response.statusCode}");
-      print("debug ADD:  ${response.body}");
       return AddTraining.fromJson(json.decode(response.body));
     }
-    print("Status code: ${response.statusCode}");
-    print("Body:  ${response.body}");
     return null; //throw Exception("Falha no carregamento dos dados!!!!");
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class TrainingByID {
   String status;
   List<dynamic> data = [];

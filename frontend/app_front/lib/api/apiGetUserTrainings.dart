@@ -16,12 +16,8 @@ class APIGetUserTrainings {
     });
 
     if(response.statusCode == 200) {
-      print("[DEBUG API TREINOS]: ${response.statusCode}");
-      print("[DEBUG API TREINOS]: ${response.body}");
       return Training.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401){
-      print("[DEBUG API TREINOS]: ${response.statusCode}");
-      print("[DEBUG API TREINOS]: ${response.body}");
       return Training.fromJson(json.decode(response.body));
     }
     return null;//throw Exception("Falha no carregamento dos dados!!!!");

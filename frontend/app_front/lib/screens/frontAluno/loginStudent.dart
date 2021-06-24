@@ -4,7 +4,7 @@ import 'package:app_front/api/apiLoginStudent.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app_front/screens/webView.dart';
+
 
 class LoginStudent extends StatefulWidget {
   @override
@@ -14,11 +14,13 @@ class LoginStudent extends StatefulWidget {
 }
 
 class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMixin {
+
   //váriaveis
   String email;
   String senha;
   bool _showPassword = false;
   int _state = 0;
+
   //chaves paras os forms
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -95,12 +97,6 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
       },
     );
   }
-
-  /*@override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }*/
 
   //animation button succes
   void animateButton() {
@@ -209,22 +205,7 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
           ),
         ),
         SizedBox(height: 13,),
-        /*Container(
-          height: 35,
-          child: TextButton(
-            child: Text(
-              "Esqueceu a Senha?",
-              style: TextStyle(
-                color: Color(0xFF0073B7),
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed("/forgotPassword");
-            },
-          ),
-        ),*/
+
         SizedBox(height: 20,),
         Container(
           key: _globalKey,

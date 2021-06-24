@@ -1,7 +1,5 @@
-import 'package:app_front/screens/frontProfessor/criarTreino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app_front/helpers/globals.dart' as globals;
 
 class AlertCheckSalvo extends StatelessWidget {
   @override
