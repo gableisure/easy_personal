@@ -13,6 +13,7 @@ import '../calendar.dart';
 import 'criarTreino.dart';
 import 'detailsTrai'
     'ning.dart';
+import 'showProfileStudent.dart';
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -198,7 +199,22 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                     iconSize: 45,
                                     icon: Icon(Icons.feedback_outlined)),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) => ShowProfileStudent(
+                                            studentId: alunosData[index]
+                                                .int_idausuario,
+                                            studentName: alunosData[index]
+                                                .vhr_nome + ' ' + alunosData[index].vhr_sobrenome,
+                                            studentSobenome: alunosData[index].vhr_sobrenome,
+                                            studentNumero: alunosData[index].vhr_whatsapp,
+                                            studentPeso: alunosData[index].num_peso,
+                                            stundentAltura: alunosData[index].num_altura,
+                                            stundentDescricao: alunosData[index].vhr_descricao,)),
+                                      );
+                                    },
                                     iconSize: 45,
                                     icon: Icon(Icons.account_circle_outlined))
                               ],
