@@ -34,25 +34,25 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
-        title: 'Easy Personal',
-        tabs: [
-          Tab(
-            icon: Icon(Icons.face),
-            text: 'Alunos',
-          ),
-          Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
-          Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
-          Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
-          Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
-        ],
-        children: [
-          buildAlunos(),
-          buildTreinos(),
-          buildExercicios(),
-          buildAgenda(),
-          buildFinanceiro(),
-        ],
-      );
+    title: 'Easy Personal',
+    tabs: [
+      Tab(
+        icon: Icon(Icons.face),
+        text: 'Alunos',
+      ),
+      Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
+      Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
+      Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
+      Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
+    ],
+    children: [
+      buildAlunos(),
+      buildTreinos(),
+      buildExercicios(),
+      buildAgenda(),
+      buildFinanceiro(),
+    ],
+  );
 
   Future getStudentsForTeacher() async {
     var listStudents = await APIGetStudents().getAllStudents();
@@ -136,7 +136,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                 CircleAvatar(
                                   child: Text(
                                     _getIniciais(alunosData[index].vhr_nome,
-                                            alunosData[index].vhr_sobrenome)
+                                        alunosData[index].vhr_sobrenome)
                                         .toUpperCase(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
@@ -243,7 +243,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
                           valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.blue),
+                          AlwaysStoppedAnimation<Color>(Colors.blue),
                           strokeWidth: 5.0,
                         ),
                       );
@@ -333,9 +333,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                                 CupertinoPageRoute(
                                                   builder: (context) =>
                                                       DetailsTraining(
-                                                    idTraining: _treinos[index]
-                                                        .int_idatreino,
-                                                  ),
+                                                        idTraining: _treinos[index]
+                                                            .int_idatreino,
+                                                      ),
                                                 ));
                                           },
                                           child: Row(
@@ -408,19 +408,19 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   }
 
   Widget _buildTituloSection(String titulo) => Container(
-        alignment: Alignment.bottomLeft,
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.only(left: 30, top: 30, right: 30),
-        child: Text(
-          titulo,
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.w500,
-            // fontFamily: 'Roboto',
-          ),
-        ),
-      );
+    alignment: Alignment.bottomLeft,
+    width: MediaQuery.of(context).size.width,
+    padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+    child: Text(
+      titulo,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w500,
+        // fontFamily: 'Roboto',
+      ),
+    ),
+  );
 
   Widget buildExercicios() => FutureBuilder(
       future: getUserExercises(),
@@ -605,10 +605,10 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   // ),
 
   Widget buildAgenda() => Center(
-        child: Calendar(),
-      );
+    child: Calendar(),
+  );
 
   Widget buildFinanceiro() => Center(
-        child: Text("Texto"),
-      );
+    child: Text("Texto"),
+  );
 }
