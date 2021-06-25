@@ -104,3 +104,12 @@ exports.getExercises = catchAsync(async (req, res, next) => {
     data: rows,
   });
 });
+
+exports.deleteUserExercises = catchAsync(async (req, res, next) => {
+  await instructorService.deleteUserExercises(req);
+
+  res.status(200).json({
+    status: 'success',
+    data: 'Exercício deletado.',
+  });
+});

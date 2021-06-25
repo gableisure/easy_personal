@@ -37,4 +37,8 @@ router
   .route('/students/:userId')
   .get(instructorController.getTrainingsByUserId);
 
+router
+  .route('/exercise/:exerciseId')
+  .delete(instructorController.deleteUserExercises);
+
 module.exports = router;
