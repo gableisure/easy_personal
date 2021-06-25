@@ -15,6 +15,7 @@ class DetailsTraining extends StatefulWidget {
 class _DetailsTrainingState extends State<DetailsTraining> {
 
   List<dynamic> _treino;
+  ScrollController _scrollbar = ScrollController();
 
   Future getTrainingByID() async {
     var traning = await APIGetTraningByID().getTrainingByID(widget.idTraining);
@@ -28,139 +29,141 @@ class _DetailsTrainingState extends State<DetailsTraining> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.red,
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.red,
+        iconTheme: IconThemeData(
+          color: Colors.black,
         ),
-        body: SingleChildScrollView(
-            // physics: ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                _buildTituloSection("Treino"),
-                FutureBuilder(
-                    future: getTrainingByID(),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                        case ConnectionState.none:
-                          return Container(
-                            width: 200.0,
-                            height: 200.0,
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                              strokeWidth: 5.0,
+        title: Text(
+          "Treino",
+          style: TextStyle(color: Colors.black, fontSize: 25),
+        ),
+        centerTitle: true,
+      ),
+      body: FutureBuilder(
+      future: getTrainingByID(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+          case ConnectionState.none:
+            return Center(
+              child: Container(
+                width: 200.0,
+                height: 200.0,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 5.0,
+                ),
+              ),
+            );
+          default:
+            if (snapshot.hasError) {
+              return Center(child: Text("Erro ao carregar..."));
+            } else {
+              return ListView.builder(
+                padding: EdgeInsets.only(top: 30, bottom: 10),
+                shrinkWrap: true,
+                controller: _scrollbar,
+                itemCount: _treino.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        padding: EdgeInsets.only(
+                            bottom: 15, right: 20, left: 20, top: 18),
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 4,
+                              offset: Offset(
+                                  0, 3), // changes position of shadow
                             ),
-                          );
-                        default:
-                          if (snapshot.hasError) {
-                            return Center(child: Text("Erro ao carregar..."));
-                          } else {
-                            return ListView.builder(
-                              padding: EdgeInsets.only(top: 30, bottom: 10),
-                              shrinkWrap: true,
-                              itemCount: _treino.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.only(
-                                      bottom: 15, right: 10, left: 10, top: 5),
-                                  height: 210,
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        bottom: 15, right: 20, left: 20, top: 18),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white70,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 3,
-                                          blurRadius: 4,
-                                          offset: Offset(
-                                              0, 3), // changes position of shadow
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${_treino[index].vhr_nome}",
-                                              style: TextStyle(
-                                                  color: Colors.blueAccent,
-                                                  fontSize: 25.0,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${formatDate(_treino[index].dtt_inicio)} a ${formatDate(_treino[index].dtt_fim)}",
-                                              style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 18.0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 6,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${_defineTypeTraining(_treino[index].int_idftipotreino)}",
-                                              style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 6,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "",
-                                              // "${_treino[index].vhr_observacao}",
-                                              // overflow: TextOverflow.fade,
-                                              style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                          ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "${_treino[index].vhr_nome}",
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${formatDate(_treino[index].dtt_inicio)} a ${formatDate(_treino[index].dtt_fim)}",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
                                   ),
-                                );
-                              },
-                            );
-                          }
-                      }
-                    }
-                    ),
-                _buildTituloSection("Exercícios"),
-                TreinoSemanal(),
-              ],
-            )
-        )
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${_defineTypeTraining(_treino[index].int_idftipotreino)}",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "",
+                                  // "${_treino[index].vhr_observacao}",
+                                  // overflow: TextOverflow.fade,
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildTituloSection("Exercícios"),
+                      TreinoSemanal(),
+                    ],
+                  );
+                },
+              );
+            }
+        }
+      }),
     );
   }
 
@@ -197,7 +200,4 @@ class _DetailsTrainingState extends State<DetailsTraining> {
 
     return "${mes}/${dia}/${ano}";
   }
-
-
-
 }
