@@ -189,11 +189,27 @@ exports.addExerciseToTraining = async req => {
 
 exports.getExercises = async req => {
   const { rows } = await db.query(
-    `SELECT exercicio.*, categoria.vhr_nome, categoria.vhr_descricao 
+    `SELECT exercicio.*, categoria.vhr_nome as nome_categoria, categoria.vhr_descricao 
     FROM tbl_exercicio exercicio INNER JOIN tbr_categoria categoria ON categoria.int_idacategoria = exercicio.int_idfcategoria 
     WHERE exercicio.int_idfprofessor = $1`,
     [req.user.int_idausuario]
   );
 
   return rows;
+};
+
+exports.deleteUserExercises = async req => {
+  const {
+    rowCount,
+  } = await db.query(
+    `DELETE FROM tbl_exercicio WHERE int_idaexercicio = $1 AND int_idfprofessor = $2`,
+    [req.params.exerciseId, req.user.int_idausuario]
+  );
+
+  if (!rowCount) {
+    throw new AppError(
+      'Este usuário não possui nenhum exercício com este ID.',
+      404
+    );
+  }
 };
