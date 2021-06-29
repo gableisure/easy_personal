@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 class APILoginStudent {
   Future<JsonDefault> login(String email, String password) async {
-    String url = "10.0.2.2:3000";
-    // String url = "easy-personal.herokuapp.com";
+    // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
     String route = "/api/v1/usuarios/login";
 
     final http.Response response = await http.post(Uri.http(url, route),

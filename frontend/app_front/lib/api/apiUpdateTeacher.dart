@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 class APIUpdateTeacher {
   Future<UserForgotPassword> updateTeacher(Map user) async {
-    String url = "10.0.2.2:3000";
-    //String url = "easy-personal.herokuapp.com";
+    // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
 
     final http.Response response = await http.patch(Uri.http(url,"/api/v1/usuarios/${user['int_idausuario']}"),
         body: jsonEncode(<String, dynamic>{

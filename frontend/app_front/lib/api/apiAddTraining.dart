@@ -6,8 +6,8 @@ import 'package:app_front/helpers/globals.dart' as globals;
 
 class APIAddTraining {
   Future<AddTraining> addTraining(Map training) async {
-     String url = "10.0.2.2:3000";
-    //String url = "easy-personal.herokuapp.com";
+     // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
     String route = "/api/v1/instructors/training";
 
 

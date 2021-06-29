@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 class APIPassword {
   Future<UserForgotPassword> forgotPassword(String email) async {
-    String url = "10.0.2.2:3000";
-    //String url = "easy-personal.herokuapp.com";
+    // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
     String route = "/api/v1/usuarios/forgotPassword/api/v1/usuarios/forgotPassword";
 
     final http.Response response = await http.post(Uri.http(url, route),
