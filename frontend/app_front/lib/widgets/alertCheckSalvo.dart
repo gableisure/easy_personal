@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/frontProfessor/pageMainTeacher.dart';
+
 class AlertCheckSalvo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class AlertCheckSalvo extends StatelessWidget {
       ),
       titlePadding: EdgeInsets.only(top: 20, left: 30, right: 30),
       title: Text(
-        "Em desenvolvimento...",
+        "Exercício criado com sucesso!",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
@@ -24,21 +26,21 @@ class AlertCheckSalvo extends StatelessWidget {
         child: ListBody(
           children: <Widget>[
             Icon(
-              Icons.build,
-              size: 100.0,
-              color: Colors.grey
+                Icons.check,
+                size: 100.0,
+                color: Colors.green
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //     context,
-                    //     CupertinoPageRoute(
-                    //       builder: (context) => CriarTreino(),
-                    //     ));
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => PageMainTeacher(),
+                        ));
+                    //Navigator.of(context).pop();
                   },
                   child: Text(
                     "Continuar",

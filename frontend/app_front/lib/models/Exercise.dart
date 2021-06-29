@@ -30,6 +30,7 @@ class Data {
   int int_idfcategoria;
   int int_idfprofessor;
   String vhr_descricao;
+  String nome_categoria;
 
   Data(
       this.int_idaexercicio,
@@ -39,6 +40,7 @@ class Data {
       this.int_idfcategoria,
       this.int_idfprofessor,
       this.vhr_descricao,
+      this.nome_categoria
       );
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -50,6 +52,7 @@ class Data {
       json['int_idfcategoria'] as int,
       json['int_idfprofessor'] as int,
       json['vhr_descricao'] as String,
+      json['nome_categoria'] as String
     );
   }
 }

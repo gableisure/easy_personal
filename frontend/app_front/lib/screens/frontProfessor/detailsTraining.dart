@@ -133,21 +133,17 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                               ],
                             ),
                             SizedBox(
-                              height: 6,
+                              height: 10,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  "",
-                                  // "${_treino[index].vhr_observacao}",
-                                  // overflow: TextOverflow.fade,
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              // "",
+                              "${_treino[index].vhr_observacao}",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
