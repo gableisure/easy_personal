@@ -12,8 +12,8 @@ import 'package:flutter/painting.dart';
 import 'package:app_front/helpers/globals.dart' as globals;
 import '../calendar.dart';
 import 'criarTreino.dart';
-import 'detailsTrai'
-    'ning.dart';
+import 'detailsTraining.dart';
+import 'pageAddExerciseTraning.dart';
 import 'showProfileStudent.dart';
 
 class PageMainTeacher extends StatefulWidget {
@@ -474,7 +474,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 return Container(
                   padding: EdgeInsets.only(
                       bottom: 15, right: 10, left: 10, top: 5),
-                  height: 210,
+                  height: 230,
                   child: Container(
                     padding: EdgeInsets.only(
                         bottom: 15, right: 20, left: 20, top: 18),
@@ -506,12 +506,12 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                           ],
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 12,
                         ),
                         Row(
                           children: [
                             Text(
-                              _exercises[index].vhr_seriesrepeticoes,
+                              "Grupo muscular: ${_exercises[index].nome_categoria}",
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: 18.0,
@@ -525,11 +525,24 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                         Row(
                           children: [
                             Text(
-                              _exercises[index].int_intervalor.toString(),
+                              "Séries/repetições: ${_exercises[index].vhr_seriesrepeticoes}",
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Intervalo: ${_exercises[index].int_intervalor.toString()}s",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 18.0,
                               ),
                             ),
                           ],
@@ -542,14 +555,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     CupertinoPageRoute(
-                                //       builder: (context) => DetailsTraining(
-                                //         idTraining:
-                                //             _treinos[index].int_idatreino,
-                                //       ),
-                                //     ));
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => PageAddExerciseTraining(int_idaexercicio: _exercises[index].int_idaexercicio),
+                                    ));
                               },
                               child: Row(
                                 children: [
