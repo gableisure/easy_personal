@@ -6,8 +6,8 @@ import 'package:app_front/helpers/globals.dart' as globals;
 
 class APIGetTraningByID {
   Future<TrainingByID> getTrainingByID(int idTraining) async {
-    String url = "10.0.2.2:3000";
-    //String url = "easy-personal.herokuapp.com";
+    // String url = "10.0.2.2:3000";
+    String url = "easy-personal.herokuapp.com";
     String route = "api/v1/instructors/training/$idTraining";
 
     final http.Response response = await http.get(Uri.http(url, route), headers: <String, String>{

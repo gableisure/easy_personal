@@ -1,4 +1,5 @@
 import 'package:app_front/api/apiAddTraining.dart';
+import 'package:app_front/api/apiDeleteExercise.dart';
 import 'package:app_front/api/apiGetExercises.dart';
 import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/criarExercicio.dart';
@@ -581,7 +582,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 // Navigator.push(
                                 //     context,
                                 //     CupertinoPageRoute(
@@ -590,6 +591,11 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                 //         _treinos[index].int_idatreino,
                                 //       ),
                                 //     ));
+
+                                var res = await APIDeleteExercise().deleteExercise();
+                                // print("delete: $res");
+
+                                print("Clicou");
                               },
                               child: Row(
                                 children: [
