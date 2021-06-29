@@ -36,7 +36,16 @@ exports.getUserTrainingByTrainingId = async req => {
     [req.user.int_idausuario, req.params.trainingId]
   );
 
-  return training;
+  const { rows } = await db.query(
+    `SELECT exercicio.* FROM tbl_treinoexercicio treinoexercicio
+    LEFT JOIN tbl_exercicio exercicio ON exercicio.int_idaexercicio = treinoexercicio.int_idfexercicio 
+    WHERE treinoexercicio.int_idftreino = $1`,
+    [req.params.trainingId]
+  );
+
+  training[0].exercises = rows;
+
+  return training[0];
 };
 
 exports.deleteUserTrainings = async req => {
