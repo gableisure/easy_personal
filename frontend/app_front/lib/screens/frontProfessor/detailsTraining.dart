@@ -1,9 +1,7 @@
 import 'package:app_front/api/apiGetTrainingByID.dart';
-import 'package:app_front/widgets/treinoSemanal.dart';
 import 'package:flutter/material.dart';
 
 class DetailsTraining extends StatefulWidget {
-
   final int idTraining;
 
   const DetailsTraining({Key key, this.idTraining}) : super(key: key);
@@ -13,19 +11,18 @@ class DetailsTraining extends StatefulWidget {
 }
 
 class _DetailsTrainingState extends State<DetailsTraining> {
-
   List<dynamic> _treino;
+  List _list;
   ScrollController _scrollbar = ScrollController();
-
 
   Future getTrainingByID() async {
     var training = await APIGetTraningByID().getTrainingByID(widget.idTraining);
     _treino = [];
-    for (var treino in training.data) {
-      _treino.add(treino);
-    }
-    return _treino;
-    print(training);
+    _treino.add(training.data);
+
+    // Lista de exercícios
+    _list = training.data['exercises'];
+
   }
 
   @override
@@ -51,87 +48,102 @@ class _DetailsTrainingState extends State<DetailsTraining> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-      future: getTrainingByID(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-          case ConnectionState.none:
-            return Center(
-              child: Container(
-                width: 200.0,
-                height: 200.0,
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  strokeWidth: 5.0,
-                ),
-              ),
-            );
-          default:
-            if (snapshot.hasError) {
-              return Center(child: Text("Erro ao carregar..."));
-            } else {
-              return ListView.builder(
-                padding: EdgeInsets.only(top: 30, bottom: 10),
-                shrinkWrap: true,
-                controller: _scrollbar,
-                itemCount: _treino.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        padding: EdgeInsets.only(
-                            bottom: 15, right: 20, left: 20, top: 18),
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 4,
-                              offset: Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "${_treino[index].vhr_nome}",
-                                  style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.w500),
+          future: getTrainingByID(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+              case ConnectionState.none:
+                return Center(
+                  child: Container(
+                    width: 200.0,
+                    height: 200.0,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      strokeWidth: 5.0,
+                    ),
+                  ),
+                );
+              default:
+                if (snapshot.hasError) {
+                  return Center(child: Text("Erro ao carregar..."));
+                } else {
+                  return ListView.builder(
+                    padding: EdgeInsets.only(top: 30, bottom: 10),
+                    shrinkWrap: true,
+                    controller: _scrollbar,
+                    // itemCount: 1,
+                    itemCount: _treino.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            padding: EdgeInsets.only(
+                                bottom: 15, right: 20, left: 20, top: 18),
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
                                 ),
                               ],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
                             ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
+                            child: Column(
                               children: [
-                                Text(
-                                  "${formatDate(_treino[index].dtt_inicio)} a ${formatDate(_treino[index].dtt_fim)}",
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 18.0,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "${_treino[index]["vhr_nome"]}",
+                                      style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Row(
-                              children: [
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "${formatDate(_treino[index]["dtt_inicio"])} a ${formatDate(_treino[index]["dtt_fim"])}",
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "${_defineTypeTraining(_treino[index]["int_idftipotreino"])}",
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
-                                  "${_defineTypeTraining(_treino[index].int_idftipotreino)}",
+                                  "${_treino[index]["vhr_observacao"]}",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     color: Colors.black54,
                                     fontSize: 18.0,
@@ -140,56 +152,107 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              // "",
-                              "${_treino[index].vhr_observacao}",
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      _buildTituloSection("Exercícios"),
-                      TreinoSemanal(),
-                    ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _buildTituloSection("Exercícios"),
+                          ListView.builder(
+                            padding: EdgeInsets.only(top: 30, bottom: 10),
+                            shrinkWrap: true,
+                            controller: _scrollbar,
+                            itemCount: _list.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: EdgeInsets.only(
+                                    bottom: 15, right: 10, left: 10, top: 5),
+                                height: 110,
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      bottom: 15, right: 20, left: 20, top: 18),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white70,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 4,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${_list[index]["vhr_nome"]}",
+                                            style: TextStyle(
+                                                color: Colors.blueAccent,
+                                                fontSize: 25.0,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              // Navigator.push(
+                                              //     context,
+                                              //     CupertinoPageRoute(
+                                              //       builder: (context) =>
+                                              //           DayExercises(),
+                                              //     ));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text("Abrir"),
+                                                SizedBox(width: 5.0),
+                                                Icon(Icons
+                                                    .arrow_forward_outlined),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      );
+                    },
                   );
-                },
-              );
+                }
             }
-        }
-      }),
+          }),
     );
   }
 
   Widget _buildTituloSection(String titulo) => Container(
-    alignment: Alignment.bottomLeft,
-    width: MediaQuery.of(context).size.width,
-    padding: EdgeInsets.only(left: 30, top: 10, right: 30),
-    child: Text(
-      titulo,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w500,
-        // fontFamily: 'Roboto',
-      ),
-    ),
-  );
+        alignment: Alignment.bottomLeft,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 30, top: 10, right: 30),
+        child: Text(
+          titulo,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+            // fontFamily: 'Roboto',
+          ),
+        ),
+      );
 
   String _defineTypeTraining(int typeTraining) {
-    if(typeTraining == 1){
+    if (typeTraining == 1) {
       return "Treino semanal";
-    }else{
+    } else {
       return "Treino ABCDE";
     }
   }
