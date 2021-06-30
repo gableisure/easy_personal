@@ -33,6 +33,7 @@ class TabBarWidget extends StatelessWidget {
                 Color(0xFF4563DB),
               ],
             ),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
           ),
         ),
         bottom: TabBar(
@@ -43,6 +44,7 @@ class TabBarWidget extends StatelessWidget {
         ),
         elevation: 20,
         titleSpacing: 20,
+        backgroundColor: Colors.transparent,
       ),
       drawer: SideMenu(),
       body: TabBarView(children: children),

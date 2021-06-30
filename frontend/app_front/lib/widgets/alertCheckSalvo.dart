@@ -1,6 +1,7 @@
+import 'package:app_front/screens/frontAluno/pageMainStudent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../helpers/globals.dart' as globals;
 import '../screens/frontProfessor/pageMainTeacher.dart';
 
 class AlertCheckSalvo extends StatelessWidget {
@@ -35,12 +36,11 @@ class AlertCheckSalvo extends StatelessWidget {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => PageMainTeacher(),
-                        ));
-                    //Navigator.of(context).pop();
+                    if(globals.int_tipo == 0) {
+                      Navigator.of(context).pushReplacementNamed("/pageMainStudent");
+                    } else {
+                      Navigator.of(context).pushReplacementNamed("/pageMainTeacher");
+                    }
                   },
                   child: Text(
                     "Continuar",

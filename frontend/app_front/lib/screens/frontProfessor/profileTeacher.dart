@@ -120,6 +120,7 @@ class ProfileTeacher extends StatelessWidget {
             color: Colors.white,
             fontSize: 15,
           ),
+          textAlign: TextAlign.justify,
         );
       },
     );

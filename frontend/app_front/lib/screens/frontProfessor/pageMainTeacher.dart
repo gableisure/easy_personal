@@ -47,15 +47,15 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
       ),
       Tab(icon: Icon(Icons.assignment), text: 'Treinos'),
       Tab(icon: Icon(Icons.fitness_center), text: 'Exercícios'),
-      Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
-      Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
+      //Tab(icon: Icon(Icons.date_range), text: 'Agenda'),
+      //Tab(icon: Icon(Icons.attach_money), text: 'Financeiro'),
     ],
     children: [
       buildAlunos(),
       buildTreinos(),
       buildExercicios(),
-      buildAgenda(),
-      buildFinanceiro(),
+      //buildAgenda(),
+      //buildFinanceiro(),
     ],
   );
 
@@ -114,8 +114,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 itemBuilder: (context, index) {
                   return Container(
                     padding: EdgeInsets.only(
-                        bottom: 15, right: 10, left: 10, top: 5),
-                    height: 180,
+                        bottom: 15, right: 20, left: 20, top: 8),
+                    height: 200,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -147,21 +148,30 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       fontWeight: FontWeight.w800,
                                       fontSize: 21.0,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
+                                  radius: 25,
                                 ),
                                 SizedBox(
                                   width: 60.0,
                                 ),
-                                Text(
-                                    alunosData[index].vhr_nome +
-                                        " " +
-                                        alunosData[index].vhr_sobrenome,
-                                    style: GoogleFonts.lato(
-                                      textStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 20, right: 30),
+                                    child:  Text(
+                                      alunosData[index].vhr_nome +
+                                          " " +
+                                          alunosData[index].vhr_sobrenome,
+                                      style: GoogleFonts.lato(
+                                        textStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                    )),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

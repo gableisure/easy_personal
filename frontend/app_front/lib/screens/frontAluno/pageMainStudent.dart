@@ -17,13 +17,13 @@ class _PageMainStudentState extends State<PageMainStudent> {
     title: 'Easy Personal',
     tabs: [
       Tab(icon: Icon(Icons.fitness_center), text: 'Treinos'),
-      Tab(icon: Icon(Icons.announcement), text: 'Feedback'),
-      Tab(icon: Icon(Icons.inbox), text: 'Treinos Arquivados'),
+      //Tab(icon: Icon(Icons.announcement), text: 'Feedback'),
+      //Tab(icon: Icon(Icons.inbox), text: 'Treinos Arquivados'),
       ],
     children: [
       buildTreinos(),
-      buildFeedback(),
-      buildTreinosArquivados(),
+      //buildFeedback(),
+      //buildTreinosArquivados(),
     ],
   );
 
