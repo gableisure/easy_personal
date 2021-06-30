@@ -17,13 +17,21 @@ class _DetailsTrainingState extends State<DetailsTraining> {
   List<dynamic> _treino;
   ScrollController _scrollbar = ScrollController();
 
+
   Future getTrainingByID() async {
-    var traning = await APIGetTraningByID().getTrainingByID(widget.idTraining);
+    var training = await APIGetTraningByID().getTrainingByID(widget.idTraining);
     _treino = [];
-    for (var treino in traning.data) {
+    for (var treino in training.data) {
       _treino.add(treino);
     }
     return _treino;
+    print(training);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

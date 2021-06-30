@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../api/apiGetUserTrainings.dart';
 import '../../api/APIAddExerciseToTraining.dart';
+import 'package:app_front/widgets/alertCheckSalvoAddToTraining.dart';
 
 class PageAddExerciseTraining extends StatefulWidget {
   final int int_idaexercicio;
@@ -172,9 +173,15 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                                       //           ),
                                       //     ));
 
-                                      // FUNCIONOU! CONTINUAR DAQUI.
-                                      // var res = await APIAddExerciseToTraining().addExerciseToTraining(_treinos[index].int_idatreino, widget.int_idaexercicio);
-                                      // print(res);
+
+                                      var res = await APIAddExerciseToTraining().addExerciseToTraining(_treinos[index].int_idatreino, widget.int_idaexercicio);
+
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) => AlertCheckSalvoAddToTraining(),
+                                      );
+
                                     },
                                     child: Row(
                                       children: [
