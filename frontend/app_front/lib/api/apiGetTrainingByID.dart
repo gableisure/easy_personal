@@ -16,6 +16,7 @@ class APIGetTraningByID {
     });
 
     if(response.statusCode == 200) {
+      print(json.decode(response.body));
       return TrainingByID.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401){
       return TrainingByID.fromJson(json.decode(response.body));

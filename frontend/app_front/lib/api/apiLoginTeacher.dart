@@ -17,7 +17,7 @@ class APILoginTeacher {
           "password": password,
         }),
         headers: <String, String>{
-          "content-type": "application/json; charset=UTF-8"
+          "content-type": "application/json; charset=UTF-8",
         });
     if (response.statusCode == 200) {
       String rawCookie = response.headers['set-cookie'];
