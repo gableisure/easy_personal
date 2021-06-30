@@ -163,16 +163,6 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                                               Colors.green),
                                     ),
                                     onPressed: () async {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     CupertinoPageRoute(
-                                      //       builder: (context) =>
-                                      //           DetailsTraining(
-                                      //             idTraining:
-                                      //             _treinos[index].int_idatreino,
-                                      //           ),
-                                      //     ));
-
 
                                       var res = await APIAddExerciseToTraining().addExerciseToTraining(_treinos[index].int_idatreino, widget.int_idaexercicio);
 

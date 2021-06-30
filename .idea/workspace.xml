@@ -24,24 +24,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d3be2ead-5557-48e3-9ba9-e1f4fbed3870" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddExercise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddExercise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddExerciseToTraining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddExerciseToTraining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddTraining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiAddTraining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiDeleteUser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiDeleteUser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiForgotPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiForgotPassword.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetExercises.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetExercises.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetStudents.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetStudents.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetTeachers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetTeachers.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetTrainingByID.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetTrainingByID.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetUserTrainings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetUserTrainings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetStudentTrainings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiGetStudentTrainings.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiLoginStudent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiLoginStudent.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiLoginTeacher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiLoginTeacher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiSingUpStudent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiSingUpStudent.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiSingUpTeacher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiSingUpTeacher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiUpdateStudent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiUpdateStudent.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/api/apiUpdateTeacher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/api/apiUpdateTeacher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/screens/frontProfessor/pageMainTeacher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/screens/frontProfessor/pageMainTeacher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app_front/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/helpers/globals.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/helpers/globals.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app_front/lib/screens/frontProfessor/pageAddExerciseTraning.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app_front/lib/screens/frontProfessor/pageAddExerciseTraning.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,13 +52,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/frontend/app_front/build/app/outputs/apk/release/app-arm64-v8a-release.apk" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/frontend/app_front/build/app/outputs/apk/debug/app-debug.apk" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/app_front/build/app/outputs/apk/release/app-arm64-v8a-release.apk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pharma_off" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -127,36 +113,36 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="100" y="100" width="1720" height="840" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1624976113273" />
-    <state x="651" y="170" key="FileChooserDialogImpl" timestamp="1625003394514">
+    <state x="651" y="170" key="FileChooserDialogImpl" timestamp="1625014666449">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1360.728@0.0.1366.728" timestamp="1619570364993" />
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1619652833150" />
-    <state x="651" y="170" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1625003394514" />
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1625003215036">
+    <state x="651" y="170" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1625014666449" />
+    <state width="1877" height="195" key="GridCell.Tab.0.bottom" timestamp="1625021458635">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1323" height="216" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1360.728@0.0.1366.728" timestamp="1619575406388" />
     <state width="1323" height="216" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1619652837352" />
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1625003215036" />
-    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1625003215036">
+    <state width="1877" height="195" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1625021458635" />
+    <state width="1877" height="195" key="GridCell.Tab.0.center" timestamp="1625021458634">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1323" height="216" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1360.728@0.0.1366.728" timestamp="1619575406387" />
     <state width="1323" height="216" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1619652837352" />
-    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1625003215036" />
-    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1625003215036">
+    <state width="1877" height="195" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1625021458634" />
+    <state width="1877" height="195" key="GridCell.Tab.0.left" timestamp="1625021458634">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1323" height="216" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1360.728@0.0.1366.728" timestamp="1619575406387" />
     <state width="1323" height="216" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1619652837351" />
-    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1625003215036" />
-    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1625003215036">
+    <state width="1877" height="195" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1625021458634" />
+    <state width="1877" height="195" key="GridCell.Tab.0.right" timestamp="1625021458634">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1323" height="216" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1360.728@0.0.1366.728" timestamp="1619575406387" />
     <state width="1323" height="216" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1619652837352" />
-    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1625003215036" />
+    <state width="1877" height="195" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1625021458634" />
     <state x="632" y="184" key="SettingsEditor" timestamp="1621195384270">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

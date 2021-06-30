@@ -2,6 +2,7 @@ import "dart:async";
 import 'dart:convert';
 import 'package:app_front/models/jsonDefault.dart';
 import 'package:http/http.dart' as http;
+import 'package:app_front/helpers/globals.dart' as globals;
 
 class APILoginStudent {
   Future<JsonDefault> login(String email, String password) async {
@@ -15,6 +16,8 @@ class APILoginStudent {
           "password": password,
         }), headers: <String, String>{"content-type": "application/json; charset=UTF-8"});
     if(response.statusCode == 200) {
+      String rawCookie = response.headers['set-cookie'];
+      globals.rawCookieStudent = rawCookie;
       return JsonDefault.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401){
       return JsonDefault.fromJson(json.decode(response.body));

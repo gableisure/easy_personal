@@ -27,3 +27,4 @@ int instructor_id = 0;
 
 // Cookie
 String rawCookie = "";
+String rawCookieStudent = "";
