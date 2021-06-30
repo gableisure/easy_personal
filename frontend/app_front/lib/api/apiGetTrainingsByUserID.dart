@@ -1,24 +1,24 @@
 import "dart:async";
 import 'dart:convert';
-import 'package:app_front/models/studentTraning.dart';
+import 'package:app_front/models/studentTrainingTeacher.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_front/helpers/globals.dart' as globals;
 
-class APIGetStudentTrainings {
-  Future<StudentTraining> getAllTrainings() async {
+class APIGetTrainingsByUserID {
+  Future<StudentTrainingTeacher> getAllTrainings(int idStudent) async {
     // String url = "10.0.2.2:3000";
     String url = "easy-personal.herokuapp.com";
-    String route = "/api/v1/usuarios/trainings/";
+    String route = "/api/v1/instructors/students/$idStudent";
 
     final http.Response response = await http.get(Uri.http(url, route), headers: <String, String>{
       "content-type": "application/json; charset=UTF-8",
-      "Cookie": globals.rawCookieStudent
+      "Cookie": globals.rawCookie
     });
 
     if(response.statusCode == 200) {
-      return StudentTraining.fromJson(json.decode(response.body));
+      return StudentTrainingTeacher.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401){
-      return StudentTraining.fromJson(json.decode(response.body));
+      return StudentTrainingTeacher.fromJson(json.decode(response.body));
     }
     return null;//throw Exception("Falha no carregamento dos dados!!!!");
   }
