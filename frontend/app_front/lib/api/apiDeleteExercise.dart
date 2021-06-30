@@ -4,6 +4,8 @@ import 'package:app_front/models/deleteExercise.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_front/helpers/globals.dart' as globals;
 
+// TODO: A ser implementada
+
 class APIDeleteExercise {
   Future<DeleteExercise> deleteExercise() async {
     String url = "10.0.2.2:3000";

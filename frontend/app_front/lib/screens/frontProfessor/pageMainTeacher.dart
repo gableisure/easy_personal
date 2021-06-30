@@ -4,6 +4,7 @@ import 'package:app_front/api/apiGetExercises.dart';
 import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/criarExercicio.dart';
 import 'package:app_front/screens/frontProfessor/treinosAluno.dart';
+import 'package:app_front/widgets/alertDeleteTraining.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
@@ -16,6 +17,7 @@ import 'criarTreino.dart';
 import 'detailsTraining.dart';
 import 'pageAddExerciseTraning.dart';
 import 'showProfileStudent.dart';
+import 'package:http/http.dart' as http;
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -369,6 +371,41 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                       ],
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                    ),
+                                    onPressed: () async {
+                                      // String url = "10.0.2.2:3000";
+                                      String url = "easy-personal.herokuapp.com";
+                                      String route = "/api/v1/instructors/training/${_treinos[index].int_idatreino}";
+
+                                      final http.Response response = await http.delete(Uri.https(url, route),
+                                          headers: <String, String>{
+                                            "content-type": "application/json; charset=UTF-8",
+                                            "Cookie": globals.rawCookie
+                                          });
+
+                                      if(response.statusCode == 204) {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (context) => AlertDeleteTraining(),
+                                        );
+                                      }
+
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.delete_outlined,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -583,29 +620,14 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                 backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
                               ),
                               onPressed: () async {
-                                // Navigator.push(
-                                //     context,
-                                //     CupertinoPageRoute(
-                                //       builder: (context) => DetailsTraining(
-                                //         idTraining:
-                                //         _treinos[index].int_idatreino,
-                                //       ),
-                                //     ));
 
-                                var res = await APIDeleteExercise().deleteExercise();
-                                // print("delete: $res");
 
                                 print("Clicou");
                               },
                               child: Row(
                                 children: [
-                                  Text(
-                                    "Excluir",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                  Icon(
+                                    Icons.delete_outlined,
                                   ),
                                 ],
                               ),
