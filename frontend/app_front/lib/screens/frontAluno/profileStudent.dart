@@ -118,6 +118,7 @@ class ProfileStudent extends StatelessWidget {
             color: Colors.white,
             fontSize: 15,
           ),
+          textAlign: TextAlign.justify,
         );
       },
     );
