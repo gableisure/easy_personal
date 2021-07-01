@@ -24,8 +24,28 @@ class _TreinosAlunoState extends State<TreinosAluno> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Treinos"),
+        title: Text("Treinos do aluno", style: TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+        ),),
+        backgroundColor: Colors.transparent,
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.1, 0.4, 0.7, 0.9],
+                colors: [
+                  Color(0xFF3594DD),
+                  Color(0xFF4563DB),
+                  Color(0xFF5036D5),
+                  Color(0xFF5B16D0),
+                ]
+            ),
+            //borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+          ),
+        ),
       ),
       body: buildTreinos(),
     );
