@@ -1,5 +1,3 @@
-import 'package:app_front/api/apiAddTraining.dart';
-import 'package:app_front/api/apiDeleteExercise.dart';
 import 'package:app_front/api/apiGetExercises.dart';
 import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/criarExercicio.dart';
@@ -833,28 +831,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     ),
   );
 
-  // Container(
-  //   padding: EdgeInsets.only(right: 20, bottom: 35),
-  //   child: FloatingActionButton.extended(
-  //     onPressed: () {
-  //       Navigator.push(
-  //           context,
-  //           CupertinoPageRoute(
-  //             builder: (context) => CriarExercicio(),
-  //           ));
-  //     },
-  //     elevation: 3,
-  //     icon: Icon(Icons.add),
-  //     backgroundColor: Colors.green,
-  //     label: Text(
-  //       "Criar",
-  //       style: TextStyle(
-  //         fontWeight: FontWeight.bold,
-  //         fontSize: 17.0,
-  //       ),
-  //     ),
-  //   ),
-  // ),
 
   Widget buildAgenda() => Center(
     child: Calendar(),

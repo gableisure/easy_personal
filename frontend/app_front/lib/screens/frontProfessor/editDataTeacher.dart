@@ -1,6 +1,7 @@
 import 'package:app_front/api/apiUpdateTeacher.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
+import 'package:app_front/widgets/alertUpdateTeacher.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -358,7 +359,7 @@ class _EditDataTeacherState extends State<EditDataTeacher> {
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => AlertCheckSalvo(),
+          builder: (context) => AlertUpdateTeacher(),
         );
 
       },

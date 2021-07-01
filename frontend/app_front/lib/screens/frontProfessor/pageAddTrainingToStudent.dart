@@ -1,25 +1,38 @@
+import 'package:app_front/api/apiAddTrainingToStudent.dart';
+import 'package:app_front/api/apiGetStudents.dart';
+import 'package:app_front/widgets/alertCheckAddTrainingToStudent.dart';
 import 'package:flutter/material.dart';
-
+import 'package:app_front/helpers/globals.dart' as globals;
 import '../../api/apiGetUserTrainings.dart';
-import '../../api/APIAddExerciseToTraining.dart';
-import 'package:app_front/widgets/alertCheckSalvoAddToTraining.dart';
 
-class PageAddExerciseTraining extends StatefulWidget {
-  final int int_idaexercicio;
+class PageAddTrainingToStudent extends StatefulWidget {
+  final int int_idatreino;
 
-  const PageAddExerciseTraining({Key key, this.int_idaexercicio})
+  const PageAddTrainingToStudent({Key key, this.int_idatreino})
       : super(key: key);
 
   @override
-  _PageAddExerciseTrainingState createState() =>
-      _PageAddExerciseTrainingState();
+  _PageAddTrainingToStudentState createState() =>
+      _PageAddTrainingToStudentState();
 }
 
-class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
+class _PageAddTrainingToStudentState extends State<PageAddTrainingToStudent> {
   ScrollController _scrollbar = ScrollController();
 
 
   List<dynamic> _treinos;
+  List alunosData;
+
+  Future getStudentsForTeacher() async {
+    var listStudents = await APIGetStudents().getAllStudents();
+    alunosData = [];
+    for (var aluno in listStudents.data) {
+      if (aluno.instructor_id == globals.int_idfprofessor) {
+        alunosData.add(aluno);
+      }
+    }
+    return alunosData;
+  }
 
   Future getUserTraining() async {
     var listTrainings = await APIGetUserTrainings().getAllTrainings();
@@ -29,7 +42,8 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
     }
     return _treinos;
   }
-  
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +56,7 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
         ),
       ),
       body: FutureBuilder(
-          future: getUserTraining(),
+          future: getStudentsForTeacher(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -66,12 +80,12 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                     padding: EdgeInsets.only(top: 30, bottom: 10),
                     controller: _scrollbar,
                     shrinkWrap: true,
-                    itemCount: _treinos.length,
+                    itemCount: alunosData.length,
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.only(
                             bottom: 15, right: 10, left: 10, top: 5),
-                        height: 210,
+
                         child: Container(
                           padding: EdgeInsets.only(
                               bottom: 15, right: 20, left: 20, top: 18),
@@ -83,7 +97,7 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                                 spreadRadius: 3,
                                 blurRadius: 4,
                                 offset:
-                                    Offset(0, 3), // changes position of shadow
+                                Offset(0, 3), // changes position of shadow
                               ),
                             ],
                             borderRadius: BorderRadius.all(
@@ -93,65 +107,30 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                           child: Column(
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    _treinos[index].vhr_nome,
+                                    "${alunosData[index].vhr_nome} ${alunosData[index].vhr_sobrenome}",
                                     style: TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 25.0,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "${formatDate(_treinos[index].dtt_inicio)} a ${formatDate(_treinos[index].dtt_fim)}",
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "${_defineTypeTraining(_treinos[index].int_idftipotreino)}",
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
                                   ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.green),
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.green),
                                     ),
                                     onPressed: () async {
 
-                                      var res = await APIAddExerciseToTraining().addExerciseToTraining(_treinos[index].int_idatreino, widget.int_idaexercicio);
+                                      var res = await APIAddTrainingToStudent().addTrainingToStudent(widget.int_idatreino, alunosData[index].int_idausuario);
+                                      print("RES: $res");
 
                                       showDialog(
                                         context: context,
                                         barrierDismissible: false,
-                                        builder: (context) => AlertCheckSalvoAddToTraining(),
+                                        builder: (context) => AlertCheckAddTrainingToStudent(),
                                       );
 
                                     },
@@ -170,6 +149,7 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
                                   ),
                                 ],
                               ),
+
                             ],
                           ),
                         ),
@@ -182,23 +162,5 @@ class _PageAddExerciseTrainingState extends State<PageAddExerciseTraining> {
     );
   }
 
-  /*   Funções buildTreinos     */
-  String _defineTypeTraining(int typeTraining) {
-    if (typeTraining == 1) {
-      return "Treino semanal";
-    } else {
-      return "Treino ABCDE";
-    }
-  }
 
-  // Método para formatar a data para o tipo dd/mm/yyyy
-  String formatDate(String date) {
-    String dia, mes, ano;
-
-    dia = date.substring(5, 7);
-    mes = date.substring(8, 10);
-    ano = date.substring(0, 4);
-
-    return "${mes}/${dia}/${ano}";
-  }
 }

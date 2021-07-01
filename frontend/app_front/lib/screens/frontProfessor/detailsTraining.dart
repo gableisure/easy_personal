@@ -1,4 +1,6 @@
 import 'package:app_front/api/apiGetTrainingByID.dart';
+import 'package:app_front/screens/frontProfessor/pageAddTrainingToStudent.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailsTraining extends StatefulWidget {
@@ -22,7 +24,6 @@ class _DetailsTrainingState extends State<DetailsTraining> {
 
     // Lista de exercícios
     _list = training.data['exercises'];
-
   }
 
   @override
@@ -43,7 +44,10 @@ class _DetailsTrainingState extends State<DetailsTraining> {
         ),
         title: Text(
           "Treino",
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 25
+          ),
         ),
         centerTitle: true,
       ),
@@ -72,7 +76,6 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                     padding: EdgeInsets.only(top: 30, bottom: 10),
                     shrinkWrap: true,
                     controller: _scrollbar,
-                    // itemCount: 1,
                     itemCount: _treino.length,
                     itemBuilder: (context, index) {
                       return Column(
@@ -156,6 +159,46 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                           SizedBox(
                             height: 20,
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => PageAddTrainingToStudent(int_idatreino: _treino[index]["int_idatreino"]),
+                                        ));
+
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 5.0
+                                      ),
+                                      Text(
+                                        "Atribuir a aluno",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 19.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           _buildTituloSection("Exercícios"),
                           ListView.builder(
                             padding: EdgeInsets.only(top: 30, bottom: 10),
@@ -166,7 +209,7 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                               return Container(
                                 padding: EdgeInsets.only(
                                     bottom: 15, right: 10, left: 10, top: 5),
-                                height: 110,
+                                height: 170,
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       bottom: 15, right: 20, left: 20, top: 18),
@@ -198,22 +241,46 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                                 fontSize: 25.0,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     CupertinoPageRoute(
-                                              //       builder: (context) =>
-                                              //           DayExercises(),
-                                              //     ));
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text("Abrir"),
-                                                SizedBox(width: 5.0),
-                                                Icon(Icons
-                                                    .arrow_forward_outlined),
-                                              ],
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 12,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Grupo muscular: ${_defineCategoria(_list[index]["int_idfcategoria"])}",
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Séries/repetições: ${_list[index]["vhr_seriesrepeticoes"]}",
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Intervalo: ${_list[index]["int_intervalor"]}s",
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 18.0,
                                             ),
                                           ),
                                         ],
@@ -266,5 +333,28 @@ class _DetailsTrainingState extends State<DetailsTraining> {
     ano = date.substring(0, 4);
 
     return "${mes}/${dia}/${ano}";
+  }
+
+  String _defineCategoria(int idCategoria) {
+    switch (idCategoria) {
+      case 2:
+        return "Ombro";
+      case 3:
+        return "Peito";
+      case 4:
+        return "Bíceps";
+      case 5:
+        return "Tríceps";
+      case 6:
+        return "Abdômen";
+      case 7:
+        return "Quadríceps";
+      case 8:
+        return "Posterior de Coxa";
+      case 9:
+        return "Panturrilha";
+      case 10:
+        return "Glúteos";
+    }
   }
 }
