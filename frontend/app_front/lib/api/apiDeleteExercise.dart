@@ -7,10 +7,10 @@ import 'package:app_front/helpers/globals.dart' as globals;
 // TODO: A ser implementada
 
 class APIDeleteExercise {
-  Future<DeleteExercise> deleteExercise() async {
+  Future<DeleteExercise> deleteExercise(int idExercise) async {
     String url = "10.0.2.2:3000";
     //String url = "easy-personal.herokuapp.com";
-    String route = "/api/v1/instructors/exercise/47";
+    String route = "/api/v1/instructors/exercise/$idExercise";
 
     final http.Response response = await http.delete(Uri.https(url, route),
         headers: <String, String>{
@@ -18,6 +18,7 @@ class APIDeleteExercise {
           // "Cookie": globals.rawCookie
         });
     if(response.statusCode != 204) {
+      print("Status code: ${response.statusCode}");
       return DeleteExercise.fromJson(json.decode(response.body));
     } else {
       print("${response.statusCode}");

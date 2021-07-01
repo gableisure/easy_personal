@@ -40,7 +40,6 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
         ),
         prefixIcon: Icon(Icons.email_rounded),
         labelText: "E-mail",
-        hintText: "E-mail teste: aluno@easy.com",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
@@ -70,7 +69,6 @@ class _StateLoginStudent extends State<LoginStudent>  with TickerProviderStateMi
         ),
         prefixIcon: Icon(Icons.vpn_key_rounded),
         labelText: "Senha",
-        hintText: "senha Teste: 123",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
