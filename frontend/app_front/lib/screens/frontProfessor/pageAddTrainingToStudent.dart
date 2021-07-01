@@ -52,8 +52,29 @@ class _PageAddTrainingToStudentState extends State<PageAddTrainingToStudent> {
         elevation: 0,
         foregroundColor: Colors.red,
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.1, 0.4, 0.7, 0.9],
+                colors: [
+                  Color(0xFF3594DD),
+                  Color(0xFF4563DB),
+                  Color(0xFF5036D5),
+                  Color(0xFF5B16D0),
+                ],
+            ),
+            //borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+          ),
+        ),
+        title: Text("Atribuir treino ao aluno", style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),),
+        centerTitle: true,
       ),
       body: FutureBuilder(
           future: getStudentsForTeacher(),
