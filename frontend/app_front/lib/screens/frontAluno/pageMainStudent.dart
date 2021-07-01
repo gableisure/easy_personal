@@ -11,6 +11,15 @@ class PageMainStudent extends StatefulWidget {
 class _PageMainStudentState extends State<PageMainStudent> {
 
   List<dynamic> _treinos;
+  List _list;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserTraining();
+
+  }
 
   @override
   Widget build(BuildContext context) => TabBarWidget(
@@ -29,12 +38,24 @@ class _PageMainStudentState extends State<PageMainStudent> {
 
 
   Future getUserTraining() async {
-    var listTrainings = await APIGetStudentTrainings().getAllTrainings();
+    var training = await APIGetStudentTrainings().getAllTrainings();
+    // print("Training: ${training.data[0].vhr_nome}");
     _treinos = [];
-    for (var treino in listTrainings.data) {
-      _treinos.add(treino);
+
+    for(var training in training.data) {
+      _treinos.add(training);
     }
-    return _treinos;
+
+    // print("TREINOOOOOO:   " + _treinos[0].exercises[0].vhr_nome);
+    //
+    // print("treino: ${_treinos}");
+    //
+    // // Lista de exercícios
+    // _list = training.data['exercises'];
+
+    for(var item in _treinos) {
+
+    }
   }
 
   ScrollController _scrollbar = ScrollController();
@@ -95,7 +116,7 @@ class _PageMainStudentState extends State<PageMainStudent> {
                               Row(
                                 children: [
                                   Text(
-                                    // "Texto",
+                                    // "Text",
                                     _treinos[index].vhr_nome,
                                     style: TextStyle(
                                         color: Colors.blueAccent,
@@ -152,6 +173,8 @@ class _PageMainStudentState extends State<PageMainStudent> {
                                       //             _treinos[index].int_idatreino,
                                       //           ),
                                       //     ));
+
+                                      // print(_treinos[index].exercises);
                                     },
                                     child: Row(
                                       children: [
