@@ -1,11 +1,11 @@
 import "dart:async";
 import 'dart:convert';
-import 'package:app_front/models/studentTraning.dart';
+import 'package:app_front/models/TrainingStudent.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_front/helpers/globals.dart' as globals;
 
 class APIGetStudentTrainings {
-  Future<StudentTraining> getAllTrainings() async {
+  Future<TrainingStudent> getAllTrainings() async {
     // String url = "10.0.2.2:3000";
     String url = "easy-personal.herokuapp.com";
     String route = "/api/v1/usuarios/trainings/";
@@ -16,9 +16,13 @@ class APIGetStudentTrainings {
     });
 
     if(response.statusCode == 200) {
-      return StudentTraining.fromJson(json.decode(response.body));
+      print("StatusCode: ${response.statusCode}");
+      print("Body: ${response.body}");
+      return TrainingStudent.fromJson(json.decode(response.body));
     } else if(response.statusCode == 401){
-      return StudentTraining.fromJson(json.decode(response.body));
+      print("StatusCode: ${response.statusCode}");
+      // print("Body: ${response.body}");
+      return TrainingStudent.fromJson(json.decode(response.body));
     }
     return null;//throw Exception("Falha no carregamento dos dados!!!!");
   }
