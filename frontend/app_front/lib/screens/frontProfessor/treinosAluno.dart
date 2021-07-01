@@ -2,6 +2,8 @@ import 'package:app_front/api/apiGetTrainingsByUserID.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'detailsTraining.dart';
+
 class TreinosAluno extends StatefulWidget {
   final int studentId;
   final String studentName;
@@ -145,15 +147,15 @@ class _TreinosAlunoState extends State<TreinosAluno> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     CupertinoPageRoute(
-                                      //       builder: (context) =>
-                                      //           DetailsTraining(
-                                      //             idTraining:
-                                      //             _treinos[index].int_idatreino,
-                                      //           ),
-                                      //     ));
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) =>
+                                                DetailsTraining(
+                                                  idTraining:
+                                                  _treinos[index].int_idatreino,
+                                                ),
+                                          ));
                                     },
                                     child: Row(
                                       children: [

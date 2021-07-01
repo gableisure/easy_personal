@@ -1,6 +1,7 @@
 import 'package:app_front/api/apiUpdateStudent.dart';
 import 'package:app_front/helpers/helpers.dart';
 import 'package:app_front/widgets/alertCheckSalvo.dart';
+import 'package:app_front/widgets/alertUpdateStudent.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -391,7 +392,7 @@ class _EditDataStudentState extends State<EditDataStudent> {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (context) => AlertCheckSalvo(),
+              builder: (context) => AlertUpdateStudent(),
             );
             var res = await APIUpdateStudent().updateStudent(_userEdit);
             print("debug resposta: $res");

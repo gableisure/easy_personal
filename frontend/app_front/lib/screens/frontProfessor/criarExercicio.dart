@@ -31,7 +31,6 @@ class _CriarExercicioState extends State<CriarExercicio> {
 
   Future addExercise(Map _exercise) async {
     var res = await APIAddExercise().addExercise(_exercise);
-    print(res);
   }
 
   @override
@@ -77,7 +76,7 @@ class _CriarExercicioState extends State<CriarExercicio> {
                     SizedBox(
                       height: 25,
                     ),
-                    _buildTextFieldIntervalo("Intervalo p/ série"),
+                    _buildTextFieldIntervalo("Intervalo p/ série (em segundos)"),
                     SizedBox(
                       height: 25,
                     ),
