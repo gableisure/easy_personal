@@ -41,7 +41,6 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
         ),
         prefixIcon: Icon(Icons.email_rounded),
         labelText: "E-mail",
-        hintText: "Email Teste: professor@easy.com",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
 
@@ -72,7 +71,6 @@ class _StateLoginTeacher extends State<LoginTeacher> with TickerProviderStateMix
         ),
         prefixIcon: Icon(Icons.vpn_key_rounded),
         labelText: "Senha",
-        hintText: "Senha Teste: 123",
         labelStyle: TextStyle(
           fontWeight: FontWeight.w400,
         ),
