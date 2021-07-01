@@ -18,6 +18,7 @@ import 'detailsTraining.dart';
 import 'pageAddExerciseTraning.dart';
 import 'showProfileStudent.dart';
 import 'package:http/http.dart' as http;
+import 'package:app_front/widgets/alertDeleteExercise.dart';
 
 class PageMainTeacher extends StatefulWidget {
   @override
@@ -755,10 +756,24 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                     backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
                                   ),
                                   onPressed: () async {
+                                    // String url = "10.0.2.2:3000";
+                                    String url = "easy-personal.herokuapp.com";
+                                    String route = "/api/v1/instructors/exercise/${_exercises[index].int_idaexercicio}";
 
-                                    // TODO: Não está deletando exercício
-                                    // var res = await APIDeleteExercise().deleteExercise(_exercises[index].int_idaexercicio);
-                                    // print("debug: $res");
+                                    final http.Response response = await http.delete(Uri.https(url, route),
+                                        headers: <String, String>{
+                                          "content-type": "application/json; charset=UTF-8",
+                                          "Cookie": globals.rawCookie
+                                        });
+
+                                    if(response.statusCode == 200) {
+                                      //print("Status code: ${response.statusCode}");
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) => AlertDeleteExercise(),
+                                      );
+                                    }
                                   },
                                   child: Row(
                                     children: [
