@@ -1,5 +1,7 @@
 import 'package:app_front/api/apiGetStudentTrainings.dart';
+import 'package:app_front/screens/frontProfessor/detailsTraining.dart';
 import 'package:app_front/screens/frontProfessor/tabBarWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -36,7 +38,6 @@ class _PageMainStudentState extends State<PageMainStudent> {
     ],
   );
 
-
   Future getUserTraining() async {
     var training = await APIGetStudentTrainings().getAllTrainings();
     // print("Training: ${training.data[0].vhr_nome}");
@@ -45,7 +46,7 @@ class _PageMainStudentState extends State<PageMainStudent> {
     for(var training in training.data) {
       _treinos.add(training);
     }
-
+    return _treinos;
     // print("TREINOOOOOO:   " + _treinos[0].exercises[0].vhr_nome);
     //
     // print("treino: ${_treinos}");
@@ -53,9 +54,9 @@ class _PageMainStudentState extends State<PageMainStudent> {
     // // Lista de exercícios
     // _list = training.data['exercises'];
 
-    for(var item in _treinos) {
+    /*for(var item in _treinos) {
 
-    }
+    }*/
   }
 
   ScrollController _scrollbar = ScrollController();
@@ -164,17 +165,15 @@ class _PageMainStudentState extends State<PageMainStudent> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     CupertinoPageRoute(
-                                      //       builder: (context) =>
-                                      //           DetailsTraining(
-                                      //             idTraining:
-                                      //             _treinos[index].int_idatreino,
-                                      //           ),
-                                      //     ));
-
-                                      // print(_treinos[index].exercises);
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => DetailsTraining(
+                                                  idTraining:
+                                                  _treinos[index].int_idatreino,
+                                                ),
+                                          ),
+                                      );
                                     },
                                     child: Row(
                                       children: [

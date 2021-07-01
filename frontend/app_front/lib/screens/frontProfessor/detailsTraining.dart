@@ -2,6 +2,7 @@ import 'package:app_front/api/apiGetTrainingByID.dart';
 import 'package:app_front/screens/frontProfessor/pageAddTrainingToStudent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app_front/helpers/globals.dart' as globals;
 
 class DetailsTraining extends StatefulWidget {
   final int idTraining;
@@ -161,18 +162,21 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 20.0),
-                            child: Row(
+                            child: globals.int_tipo == 1 ? Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
 
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) => PageAddTrainingToStudent(int_idatreino: _treino[index]["int_idatreino"]),
-                                        ));
-
+                                    if(globals.int_tipo == 0) {
+                                      return;
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => PageAddTrainingToStudent(int_idatreino: _treino[index]["int_idatreino"]),
+                                          ));
+                                    }
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
@@ -180,24 +184,24 @@ class _DetailsTrainingState extends State<DetailsTraining> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Icon(
+                                      globals.int_tipo == 1 ? Icon(
                                         Icons.add,
                                         color: Colors.white,
-                                      ),
+                                      ) : Container(),
                                       SizedBox(
                                         width: 5.0
                                       ),
-                                      Text(
+                                      globals.int_tipo == 1 ? Text(
                                         "Atribuir a aluno",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 19.0),
-                                      ),
+                                      ) : Container(),
                                     ],
                                   ),
                                 ),
                               ],
-                            ),
+                            ) : Container(),
                           ),
                           _buildTituloSection("Exercícios"),
                           ListView.builder(
