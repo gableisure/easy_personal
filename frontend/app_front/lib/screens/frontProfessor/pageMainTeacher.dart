@@ -383,173 +383,173 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
   Widget buildTreinos() {
     return Scaffold(
       body: FutureBuilder(
-          future: getUserTraining(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-              case ConnectionState.none:
-                return Center(
-                  child: Container(
-                    width: 200.0,
-                    height: 200.0,
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                      strokeWidth: 5.0,
-                    ),
-                  ),
-                );
-              default:
-                if (snapshot.hasError) {
-                  return Center(child: Text("Erro ao carregar..."));
-                } else {
-                  return ListView.builder(
-                    padding: EdgeInsets.only(top: 30, bottom: 10),
-                    controller: _scrollbar,
-                    shrinkWrap: true,
-                    itemCount: _treinos.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.only(
-                            bottom: 15, right: 10, left: 10, top: 5),
-                        height: 210,
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              bottom: 15, right: 20, left: 20, top: 18),
-                          decoration: BoxDecoration(
-                            color: Colors.white70,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 4,
-                                offset:
-                                Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    _treinos[index].vhr_nome,
-                                    style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.w500),
+              future: getUserTraining(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
+                    return Center(
+                      child: Container(
+                        width: 200.0,
+                        height: 200.0,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          strokeWidth: 5.0,
+                        ),
+                      ),
+                    );
+                  default:
+                    if (snapshot.hasError) {
+                      return Center(child: Text("Erro ao carregar..."));
+                    } else {
+                      return ListView.builder(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        controller: _scrollbar,
+                        shrinkWrap: true,
+                        itemCount: _treinos.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                bottom: 15, right: 10, left: 10, top: 5),
+                            height: 210,
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 15, right: 20, left: 20, top: 18),
+                              decoration: BoxDecoration(
+                                color: Colors.white70,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 4,
+                                    offset:
+                                    Offset(0, 3), // changes position of shadow
                                   ),
                                 ],
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
                               ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
+                              child: Column(
                                 children: [
-                                  Text(
-                                    "${formatDate(_treinos[index].dtt_inicio)} a ${formatDate(_treinos[index].dtt_fim)}",
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "${_defineTypeTraining(_treinos[index].int_idftipotreino)}",
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) =>
-                                                DetailsTraining(
-                                                  idTraining:
-                                                  _treinos[index].int_idatreino,
-                                                ),
-                                          ));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Ver treino",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        _treinos[index].vhr_nome,
+                                        style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 25.0,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(
-                                    width: 10.0,
+                                    height: 15,
                                   ),
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
-                                    ),
-                                    onPressed: () async {
-                                      // String url = "10.0.2.2:3000";
-                                      String url = "easy-personal.herokuapp.com";
-                                      String route = "/api/v1/instructors/training/${_treinos[index].int_idatreino}";
-
-                                      final http.Response response = await http.delete(Uri.https(url, route),
-                                          headers: <String, String>{
-                                            "content-type": "application/json; charset=UTF-8",
-                                            "Cookie": globals.rawCookie
-                                          });
-
-                                      if(response.statusCode == 204) {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (context) => AlertDeleteTraining(),
-                                        );
-                                      }
-
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.delete_outlined,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${formatDate(_treinos[index].dtt_inicio)} a ${formatDate(_treinos[index].dtt_fim)}",
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 18.0,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${_defineTypeTraining(_treinos[index].int_idftipotreino)}",
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 13,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    DetailsTraining(
+                                                      idTraining:
+                                                      _treinos[index].int_idatreino,
+                                                    ),
+                                              ));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Ver treino",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                        ),
+                                        onPressed: () async {
+                                          // String url = "10.0.2.2:3000";
+                                          String url = "easy-personal.herokuapp.com";
+                                          String route = "/api/v1/instructors/training/${_treinos[index].int_idatreino}";
+
+                                          final http.Response response = await http.delete(Uri.https(url, route),
+                                              headers: <String, String>{
+                                                "content-type": "application/json; charset=UTF-8",
+                                                "Cookie": globals.rawCookie
+                                              });
+
+                                          if(response.statusCode == 204) {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (context) => AlertDeleteTraining(),
+                                            );
+                                          }
+
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.delete_outlined,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       );
-                    },
-                  );
+                    }
                 }
-            }
-          }),
+              }),
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
@@ -754,8 +754,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                   ),
                                   onPressed: () async {
 
-
-                                    print("Clicou");
+                                    // TODO: Não está deletando exercício
+                                    // var res = await APIDeleteExercise().deleteExercise(_exercises[index].int_idaexercicio);
+                                    // print("debug: $res");
                                   },
                                   child: Row(
                                     children: [
