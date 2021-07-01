@@ -88,6 +88,34 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return _exercises;
   }
 
+  Widget planetThumbnail() => new Container(
+    margin: new EdgeInsets.symmetric(
+        vertical: 16.0
+    ),
+    alignment: FractionalOffset.centerLeft,
+    child: CircleAvatar(
+      radius: 50,
+      backgroundColor: Colors.white,
+    ),
+  );
+
+  Widget planetCard() => new Container(
+    height: 124.0,
+    margin: new EdgeInsets.only(left: 46.0),
+    decoration: new BoxDecoration(
+      color: new Color(0xFF333366),
+      shape: BoxShape.rectangle,
+      borderRadius: new BorderRadius.circular(8.0),
+      boxShadow: <BoxShadow>[
+        new BoxShadow(
+          color: Colors.black12,
+          blurRadius: 10.0,
+          offset: new Offset(0.0, 10.0),
+        ),
+      ],
+    ),
+  );
+
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
       builder: (context, snapshot) {
@@ -112,6 +140,129 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 shrinkWrap: true,
                 itemCount: alunosData.length,
                 itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                        Container(
+                        height: 120,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 16.0,
+                          horizontal: 24.0,
+                        ),
+                        child: new Stack(
+                          children: <Widget>[
+                            Container(
+                              height: 124.0,
+                              margin: new EdgeInsets.only(left: 46.0),
+                              decoration: new BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: new BorderRadius.circular(10.0),
+                                boxShadow: <BoxShadow>[
+                                  new BoxShadow(
+                                    color: Colors.grey.withOpacity(0.8),
+                                    spreadRadius: 3,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                                      child:  Text(
+                                        alunosData[index].vhr_nome +
+                                            " " +
+                                            alunosData[index].vhr_sobrenome,
+                                        style: GoogleFonts.lato(
+                                          textStyle: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                  builder: (context) => TreinosAluno(
+                                                      studentId: alunosData[index]
+                                                          .int_idausuario,
+                                                      studentName: alunosData[index]
+                                                          .vhr_nome)),
+                                            );
+                                          },
+                                          iconSize: 35,
+                                          icon: Icon(Icons.assignment_outlined)),
+                                      /*IconButton(
+                                          onPressed: () {},
+                                          iconSize: 45,
+                                          icon: Icon(Icons.all_inbox_outlined)),
+                                      IconButton(
+                                          onPressed: () {},
+                                          iconSize: 45,
+                                          icon: Icon(Icons.feedback_outlined)),*/
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                  builder: (context) => ShowProfileStudent(
+                                                    studentId: alunosData[index]
+                                                        .int_idausuario,
+                                                    studentName: alunosData[index]
+                                                        .vhr_nome + ' ' + alunosData[index].vhr_sobrenome,
+                                                    studentSobenome: alunosData[index].vhr_sobrenome,
+                                                    studentNumero: alunosData[index].vhr_whatsapp,
+                                                    studentPeso: alunosData[index].num_peso,
+                                                    stundentAltura: alunosData[index].num_altura,
+                                                    stundentDescricao: alunosData[index].vhr_descricao,)),
+                                            );
+                                          },
+                                          iconSize: 35,
+                                          icon: Icon(Icons.account_circle_outlined))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                vertical: 16.0,
+                              ),
+                              alignment: FractionalOffset.centerLeft,
+                              child: CircleAvatar(
+                                child: Text(
+                                  _getIniciais(alunosData[index].vhr_nome,
+                                      alunosData[index].vhr_sobrenome)
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 25.0,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                radius: 40,
+                                backgroundColor: Colors.indigo,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
                   return Container(
                     padding: EdgeInsets.only(
                         bottom: 15, right: 20, left: 20, top: 8),
