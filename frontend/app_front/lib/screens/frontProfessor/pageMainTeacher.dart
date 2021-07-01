@@ -1,3 +1,5 @@
+import 'package:app_front/api/apiAddTraining.dart';
+import 'package:app_front/api/apiDeleteExercise.dart';
 import 'package:app_front/api/apiGetExercises.dart';
 import 'package:app_front/api/apiGetUserTrainings.dart';
 import 'package:app_front/screens/frontProfessor/criarExercicio.dart';
@@ -86,34 +88,6 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     return _exercises;
   }
 
-  Widget planetThumbnail() => new Container(
-    margin: new EdgeInsets.symmetric(
-        vertical: 16.0
-    ),
-    alignment: FractionalOffset.centerLeft,
-    child: CircleAvatar(
-      radius: 50,
-      backgroundColor: Colors.white,
-    ),
-  );
-
-  Widget planetCard() => new Container(
-    height: 124.0,
-    margin: new EdgeInsets.only(left: 46.0),
-    decoration: new BoxDecoration(
-      color: new Color(0xFF333366),
-      shape: BoxShape.rectangle,
-      borderRadius: new BorderRadius.circular(8.0),
-      boxShadow: <BoxShadow>[
-        new BoxShadow(
-          color: Colors.black12,
-          blurRadius: 10.0,
-          offset: new Offset(0.0, 10.0),
-        ),
-      ],
-    ),
-  );
-
   Widget buildAlunos() => FutureBuilder(
       future: getStudentsForTeacher(),
       builder: (context, snapshot) {
@@ -140,7 +114,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
-                        Container(
+                      Container(
                         height: 120,
                         margin: const EdgeInsets.symmetric(
                           vertical: 16.0,
@@ -367,15 +341,15 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                         context,
                                         CupertinoPageRoute(
                                             builder: (context) => ShowProfileStudent(
-                                            studentId: alunosData[index]
-                                                .int_idausuario,
-                                            studentName: alunosData[index]
-                                                .vhr_nome + ' ' + alunosData[index].vhr_sobrenome,
-                                            studentSobenome: alunosData[index].vhr_sobrenome,
-                                            studentNumero: alunosData[index].vhr_whatsapp,
-                                            studentPeso: alunosData[index].num_peso,
-                                            stundentAltura: alunosData[index].num_altura,
-                                            stundentDescricao: alunosData[index].vhr_descricao,)),
+                                              studentId: alunosData[index]
+                                                  .int_idausuario,
+                                              studentName: alunosData[index]
+                                                  .vhr_nome + ' ' + alunosData[index].vhr_sobrenome,
+                                              studentSobenome: alunosData[index].vhr_sobrenome,
+                                              studentNumero: alunosData[index].vhr_whatsapp,
+                                              studentPeso: alunosData[index].num_peso,
+                                              stundentAltura: alunosData[index].num_altura,
+                                              stundentDescricao: alunosData[index].vhr_descricao,)),
                                       );
                                     },
                                     iconSize: 45,
@@ -450,7 +424,7 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                 spreadRadius: 3,
                                 blurRadius: 4,
                                 offset:
-                                    Offset(0, 3), // changes position of shadow
+                                Offset(0, 3), // changes position of shadow
                               ),
                             ],
                             borderRadius: BorderRadius.all(
@@ -512,9 +486,9 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
                                           CupertinoPageRoute(
                                             builder: (context) =>
                                                 DetailsTraining(
-                                              idTraining:
+                                                  idTraining:
                                                   _treinos[index].int_idatreino,
-                                            ),
+                                                ),
                                           ));
                                     },
                                     child: Row(
@@ -644,164 +618,164 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
 
   Widget buildExercicios() => Scaffold(
     body: FutureBuilder(
-    future: getUserExercises(),
-    builder: (context, snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.waiting:
-        case ConnectionState.none:
-          return Container(
-            width: 200.0,
-            height: 200.0,
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              strokeWidth: 5.0,
-            ),
-          );
-        default:
-          if (snapshot.hasError) {
-            return Center(child: Text("Erro ao carregar..."));
-          } else {
-            return ListView.builder(
-              padding: EdgeInsets.only(top: 30, bottom: 10),
-              shrinkWrap: true,
-              controller: _scrollbar,
-              itemCount: _exercises.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.only(
-                      bottom: 15, right: 10, left: 10, top: 5),
-                  height: 230,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: 15, right: 20, left: 20, top: 18),
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 4,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              _exercises[index].vhr_nome,
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.w500),
+        future: getUserExercises(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+            case ConnectionState.none:
+              return Container(
+                width: 200.0,
+                height: 200.0,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 5.0,
+                ),
+              );
+            default:
+              if (snapshot.hasError) {
+                return Center(child: Text("Erro ao carregar..."));
+              } else {
+                return ListView.builder(
+                  padding: EdgeInsets.only(top: 30, bottom: 10),
+                  shrinkWrap: true,
+                  controller: _scrollbar,
+                  itemCount: _exercises.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: EdgeInsets.only(
+                          bottom: 15, right: 10, left: 10, top: 5),
+                      height: 230,
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: 15, right: 20, left: 20, top: 18),
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 4,
+                              offset: Offset(0, 3), // changes position of shadow
                             ),
                           ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
                         ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Row(
+                        child: Column(
                           children: [
-                            Text(
-                              "Grupo muscular: ${_exercises[index].nome_categoria}",
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Séries/repetições: ${_exercises[index].vhr_seriesrepeticoes}",
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Intervalo: ${_exercises[index].int_intervalor.toString()}s",
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 13,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => PageAddExerciseTraining(int_idaexercicio: _exercises[index].int_idaexercicio),
-                                    ));
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Adicionar a treino",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  _exercises[index].vhr_nome,
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 10.0,
+                              height: 12,
                             ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
-                              ),
-                              onPressed: () async {
-
-
-                                print("Clicou");
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.delete_outlined,
+                            Row(
+                              children: [
+                                Text(
+                                  "Grupo muscular: ${_exercises[index].nome_categoria}",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Séries/repetições: ${_exercises[index].vhr_seriesrepeticoes}",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Intervalo: ${_exercises[index].int_intervalor.toString()}s",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => PageAddExerciseTraining(int_idaexercicio: _exercises[index].int_idaexercicio),
+                                        ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Adicionar a treino",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                  ),
+                                  onPressed: () async {
+
+
+                                    print("Clicou");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.delete_outlined,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
-              },
-            );
+              }
           }
-      }
-    }),
+        }),
     floatingActionButton: Align(
       alignment: Alignment.bottomLeft,
       child: Padding(
@@ -831,6 +805,28 @@ class _PageMainTeacherState extends State<PageMainTeacher> {
     ),
   );
 
+  // Container(
+  //   padding: EdgeInsets.only(right: 20, bottom: 35),
+  //   child: FloatingActionButton.extended(
+  //     onPressed: () {
+  //       Navigator.push(
+  //           context,
+  //           CupertinoPageRoute(
+  //             builder: (context) => CriarExercicio(),
+  //           ));
+  //     },
+  //     elevation: 3,
+  //     icon: Icon(Icons.add),
+  //     backgroundColor: Colors.green,
+  //     label: Text(
+  //       "Criar",
+  //       style: TextStyle(
+  //         fontWeight: FontWeight.bold,
+  //         fontSize: 17.0,
+  //       ),
+  //     ),
+  //   ),
+  // ),
 
   Widget buildAgenda() => Center(
     child: Calendar(),
